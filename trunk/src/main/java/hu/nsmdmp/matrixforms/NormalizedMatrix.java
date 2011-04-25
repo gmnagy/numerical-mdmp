@@ -1,0 +1,19 @@
+package hu.nsmdmp.matrixforms;
+
+import hu.nsmdmp.utils.MatrixOperations;
+
+import org.apfloat.Apfloat;
+
+public class NormalizedMatrix extends SimpleMatrix {
+
+	NormalizedMatrix() {
+	}
+
+	@Override
+	void create(Apfloat[][] vectorSet, int moment) {
+
+		MatrixOperations.normalize(vectorSet);
+
+		super.create(vectorSet, moment);
+	}
+}
