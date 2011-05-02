@@ -37,11 +37,11 @@ public class ChebyshevTMatrixTest {
 
 	@Test
 	public void simpleMatrixTest() {
-		ChebyshevTMatrix m = MatrixFactory.createChebyshevTMatrix(Converters.convert(vectorSet), moment);
+		ChebyshevTMatrix m = Matrix.getChebyshevTMatrix(Converters.convert(vectorSet), moment);
 
 		Apfloat[][] em = Converters.convert(expectedMatrix);
 
-		if (!m.equals(em)) {
+		if (!MatrixOperations.equals(m.getMatrix(), em)) {
 			System.out.println(MatrixOperations.print(em));
 			System.out.println(m);
 			Assert.assertTrue(false);

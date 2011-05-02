@@ -30,18 +30,18 @@ public class NormalizedMatrixTest {
 
 	@Parameters
 	public static Collection<Object[]> data() {
-		Object[][] data = new Object[][] { { 1, input1(), output1() }, { 2, input2(), output2() } }; //, { 2, input2(), output2() }
+		Object[][] data = new Object[][] { { 1, input1(), output1() }, { 2, input2(), output2() } };
 
 		return Arrays.asList(data);
 	}
 
 	@Test
 	public void simpleMatrixTest() {
-		NormalizedMatrix m = MatrixFactory.createNormalizedMatrix(Converters.convert(vectorSet), moment);
+		NormalizedMatrix m = Matrix.getNormalizedMatrix(Converters.convert(vectorSet), moment);
 
 		Apfloat[][] em = Converters.convert(expectedMatrix);
 
-		if (!m.equals(em)) {
+		if (!MatrixOperations.equals(m.getMatrix(), em)) {
 			System.out.println(MatrixOperations.print(em));
 			System.out.println(m);
 			Assert.assertTrue(false);

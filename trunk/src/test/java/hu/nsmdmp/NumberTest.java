@@ -5,6 +5,7 @@ import java.math.RoundingMode;
 
 import org.apache.commons.math.fraction.BigFraction;
 import org.apfloat.Apfloat;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class NumberTest {
@@ -12,6 +13,7 @@ public class NumberTest {
 	private static final long scale = Apfloat.INFINITE;
 
 	@Test
+	@Ignore
 	public void test1() {
 
 		Apfloat a = new Apfloat(1.0 / 3.0, scale);

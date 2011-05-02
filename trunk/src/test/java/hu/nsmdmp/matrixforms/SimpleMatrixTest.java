@@ -37,11 +37,11 @@ public class SimpleMatrixTest {
 
 	@Test
 	public void simpleMatrixTest() {
-		SimpleMatrix sm = MatrixFactory.createSimpleMatrix(Converters.convert(vectorSet), moment);
+		SimpleMatrix sm = Matrix.getSimpleMatrix(Converters.convert(vectorSet), moment);
 
 		Apfloat[][] em = Converters.convert(expectedMatrix);
 
-		if (!sm.equals(em)) {
+		if (!MatrixOperations.equals(sm.getMatrix(), em)) {
 			System.out.println(MatrixOperations.print(em));
 			System.out.println(sm);
 			Assert.assertTrue(false);

@@ -20,12 +20,7 @@ public class ChebyshevTMatrix extends NormalizedMatrix {
 
 	@Override
 	protected Apfloat getPolynomialValue(final int n, final Apfloat value) {
-
-		Polynomial p = polynomials.get(Integer.valueOf(n));
-		if (null == p) {
-			p = Chebyshev.getPolynomialT(n);
-			polynomials.put(Integer.valueOf(n), p);
-		}
+		Polynomial p = getPolynomial(n);
 
 		Apfloat r = MatrixOperations.ZERO;
 
@@ -38,5 +33,19 @@ public class ChebyshevTMatrix extends NormalizedMatrix {
 		}
 
 		return r.precision(Precision.SCALE);
+	}
+
+	/**
+	 * Cache-elem a mar lekert n-ed foku polinomot.
+	 * 
+	 */
+	private Polynomial getPolynomial(final int n) {
+		Polynomial p = polynomials.get(Integer.valueOf(n));
+		if (null == p) {
+			p = Chebyshev.getPolynomialT(n);
+			polynomials.put(Integer.valueOf(n), p);
+		}
+
+		return p;
 	}
 }

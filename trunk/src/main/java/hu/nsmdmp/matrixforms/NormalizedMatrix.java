@@ -10,7 +10,7 @@ public class NormalizedMatrix extends SimpleMatrix {
 	}
 
 	@Override
-	void create(Apfloat[][] vectorSet, int moment) {
+	void create(final Apfloat[][] vectorSet, final int moment) {
 
 		MatrixOperations.normalize(vectorSet);
 

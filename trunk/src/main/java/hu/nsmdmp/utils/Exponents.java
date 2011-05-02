@@ -6,7 +6,11 @@ import java.util.List;
 
 public final class Exponents {
 
-	public static List<int[]> getExponents(final int m, final int s) {
+	/**
+	 * a1 + a2 + ... <= maxOrder.
+	 * 
+	 */
+	public static List<int[]> getExponents(final int maxOrder, final int s) {
 		List<int[]> expList = new LinkedList<int[]>();
 
 		int[] expRow = new int[s];
@@ -14,11 +18,11 @@ public final class Exponents {
 		expList.add(clone(expRow));
 		int sum = 0;
 
-		while (expRow[s - 1] < m) {
+		while (expRow[s - 1] < maxOrder) {
 			expRow[0]++;
 
-			if (sum == m && expRow[s - 1] < m) {
-				sum = stepper(m, sum, expRow, 0);
+			if (sum == maxOrder && expRow[s - 1] < maxOrder) {
+				sum = stepper(maxOrder, sum, expRow, 0);
 			}
 			sum++;
 
@@ -28,14 +32,14 @@ public final class Exponents {
 		return expList;
 	}
 
-	private static int stepper(int m, int sum, int[] expRow, int i) {
+	private static int stepper(final int maxOrder, final int sum, final int[] expRow, final int i) {
 		int summ = sum - (expRow[i] - 1);
 		expRow[i] = 0;
 
 		expRow[i + 1]++;
 
-		if (summ == m) {
-			summ = stepper(m, summ, expRow, i + 1);
+		if (summ == maxOrder) {
+			summ = stepper(maxOrder, summ, expRow, i + 1);
 		}
 
 		return summ;
