@@ -17,4 +17,24 @@ public class Converters {
 
 		return a;
 	}
+
+	public static Apfloat[] convert(final double[] value) {
+		Apfloat[] a = new Apfloat[value.length];
+
+		for (int i = 0; i < value.length; i++) {
+			a[i] = new Apfloat(value[i], Precision.SCALE);
+		}
+
+		return a;
+	}
+
+	public static double[] convert(final Apfloat[] value) {
+		double[] a = new double[value.length];
+
+		for (int i = 0; i < value.length; i++) {
+			a[i] = value[i].doubleValue();
+		}
+
+		return a;
+	}
 }
