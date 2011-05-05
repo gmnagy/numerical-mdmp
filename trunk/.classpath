@@ -2,10 +2,10 @@
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="src/test/java"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.launching.macosx.MacOSXType/JVM Contents (MacOS X Default)"/>
 	<classpathentry kind="lib" path="lib/junit-4.8.2.jar"/>
 	<classpathentry kind="lib" path="lib/apfloat.jar" sourcepath="lib/apfloat-1.6.2.zip"/>
 	<classpathentry kind="lib" path="lib/ejs_math_SpecialFunctions.jar"/>
-	<classpathentry kind="lib" path="/Users/nzcs/Developments/mosek/6/tools/platform/osx64x86/bin/mosek.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Program Files/Mosek/6/tools/platform/win32x86/bin/mosek.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
