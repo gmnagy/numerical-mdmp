@@ -7,15 +7,21 @@ import java.util.List;
 
 import org.apfloat.Apfloat;
 
-public abstract class AbstractMatrix {
+abstract class AbstractMatrix {
 
-	Apfloat[][] matrix;
+	private Apfloat[][] matrix;
+
+	private Apfloat[][] variations;
 
 	AbstractMatrix() {
 	}
 
 	public Apfloat[][] getMatrix() {
 		return matrix;
+	}
+
+	public Apfloat[][] getVariations() {
+		return variations;
 	}
 
 	/**
@@ -42,13 +48,14 @@ public abstract class AbstractMatrix {
 		int n = getNumber(vectorSet);
 
 		matrix = new Apfloat[exponents.size()][n];
+		variations = new Apfloat[n][exponents.size()];
 
 		for (int j = 0; j < n; j++) {
 
-			Apfloat[] variation = getVariation(j, vectorSet);
+			variations[j] = getVariation(j, vectorSet);
 
 			for (int i = 0; i < exponents.size(); i++) {
-				matrix[i][j] = getMatrixElement(exponents.get(i), variation);
+				matrix[i][j] = getMatrixElement(exponents.get(i), variations[j]);
 			}
 		}
 	}

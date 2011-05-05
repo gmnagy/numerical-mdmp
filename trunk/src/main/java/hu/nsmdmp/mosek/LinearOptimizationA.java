@@ -8,7 +8,7 @@ import mosek.Task;
 import org.apfloat.Apfloat;
 
 /**
- * Subject: Ax = b, x >= 0
+ * Subject: Ax <= b, x >= 0
  * 
  * min/max cx.
  * 
