@@ -29,7 +29,7 @@ public class NormalizedMatrixTest {
 
 	@Parameters
 	public static Collection<Object[]> data() {
-		Object[][] data = new Object[][] { { 1, input1(), output1() }, { 2, input2(), output2() },{ 1, input3(), output3() },{ 1, input4(), output4() } };
+		Object[][] data = new Object[][] { { 1, input1(), output1() }, { 2, input2(), output2() }, { 1, input3(), output3() }, { 1, input4(), output4() } };
 
 		return Arrays.asList(data);
 	}
@@ -38,10 +38,10 @@ public class NormalizedMatrixTest {
 	public void simpleMatrixTest() {
 		NormalizedMatrix m = Matrix.getNormalizedMatrix(Converters.convert(vectorSet), moment);
 
-		Apfloat[][] em = Converters.convert(expectedMatrix);
+		Apfloat[][] expected = Converters.convert(expectedMatrix);
 
-		if (!MatrixUtils.equals(m.getMatrix(), em)) {
-			System.out.println(MatrixUtils.print(em));
+		if (!MatrixUtils.equals(m.getMatrix(), expected)) {
+			System.out.println(MatrixUtils.print(expected));
 			System.out.println(m);
 			Assert.assertTrue(false);
 		}
@@ -102,7 +102,7 @@ public class NormalizedMatrixTest {
 	 * moment = 1
 	 */
 	private static double[][] input4() {
-		return new double[][] { { 0-4, 1-4, 2-4, 3-4 }, { 0, 1, 2, 3 } };
+		return new double[][] { { 0 - 4, 1 - 4, 2 - 4, 3 - 4 }, { 0, 1, 2, 3 } };
 	}
 
 	/**
@@ -114,5 +114,4 @@ public class NormalizedMatrixTest {
 				{ -1.0, -1.0, -1.0, -1.0, -(1.0 / 3), -(1.0 / 3), -(1.0 / 3), -(1.0 / 3), 1.0 / 3, 1.0 / 3, 1.0 / 3, 1.0 / 3, 1.0, 1.0, 1.0, 1.0 } };
 	}
 
-	
 }

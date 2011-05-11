@@ -7,10 +7,10 @@ public final class Normalization {
 	static void normalize(final Apfloat[][] matrix) {
 		for (int i = 0; i < matrix.length; i++) {
 
-			Apfloat min = MatrixMath.ZERO;
-			Apfloat max = MatrixMath.ZERO;
+			Apfloat min = matrix[i][0];
+			Apfloat max = matrix[i][0];
 
-			for (int j = 0; j < matrix[i].length; j++) {
+			for (int j = 1; j < matrix[i].length; j++) {
 				Apfloat x = matrix[i][j];
 
 				if (x.compareTo(min) < 0) {
