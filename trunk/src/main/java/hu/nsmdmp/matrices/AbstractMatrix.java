@@ -45,7 +45,7 @@ abstract class AbstractMatrix {
 		int s = vectorSet.length;
 
 		List<int[]> exponents = Exponents.getExponents(maxOrder, s);
-		int n = getNumber(vectorSet);
+		int n = MatrixMath.getVariationsNumber(vectorSet);
 
 		matrix = new Apfloat[exponents.size()][n];
 		variations = new Apfloat[n][exponents.size()];
@@ -58,22 +58,6 @@ abstract class AbstractMatrix {
 				matrix[i][j] = getMatrixElement(exponents.get(i), variations[j]);
 			}
 		}
-	}
-
-	/**
-	 * A <tt>vectorSet</tt> mereteinek szorzata.
-	 * 
-	 * @param vectorSet
-	 *            vectorok halmaza
-	 * @return <tt>vectorSet</tt> mereteinek szorzata.
-	 */
-	private int getNumber(final Apfloat[][] vectorSet) {
-		int n = 1;
-		for (Apfloat[] row : vectorSet) {
-			n *= row.length;
-		}
-
-		return n;
 	}
 
 	/**

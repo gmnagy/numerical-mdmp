@@ -48,4 +48,21 @@ public class NormalizationTest {
 			Assert.assertTrue(false);
 		}
 	}
+
+	@Test
+	public void normalizationTest3() {
+		double[][] vSet = { { 0, 1, 2, 3 }, { 0, 1, 2, 3 } };
+
+		Apfloat[][] normalized = Converters.convert(vSet);
+		Normalization.normalize(normalized);
+
+		double[][] expected = { { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1 }, { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1 } };
+
+		if (!MatrixUtils.equals(Converters.convert(expected), normalized)) {
+			System.out.println(MatrixUtils.print(expected));
+			System.out.println(MatrixUtils.print(normalized));
+
+			Assert.assertTrue(false);
+		}
+	}
 }

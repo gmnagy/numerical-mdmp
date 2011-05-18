@@ -10,10 +10,10 @@ public class NormalizedMatrix extends SimpleMatrix {
 	}
 
 	@Override
-	void create(final Apfloat[][] vectorSet, final int moment) {
+	void create(final Apfloat[][] vectorSet, final int maxOrder) {
 
 		MatrixMath.normalize(vectorSet);
 
-		super.create(vectorSet, moment);
+		super.create(vectorSet, maxOrder);
 	}
 }

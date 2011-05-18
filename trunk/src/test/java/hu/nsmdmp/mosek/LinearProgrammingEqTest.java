@@ -7,16 +7,20 @@ import mosek.MosekException;
 
 import org.junit.Test;
 
-public class LinearOptimizationATest {
+public class LinearProgrammingEqTest {
 
 	@Test
 	public void test() throws MosekException {
 
-		double m[][] = { { 2, 1 }, { 2, 3 }, { 3, 1 } };
-		double b[] = { 18, 42, 24 };
+//		double m[][] = { { 2, 1 }, { 2, 3 }, { 3, 1 } };
+//		double b[] = { 18, 42, 24 };
+//		double c[] = { 3, 2 };
+
+		double m[][] = { { 1, 0 }, { 0, 2 }, { 3, 2 } };
+		double b[] = { 4, 12, 18 };
 		double c[] = { 3, 2 };
 
-		double[] r = LinearOptimizationA.optimizeMax(Converters.convert(m), Converters.convert(b), Converters.convert(c));
+		double[] r = LinearProgrammingEq.optimizeMax(Converters.convert(m), Converters.convert(b), Converters.convert(c));
 
 		double expected[] = { 3, 12 };
 

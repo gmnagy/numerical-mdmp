@@ -15,4 +15,17 @@ public final class MatrixMath {
 	public static void normalize(final Apfloat[][] matrix) {
 		Normalization.normalize(matrix);
 	}
+
+	public static Apfloat[] multiply(final Apfloat[][] matrix, final Apfloat[] vector) {
+		return Multiplication.multiply(matrix, vector);
+	}
+
+	public static int getVariationsNumber(final Apfloat[][] vectorSet) {
+		int n = 1;
+		for (Apfloat[] row : vectorSet) {
+			n *= row.length;
+		}
+
+		return n;
+	}
 }

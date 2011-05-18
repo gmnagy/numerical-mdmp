@@ -44,6 +44,22 @@ public class VariationTest {
 		}
 	}
 
+	@Test
+	public void variationTest3() {
+		double[][] vSet = { { 1, 2, 3 }, { 1, 2 }, { 5 }, { 6, 7 } };
+
+		double[][] actual = getVariations(vSet);
+		double[][] expected = { { 1, 1, 5, 6 }, { 2, 1, 5, 6 }, { 3, 1, 5, 6 }, { 1, 2, 5, 6 }, { 2, 2, 5, 6 }, { 3, 2, 5, 6 }, { 1, 1, 5, 7 }, { 2, 1, 5, 7 }, { 3, 1, 5, 7 }, { 1, 2, 5, 7 },
+				{ 2, 2, 5, 7 }, { 3, 2, 5, 7 } };
+
+		if (!MatrixUtils.equals(expected, actual)) {
+			System.out.println(MatrixUtils.print(expected));
+			System.out.println(MatrixUtils.print(actual));
+
+			Assert.assertTrue(false);
+		}
+	}
+
 	private double[][] getVariations(final double[][] vSet) {
 		return Converters.convert(Matrix.getSimpleMatrix(Converters.convert(vSet), 1).getVariations());
 	}

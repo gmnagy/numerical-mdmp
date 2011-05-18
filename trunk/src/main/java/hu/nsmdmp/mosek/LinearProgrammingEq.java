@@ -8,13 +8,13 @@ import mosek.Task;
 import org.apfloat.Apfloat;
 
 /**
- * Subject: Ax <= b, x >= 0
+ * Subject: Ax = b, x >= 0
  * 
  * min/max cx.
  * 
  * 
  */
-public final class LinearOptimizationA {
+public final class LinearProgrammingEq {
 
 	private double infinity = 0;
 
@@ -42,7 +42,7 @@ public final class LinearOptimizationA {
 	 * Hiden.
 	 * 
 	 */
-	private LinearOptimizationA(final double aval[][], final int asub[][], final double b[], final double c[]) {
+	private LinearProgrammingEq(final double aval[][], final int asub[][], final double b[], final double c[]) {
 		this.aval = aval;
 		this.asub = asub;
 		this.b = b;
@@ -56,7 +56,7 @@ public final class LinearOptimizationA {
 	public static double[] optimizeMin(final Apfloat[][] matrix, final Apfloat[] b, final Apfloat[] c) throws MosekException {
 		SparseMatrix sm = new SparseMatrix(matrix);
 
-		return new LinearOptimizationA(sm.aval, sm.asub, Converters.convert(b), Converters.convert(c)).optimize(Env.objsense.minimize);
+		return new LinearProgrammingEq(sm.aval, sm.asub, Converters.convert(b), Converters.convert(c)).optimize(Env.objsense.minimize);
 	}
 
 	/**
@@ -66,13 +66,15 @@ public final class LinearOptimizationA {
 	public static double[] optimizeMax(final Apfloat[][] matrix, final Apfloat[] b, final Apfloat[] c) throws MosekException {
 		SparseMatrix sm = new SparseMatrix(matrix);
 
-		return new LinearOptimizationA(sm.aval, sm.asub, Converters.convert(b), Converters.convert(c)).optimize(Env.objsense.maximize);
+		return new LinearProgrammingEq(sm.aval, sm.asub, Converters.convert(b), Converters.convert(c)).optimize(Env.objsense.maximize);
 	}
 
 	private double[] optimize(final Env.objsense objsense) throws MosekException {
 		int NUMVAR = aval.length;
 		int NUMCON = b.length;
 		int NUMANZ = getNumANZ();
+//		System.out.println(NUMVAR);
+//		System.out.println(NUMCON);
 
 		Env env = null;
 		Task task = null;
@@ -110,8 +112,7 @@ public final class LinearOptimizationA {
 		for (int i = 0; i < NUMCON; ++i) {
 			/* Set the bounds on constraints.
 			   blc[i] <= constraint i <= buc[i] */
-//			task.putbound(Env.accmode.con, i, Env.boundkey.fx, b[i], b[i]);
-			task.putbound(Env.accmode.con, i, Env.boundkey.up, -infinity, b[i]);
+			task.putbound(Env.accmode.con, i, Env.boundkey.fx, b[i], b[i]);
 		}
 
 		task.putobjsense(objsense);
@@ -130,6 +131,10 @@ public final class LinearOptimizationA {
 		task.getsolutionslice(Env.soltype.bas, Env.solitem.xx, 0, NUMVAR, xx);
 
 		checkSolutionStatus(solsta);
+
+//		double[] xx2 = new double[NUMVAR];
+//		task.getsolutionslice(Env.soltype.bas, Env.solitem.xc, 0, 1, xx2);
+//		System.out.println(MatrixUtils.print(xx2));
 
 		return xx;
 	}
