@@ -151,7 +151,7 @@ public final class LinearProgrammingEq {
 		switch (solsta[0]) {
 		case optimal:
 		case near_optimal:
-			System.out.println("Optimal primal solution.");
+//			System.out.println("Optimal primal solution.");
 			break;
 		case dual_infeas_cer:
 		case near_dual_infeas_cer:
