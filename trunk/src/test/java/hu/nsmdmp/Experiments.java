@@ -1,10 +1,10 @@
 package hu.nsmdmp;
 
 import hu.nsmdmp.cvectors.CVector;
-import hu.nsmdmp.cvectors.StairsCVector;
+import hu.nsmdmp.cvectors.ICVector;
+import hu.nsmdmp.matrices.IMatrix;
 import hu.nsmdmp.matrices.Matrix;
 import hu.nsmdmp.matrices.MatrixUtils;
-import hu.nsmdmp.matrices.NormalizedMatrix;
 import hu.nsmdmp.matrixmath.MatrixMath;
 import hu.nsmdmp.mosek.LinearProgrammingEq;
 import hu.nsmdmp.utils.Converters;
@@ -24,17 +24,16 @@ public class Experiments {
 		Apfloat[] b = getBVector(variationNum);
 
 		int maxOrder = 1;
-		NormalizedMatrix normalized = Matrix.getNormalizedMatrix(vSet, maxOrder);
+		IMatrix normalized = Matrix.getNormalizedMatrix(vSet, maxOrder);
 //		ChebyshevTMatrix chebyshevT = Matrix.getChebyshevTMatrix(vSet, maxOrder);
 //		ChebyshevUMatrix chebyshevU = Matrix.getChebyshevUMatrix(vSet, maxOrder);
 
-		StairsCVector c = CVector.getStairsCVector(normalized.getVariations());
+		ICVector c = CVector.getStairsCVector(normalized.getVariations());
+		Apfloat[] cc = c.getCVectorA();
+		cc[0] = MatrixMath.ZERO;
+		System.out.println(MatrixUtils.print(cc));
 
-		System.out.println(MatrixUtils.print(normalized.getMatrix()));
-		System.out.println(MatrixUtils.print(b));
-		System.out.println(MatrixUtils.print(c.getCVectorA()));
-
-		LinearProgrammingEq.optimizeMin(normalized.getMatrix(), b, c.getCVectorA());
+		LinearProgrammingEq.optimizeMin(normalized.getMatrix(), b, cc);
 //		LinearProgrammingEq.optimizeMin(chebyshevT.getMatrix(), b, c.getCVectorA());
 //		LinearProgrammingEq.optimizeMin(chebyshevU.getMatrix(), b, c.getCVectorA());
 	}

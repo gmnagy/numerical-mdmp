@@ -36,7 +36,7 @@ public class SimpleMatrixTest {
 
 	@Test
 	public void simpleMatrixTest() {
-		SimpleMatrix sm = Matrix.getSimpleMatrix(Converters.convert(vectorSet), moment);
+		IMatrix sm = Matrix.getSimpleMatrix(Converters.convert(vectorSet), moment);
 
 		Apfloat[][] em = Converters.convert(expectedMatrix);
 

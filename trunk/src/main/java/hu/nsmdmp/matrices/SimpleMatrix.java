@@ -6,7 +6,7 @@ import hu.nsmdmp.utils.Precision;
 import org.apfloat.Apfloat;
 import org.apfloat.ApfloatMath;
 
-public class SimpleMatrix extends AbstractMatrix {
+class SimpleMatrix extends AbstractMatrix {
 
 	SimpleMatrix() {
 		super();

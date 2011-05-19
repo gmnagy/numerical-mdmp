@@ -4,7 +4,7 @@ import org.apfloat.Apfloat;
 
 public class CVector {
 
-	public static StairsCVector getStairsCVector(final Apfloat[][] variations) {
+	public static ICVector getStairsCVector(final Apfloat[][] variations) {
 		StairsCVector c = new StairsCVector();
 		c.create(variations);
 

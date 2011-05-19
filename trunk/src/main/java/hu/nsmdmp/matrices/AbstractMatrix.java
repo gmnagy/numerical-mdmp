@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.apfloat.Apfloat;
 
-abstract class AbstractMatrix {
+abstract class AbstractMatrix implements IMatrix {
 
 	private Apfloat[][] matrix;
 
@@ -16,10 +16,12 @@ abstract class AbstractMatrix {
 	AbstractMatrix() {
 	}
 
+	@Override
 	public Apfloat[][] getMatrix() {
 		return matrix;
 	}
 
+	@Override
 	public Apfloat[][] getVariations() {
 		return variations;
 	}

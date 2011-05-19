@@ -4,7 +4,7 @@ import hu.nsmdmp.matrixmath.MatrixMath;
 
 import org.apfloat.Apfloat;
 
-public class NormalizedMatrix extends SimpleMatrix {
+class NormalizedMatrix extends SimpleMatrix {
 
 	NormalizedMatrix() {
 	}

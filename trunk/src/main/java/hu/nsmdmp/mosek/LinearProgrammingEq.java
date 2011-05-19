@@ -73,8 +73,8 @@ public final class LinearProgrammingEq {
 		int NUMVAR = aval.length;
 		int NUMCON = b.length;
 		int NUMANZ = getNumANZ();
-//		System.out.println(NUMVAR);
-//		System.out.println(NUMCON);
+		System.out.println(NUMVAR);
+		System.out.println(NUMCON);
 
 		Env env = null;
 		Task task = null;

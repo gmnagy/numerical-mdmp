@@ -36,7 +36,7 @@ public class ChebyshevTMatrixTest {
 
 	@Test
 	public void simpleMatrixTest() {
-		ChebyshevTMatrix m = Matrix.getChebyshevTMatrix(Converters.convert(vectorSet), moment);
+		IMatrix m = Matrix.getChebyshevTMatrix(Converters.convert(vectorSet), moment);
 
 		Apfloat[][] em = Converters.convert(expectedMatrix);
 

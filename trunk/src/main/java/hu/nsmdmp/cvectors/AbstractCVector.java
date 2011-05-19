@@ -2,7 +2,7 @@ package hu.nsmdmp.cvectors;
 
 import org.apfloat.Apfloat;
 
-public abstract class AbstractCVector {
+public abstract class AbstractCVector implements ICVector {
 
 	private Apfloat[] cVectorA;
 
@@ -23,10 +23,12 @@ public abstract class AbstractCVector {
 
 	abstract Apfloat function(final Apfloat[] variation);
 
+	@Override
 	public Apfloat[] getCVectorA() {
 		return cVectorA;
 	}
 
+	@Override
 	public double[] getCVectorD() {
 		return cVectorD;
 	}
