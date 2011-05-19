@@ -20,7 +20,7 @@ public class MultiplicationTest {
 
 		if (!MatrixUtils.equals(result, Converters.convert(expected))) {
 			System.out.println(MatrixUtils.print(result));
-			System.out.println(Converters.convert(expected));
+			System.out.println(MatrixUtils.print(expected));
 
 			Assert.assertTrue(false);
 		}
@@ -40,5 +40,22 @@ public class MultiplicationTest {
 		}
 
 		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void test3() {
+		double[][] matrix = { { 1, 1, 1, 1 }, { 0, 1, 0, 1 }, { 0, 0, 2, 2 } };
+		double[] vector = { 1.0 / 4.0, 1.0 / 4.0, 1.0 / 4.0, 1.0 / 4.0 };
+
+		Apfloat[] result = Multiplication.multiply(Converters.convert(matrix), Converters.convert(vector));
+
+		double[] expected = { 1, 2.0 / 4.0, 1 };
+
+		if (!MatrixUtils.equals(result, Converters.convert(expected))) {
+			System.out.println(MatrixUtils.print(result));
+			System.out.println(MatrixUtils.print(expected));
+
+			Assert.assertTrue(false);
+		}
 	}
 }

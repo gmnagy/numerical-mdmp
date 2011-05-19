@@ -2,9 +2,9 @@ package hu.nsmdmp.matrixmath;
 
 import org.apfloat.Apfloat;
 
-public final class Multiplication {
+final class Multiplication {
 
-	static final Apfloat[] multiply(Apfloat[][] matrix, Apfloat[] vector) {
+	static Apfloat[] multiply(Apfloat[][] matrix, Apfloat[] vector) {
 
 		Apfloat[] result = new Apfloat[matrix.length];
 

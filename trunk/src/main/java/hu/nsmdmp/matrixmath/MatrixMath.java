@@ -28,4 +28,20 @@ public final class MatrixMath {
 
 		return n;
 	}
+
+	/**
+	 * Get all variations of <tt>vectorSet</tt>.
+	 * 
+	 */
+	public static Apfloat[][] createVariation(final Apfloat[][] vectorSet) {
+		return Variation.createVariation(vectorSet);
+	}
+
+	/**
+	 * Get <tt>j</tt>-th variation of <tt>vectorSet</tt>.
+	 * 
+	 */
+	public static Apfloat[] createVariation(final int j, final Apfloat[][] vectorSet) {
+		return Variation.getVariation(j, vectorSet);
+	}
 }

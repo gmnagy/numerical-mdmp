@@ -73,8 +73,11 @@ public final class LinearProgrammingEq {
 		int NUMVAR = aval.length;
 		int NUMCON = b.length;
 		int NUMANZ = getNumANZ();
-		System.out.println(NUMVAR);
-		System.out.println(NUMCON);
+//		System.out.println(NUMVAR);
+//		System.out.println(NUMCON);
+//		System.out.println(NUMANZ);
+//		System.out.println(MatrixUtils.print(asub));
+//		System.out.println(MatrixUtils.print(aval));
 
 		Env env = null;
 		Task task = null;
@@ -132,10 +135,6 @@ public final class LinearProgrammingEq {
 
 		checkSolutionStatus(solsta);
 
-//		double[] xx2 = new double[NUMVAR];
-//		task.getsolutionslice(Env.soltype.bas, Env.solitem.xc, 0, 1, xx2);
-//		System.out.println(MatrixUtils.print(xx2));
-
 		return xx;
 	}
 
@@ -152,13 +151,14 @@ public final class LinearProgrammingEq {
 		switch (solsta[0]) {
 		case optimal:
 		case near_optimal:
-			System.out.println("Optimal primal solution\n");
+			System.out.println("Optimal primal solution.");
 			break;
 		case dual_infeas_cer:
-		case prim_infeas_cer:
 		case near_dual_infeas_cer:
+			throw new MosekException("Dual infeasibility.");
+		case prim_infeas_cer:
 		case near_prim_infeas_cer:
-			throw new MosekException("Primal or dual infeasibility.");
+			throw new MosekException("Primal infeasibility.");
 		case unknown:
 			throw new MosekException("Unknown solution status.");
 		default:

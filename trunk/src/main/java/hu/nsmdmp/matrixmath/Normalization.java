@@ -2,7 +2,7 @@ package hu.nsmdmp.matrixmath;
 
 import org.apfloat.Apfloat;
 
-public final class Normalization {
+final class Normalization {
 
 	static void normalize(final Apfloat[][] matrix) {
 		for (int i = 0; i < matrix.length; i++) {

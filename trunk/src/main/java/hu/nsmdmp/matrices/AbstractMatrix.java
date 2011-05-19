@@ -54,36 +54,12 @@ abstract class AbstractMatrix implements IMatrix {
 
 		for (int j = 0; j < n; j++) {
 
-			variations[j] = getVariation(j, vectorSet);
+			variations[j] = MatrixMath.createVariation(j, vectorSet);
 
 			for (int i = 0; i < exponents.size(); i++) {
 				matrix[i][j] = getMatrixElement(exponents.get(i), variations[j]);
 			}
 		}
-	}
-
-	/**
-	 * A <tt>vectorSet</tt> halmaz <tt>j</tt>.-ik szamu ismetleses variacio tagjai.
-	 * 
-	 * @param j
-	 *            <tt>j</tt>.-ik variacio
-	 * @param vectorSet
-	 *            vectorok halmaza
-	 * @return <tt>j</tt>.-ik variacio tagjai.
-	 */
-	private Apfloat[] getVariation(final int j, final Apfloat[][] vectorSet) {
-		int s = vectorSet.length;
-		Apfloat[] variation = new Apfloat[s];
-
-		int a = 1;
-		for (int i = 0; i < s; i++) {
-			int x = (j / a) % vectorSet[i].length;
-			variation[i] = vectorSet[i][x];
-
-			a *= vectorSet[i].length;
-		}
-
-		return variation;
 	}
 
 	/**
