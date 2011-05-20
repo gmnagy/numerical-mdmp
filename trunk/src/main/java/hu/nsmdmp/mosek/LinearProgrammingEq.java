@@ -115,6 +115,8 @@ public final class LinearProgrammingEq {
 
 		task.putobjsense(objsense);
 
+		task.writedata("MDMP.lp");
+		
 		Env.rescode r = task.optimize();
 		if (Env.rescode.ok != r) {
 			System.out.println(r);
@@ -133,7 +135,8 @@ public final class LinearProgrammingEq {
 		LPSolution lpSolution = new LPSolution();
 		lpSolution.x = xx;
 		lpSolution.primalSolution = task.getprimalobj(Env.soltype.bas);
-
+//task.getprimalobj(arg0, arg1)
+		
 		return lpSolution;
 	}
 
