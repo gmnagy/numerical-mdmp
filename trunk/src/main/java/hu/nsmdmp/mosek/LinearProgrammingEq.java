@@ -132,7 +132,6 @@ public final class LinearProgrammingEq {
 
 		LPSolution lpSolution = new LPSolution();
 		lpSolution.x = xx;
-
 		lpSolution.primalSolution = task.getprimalobj(Env.soltype.bas);
 
 		return lpSolution;
