@@ -53,7 +53,7 @@ public final class LinearProgrammingEq {
 	 * Minimalizalas.
 	 * 
 	 */
-	public static double[] optimizeMin(final Apfloat[][] matrix, final Apfloat[] b, final Apfloat[] c) throws MosekException {
+	public static LPSolution optimizeMin(final Apfloat[][] matrix, final Apfloat[] b, final Apfloat[] c) throws MosekException {
 		SparseMatrix sm = new SparseMatrix(matrix);
 
 		return new LinearProgrammingEq(sm.aval, sm.asub, Converters.convert(b), Converters.convert(c)).optimize(Env.objsense.minimize);
@@ -63,21 +63,16 @@ public final class LinearProgrammingEq {
 	 * Maximalizalasa.
 	 * 
 	 */
-	public static double[] optimizeMax(final Apfloat[][] matrix, final Apfloat[] b, final Apfloat[] c) throws MosekException {
+	public static LPSolution optimizeMax(final Apfloat[][] matrix, final Apfloat[] b, final Apfloat[] c) throws MosekException {
 		SparseMatrix sm = new SparseMatrix(matrix);
 
 		return new LinearProgrammingEq(sm.aval, sm.asub, Converters.convert(b), Converters.convert(c)).optimize(Env.objsense.maximize);
 	}
 
-	private double[] optimize(final Env.objsense objsense) throws MosekException {
+	private LPSolution optimize(final Env.objsense objsense) throws MosekException {
 		int NUMVAR = aval.length;
 		int NUMCON = b.length;
 		int NUMANZ = getNumANZ();
-//		System.out.println(NUMVAR);
-//		System.out.println(NUMCON);
-//		System.out.println(NUMANZ);
-//		System.out.println(MatrixUtils.print(asub));
-//		System.out.println(MatrixUtils.print(aval));
 
 		Env env = null;
 		Task task = null;
@@ -135,7 +130,12 @@ public final class LinearProgrammingEq {
 
 		checkSolutionStatus(solsta);
 
-		return xx;
+		LPSolution lpSolution = new LPSolution();
+		lpSolution.x = xx;
+
+		lpSolution.primalSolution = task.getprimalobj(Env.soltype.bas);
+
+		return lpSolution;
 	}
 
 	private int getNumANZ() {

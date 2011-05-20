@@ -17,7 +17,7 @@ public class LinearProgrammingEqTest {
 		double c[] = { 0, 1, 1, 1 };
 
 		// A minimization problem 
-		double[] rMin = LinearProgrammingEq.optimizeMin(Converters.convert(m), Converters.convert(b), Converters.convert(c));
+		double[] rMin = LinearProgrammingEq.optimizeMin(Converters.convert(m), Converters.convert(b), Converters.convert(c)).getX();
 
 		double expectedMin[] = { 0.5, 0, 0, 0.5 };
 
@@ -29,7 +29,7 @@ public class LinearProgrammingEqTest {
 		}
 
 		// A maximization problem 
-		double[] rMax = LinearProgrammingEq.optimizeMax(Converters.convert(m), Converters.convert(b), Converters.convert(c));
+		double[] rMax = LinearProgrammingEq.optimizeMax(Converters.convert(m), Converters.convert(b), Converters.convert(c)).getX();
 
 		double expectedMax[] = { 0, 0.5, 0.5, 0 };
 
