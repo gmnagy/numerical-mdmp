@@ -17,57 +17,58 @@ public class Experiments {
 	public void test() throws MosekException {
 		double[][] vectorSet = { { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 }, { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 },
 				{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 } };
+//		double[][] vectorSet = { { 0, 1, 2, 3 }, { 0, 1, 2, 3 }, { 0, 1, 2, 3 } };
 
-		long begin = System.currentTimeMillis();
 		Apfloat[][] vSet = Converters.convert(vectorSet);
 		int variationNum = MatrixMath.getVariationsNumber(vSet);
+
+		// distribution
 		Apfloat[] distr = uniformDistr(variationNum);
+
+		// coefficient vector
 		Apfloat[] c = CVector.getStairsCVector(MatrixMath.createVariation(vSet)).getCVectorA();
-		System.out.println("c, distr " + (System.currentTimeMillis() - begin) + " ms");
 
-		int maxOrder = 8;
-		for (int i = 1; i <= maxOrder; i++) {
-			System.out.print("MaxOrder: " + i + "\t");
+		// normalized vector set
+		Apfloat[][] normVSet = MatrixMath.normalize(Converters.convert(vectorSet));
 
-			begin = System.currentTimeMillis();
-			Apfloat[][] matrix = Matrix.getSimpleMatrix(vSet, maxOrder).getMatrix();
-			System.out.println("matrix " + (System.currentTimeMillis() - begin) + " ms");
+		int maxOrder = 7;
+		for (int i = 7; i <= maxOrder; i++) {
+			System.out.println("MaxOrder: " + i);
 
-			// A minimization problem 
-			System.out.print(" - Minimization: ");
-			begin = System.currentTimeMillis();
-			LPSolution rMin = optimizeMin(matrix, distr, c);
-			System.out.println(rMin.getPrimalSolution());
-			System.out.println("min " + (System.currentTimeMillis() - begin) + " ms");
-//			System.out.println(MatrixUtils.print(rMin));
+			Apfloat[][] normM = Matrix.getMonomialMatrix(normVSet, i).getMatrix();
+			printMinMaxPrimalSolution(normM, distr, c, "MonomialMatrix: ");
 
-			// A maximization problem 
-//			System.out.print(" - Maximization: ");
-//			begin = System.currentTimeMillis();
-//			double[] rMax = optimizeMax(matrix, distr, c);
-//			System.out.println("max " + (System.currentTimeMillis() - begin) + " ms");
-//			System.out.println(MatrixUtils.print(rMax));
+//			Apfloat[][] chebTM = Matrix.getChebyshevTMatrix(normVSet, i).getMatrix();
+//			printMinMaxPrimalSolution(chebTM, distr, c, "ChebyshevTMatrix: ");
+
+//			Apfloat[][] chebUM = Matrix.getChebyshevUMatrix(normVSet, i).getMatrix();
+//			printMinMaxPrimalSolution(chebUM, distr, c, "ChebyshevUMatrix: ");
+
+			System.out.println();
+		}
+
+		for (int i = 7; i <= maxOrder; i++) {
+			System.out.println("MaxOrder: " + i);
+
+			Apfloat[][] chebTM = Matrix.getChebyshevTMatrix(normVSet, i).getMatrix();
+			printMinMaxPrimalSolution(chebTM, distr, c, "ChebyshevTMatrix: ");
+
+			System.out.println();
 		}
 	}
 
-	/**
-	 * A minimization problem.
-	 * 
-	 */
-	private LPSolution optimizeMin(Apfloat[][] matrix, Apfloat[] distr, Apfloat[] c) throws MosekException {
+	private void printMinMaxPrimalSolution(Apfloat[][] matrix, Apfloat[] distr, Apfloat[] c, String prefix) throws MosekException {
 		Apfloat[] b = MatrixMath.multiply(matrix, distr);
+//		System.out.println(MatrixUtils.print(matrix));
+//		System.out.println(MatrixUtils.print(b));
 
-		return LinearProgrammingEq.optimizeMin(matrix, b, c);
-	}
+		LPSolution min = LinearProgrammingEq.optimizeMin(matrix, b, c);
+		LPSolution max = LinearProgrammingEq.optimizeMax(matrix, b, c);
 
-	/**
-	 * A maximization problem.
-	 * 
-	 */
-	private LPSolution optimizeMax(Apfloat[][] matrix, Apfloat[] distr, Apfloat[] c) throws MosekException {
-		Apfloat[] b = MatrixMath.multiply(matrix, distr);
+//		System.out.println(MatrixUtils.print(min.getX()));
+//		System.out.println(MatrixUtils.print(max.getX()));
 
-		return LinearProgrammingEq.optimizeMax(matrix, b, c);
+		System.out.println(String.format("%s min: %s,\tmax: %s", prefix, min.getPrimalSolution(), max.getPrimalSolution()));
 	}
 
 	/**

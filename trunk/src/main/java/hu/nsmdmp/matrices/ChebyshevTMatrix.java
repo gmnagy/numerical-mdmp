@@ -11,7 +11,7 @@ import org.apfloat.ApfloatMath;
 import org.opensourcephysics.numerics.Polynomial;
 import org.opensourcephysics.numerics.specialfunctions.Chebyshev;
 
-class ChebyshevTMatrix extends NormalizedMatrix {
+class ChebyshevTMatrix extends AbstractMatrix {
 
 	Map<Integer, Polynomial> polynomials = new HashMap<Integer, Polynomial>();
 
@@ -23,16 +23,27 @@ class ChebyshevTMatrix extends NormalizedMatrix {
 		Polynomial p = getPolynomial(n);
 
 		Apfloat r = MatrixMath.ZERO;
-
 		int i = 0;
 		for (double coef : p.getCoefficients()) {
-			Apfloat m = ApfloatMath.pow(value, i).multiply(new Apfloat(coef));
+			Apfloat x = pow(value, i);
+			Apfloat m = x.multiply(new Apfloat(coef));
 			r = r.add(m);
 
 			i++;
 		}
 
 		return r.precision(Precision.SCALE);
+	}
+
+	private Apfloat pow(final Apfloat value, final int n) {
+		if (n == 0 && value.signum() == 0) {
+			return MatrixMath.ONE;
+		}
+		if (n != 0 && value.signum() == 0) {
+			return MatrixMath.ZERO;
+		}
+
+		return ApfloatMath.pow(value, n).precision(Precision.SCALE);
 	}
 
 	/**

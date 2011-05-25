@@ -4,7 +4,9 @@ import org.apfloat.Apfloat;
 
 final class Normalization {
 
-	static void normalize(final Apfloat[][] matrix) {
+	static Apfloat[][] normalize(final Apfloat[][] matrix) {
+		Apfloat[][] normM = new Apfloat[matrix.length][];
+
 		for (int i = 0; i < matrix.length; i++) {
 
 			Apfloat min = matrix[i][0];
@@ -25,6 +27,8 @@ final class Normalization {
 			// (min + max) / 2;
 			Apfloat mid = min.add(max).divide(MatrixMath.TWO);
 
+			normM[i] = new Apfloat[matrix[i].length];
+
 			for (int j = 0; j < matrix[i].length; j++) {
 
 				// 2 * (vSet[i][j] - mid)
@@ -34,8 +38,12 @@ final class Normalization {
 				Apfloat b = max.subtract(min);
 
 				// a / b
-				matrix[i][j] = a.divide(b);
+//				matrix[i][j] = a.divide(b);
+				normM[i][j] = a.divide(b);
+
 			}
 		}
+
+		return normM;
 	}
 }

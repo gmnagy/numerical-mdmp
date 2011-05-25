@@ -4,15 +4,8 @@ import org.apfloat.Apfloat;
 
 public final class Matrix {
 
-	public static IMatrix getSimpleMatrix(final Apfloat[][] vectorSet, final int maxOrder) {
-		SimpleMatrix matrix = new SimpleMatrix();
-		matrix.create(vectorSet, maxOrder);
-
-		return matrix;
-	}
-
-	public static IMatrix getNormalizedMatrix(final Apfloat[][] vectorSet, final int maxOrder) {
-		NormalizedMatrix matrix = new NormalizedMatrix();
+	public static IMatrix getMonomialMatrix(final Apfloat[][] vectorSet, final int maxOrder) {
+		MonomialMatrix matrix = new MonomialMatrix();
 		matrix.create(vectorSet, maxOrder);
 
 		return matrix;

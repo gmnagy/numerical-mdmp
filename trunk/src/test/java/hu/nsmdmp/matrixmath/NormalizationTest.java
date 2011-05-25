@@ -19,8 +19,7 @@ public class NormalizationTest {
 	public void normalizationTest1() {
 		double[][] vSet = { { 1, 2, 3, 4 }, { 0, 1, 2, 3 } };
 
-		Apfloat[][] normalized = Converters.convert(vSet);
-		Normalization.normalize(normalized);
+		Apfloat[][] normalized = Normalization.normalize(Converters.convert(vSet));
 
 		double[][] expected = { { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1 }, { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1 } };
 
@@ -36,8 +35,7 @@ public class NormalizationTest {
 	public void normalizationTest2() {
 		double[][] vSet = { { 0 - 4, 1 - 4, 2 - 4, 3 - 4 }, { 0, 1, 2, 3 } };
 
-		Apfloat[][] normalized = Converters.convert(vSet);
-		Normalization.normalize(normalized);
+		Apfloat[][] normalized = Normalization.normalize(Converters.convert(vSet));
 
 		double[][] expected = { { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1 }, { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1 } };
 
@@ -53,8 +51,7 @@ public class NormalizationTest {
 	public void normalizationTest3() {
 		double[][] vSet = { { 0, 1, 2, 3 }, { 0, 1, 2, 3 } };
 
-		Apfloat[][] normalized = Converters.convert(vSet);
-		Normalization.normalize(normalized);
+		Apfloat[][] normalized = Normalization.normalize(Converters.convert(vSet));
 
 		double[][] expected = { { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1 }, { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1 } };
 

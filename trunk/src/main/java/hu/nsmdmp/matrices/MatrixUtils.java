@@ -122,11 +122,12 @@ public final class MatrixUtils {
 			}
 
 			for (int j = 0; j < a[i].length; j++) {
-				Apfloat e = new Apfloat(a[i][j].doubleValue(), RadixConstants.DOUBLE_PRECISION[10]);
-				Apfloat f = new Apfloat(b[i][j].doubleValue(), RadixConstants.DOUBLE_PRECISION[10]);
+				Apfloat x = new Apfloat(a[i][j].doubleValue(), RadixConstants.DOUBLE_PRECISION[10]);
+				Apfloat y = new Apfloat(b[i][j].doubleValue(), RadixConstants.DOUBLE_PRECISION[10]);
 
-				if (e.compareTo(f) != 0) {
-					System.out.println(String.format("[%d, %d] %s != %s", i, j, e, f));
+//				if (e.compareTo(f) != 0) {
+				if (Math.abs(x.doubleValue() - y.doubleValue()) > e) {
+					System.out.println(String.format("[%d, %d] %s != %s", i, j, x, y));
 					return false;
 				}
 			}
@@ -142,11 +143,12 @@ public final class MatrixUtils {
 		}
 
 		for (int i = 0; i < a.length; i++) {
-			Apfloat e = new Apfloat(a[i].doubleValue(), RadixConstants.DOUBLE_PRECISION[10]);
-			Apfloat f = new Apfloat(b[i].doubleValue(), RadixConstants.DOUBLE_PRECISION[10]);
+			Apfloat x = new Apfloat(a[i].doubleValue(), RadixConstants.DOUBLE_PRECISION[10]);
+			Apfloat y = new Apfloat(b[i].doubleValue(), RadixConstants.DOUBLE_PRECISION[10]);
 
-			if (e.compareTo(f) != 0) {
-				System.out.println(String.format("%s != %s", e, f));
+//			if (e.compareTo(f) != 0) {
+			if (Math.abs(x.doubleValue() - y.doubleValue()) > e) {
+				System.out.println(String.format("%s != %s", x, y));
 
 				return false;
 			}

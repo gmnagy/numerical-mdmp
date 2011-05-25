@@ -11,7 +11,7 @@ import org.apfloat.ApfloatMath;
 import org.opensourcephysics.numerics.Polynomial;
 import org.opensourcephysics.numerics.specialfunctions.Chebyshev;
 
-class ChebyshevUMatrix extends NormalizedMatrix {
+class ChebyshevUMatrix extends AbstractMatrix {
 
 	Map<Integer, Polynomial> polynomials = new HashMap<Integer, Polynomial>();
 

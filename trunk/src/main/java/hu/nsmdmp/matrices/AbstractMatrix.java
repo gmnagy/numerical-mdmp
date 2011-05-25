@@ -11,19 +11,12 @@ abstract class AbstractMatrix implements IMatrix {
 
 	private Apfloat[][] matrix;
 
-	private Apfloat[][] variations;
-
 	AbstractMatrix() {
 	}
 
 	@Override
 	public Apfloat[][] getMatrix() {
 		return matrix;
-	}
-
-	@Override
-	public Apfloat[][] getVariations() {
-		return variations;
 	}
 
 	/**
@@ -50,14 +43,13 @@ abstract class AbstractMatrix implements IMatrix {
 		int n = MatrixMath.getVariationsNumber(vectorSet);
 
 		matrix = new Apfloat[exponents.size()][n];
-		variations = new Apfloat[n][exponents.size()];
 
 		for (int j = 0; j < n; j++) {
 
-			variations[j] = MatrixMath.createVariation(j, vectorSet);
+			Apfloat[] variations = MatrixMath.createVariation(j, vectorSet);
 
 			for (int i = 0; i < exponents.size(); i++) {
-				matrix[i][j] = getMatrixElement(exponents.get(i), variations[j]);
+				matrix[i][j] = getMatrixElement(exponents.get(i), variations);
 			}
 		}
 	}
@@ -81,7 +73,6 @@ abstract class AbstractMatrix implements IMatrix {
 			int exp = exponents[k];
 
 			b = b.multiply(getPolynomialValue(exp, variation[k]));
-
 		}
 
 		return b;

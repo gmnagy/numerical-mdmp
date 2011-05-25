@@ -1,5 +1,6 @@
 package hu.nsmdmp.matrices;
 
+import hu.nsmdmp.matrixmath.MatrixMath;
 import hu.nsmdmp.utils.Converters;
 
 import java.util.Arrays;
@@ -36,7 +37,8 @@ public class NormalizedMatrixTest {
 
 	@Test
 	public void simpleMatrixTest() {
-		IMatrix m = Matrix.getNormalizedMatrix(Converters.convert(vectorSet), moment);
+		Apfloat[][] normalized = MatrixMath.normalize(Converters.convert(vectorSet));
+		IMatrix m = Matrix.getMonomialMatrix(normalized, moment);
 
 		Apfloat[][] expected = Converters.convert(expectedMatrix);
 

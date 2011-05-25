@@ -12,8 +12,8 @@ public final class MatrixMath {
 
 	public static final Apfloat TWO = new Apfloat(2, Precision.SCALE);
 
-	public static void normalize(final Apfloat[][] matrix) {
-		Normalization.normalize(matrix);
+	public static Apfloat[][] normalize(final Apfloat[][] matrix) {
+		return Normalization.normalize(matrix);
 	}
 
 	public static Apfloat[] multiply(final Apfloat[][] matrix, final Apfloat[] vector) {
