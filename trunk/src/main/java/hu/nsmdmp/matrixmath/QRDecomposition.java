@@ -6,7 +6,7 @@ import hu.nsmdmp.matrices.Matrix;
 import org.apfloat.Apfloat;
 import org.apfloat.ApfloatMath;
 
-public class QRDecomposition {
+final class QRDecomposition {
 
 	/**
 	 * Array for internal storage of decomposition.
@@ -37,7 +37,7 @@ public class QRDecomposition {
 	 *            Rectangular matrix
 	 * @return Structure to access R and the Householder vectors and compute Q.
 	 */
-	public QRDecomposition(final IMatrix A) {
+	QRDecomposition(final IMatrix A) {
 
 		QR = A.getArrayCopy();
 		m = A.getRowDimension();
@@ -78,6 +78,7 @@ public class QRDecomposition {
 					}
 				}
 			}
+
 			Rdiag[k] = nrm.negate();
 		}
 	}
@@ -105,7 +106,7 @@ public class QRDecomposition {
 	 * 
 	 * @return R
 	 */
-	public IMatrix getR() {
+	IMatrix getR() {
 		IMatrix X = new Matrix(n, n);
 		Apfloat[][] R = X.getMatrix();
 
@@ -129,7 +130,7 @@ public class QRDecomposition {
 	 * 
 	 * @return Q
 	 */
-	public IMatrix getQ() {
+	IMatrix getQ() {
 		IMatrix X = new Matrix(m, n);
 		Apfloat[][] Q = X.getMatrix();
 
@@ -165,7 +166,7 @@ public class QRDecomposition {
 	 * 
 	 * @return true if R, and hence A, has full rank.
 	 */
-	public boolean isFullRank() {
+	private boolean isFullRank() {
 		for (int j = 0; j < n; j++) {
 			if (Rdiag[j].signum() == 0) {
 				return false;
@@ -186,7 +187,7 @@ public class QRDecomposition {
 	 * @exception RuntimeException
 	 *                Matrix is rank deficient.
 	 */
-	public IMatrix solve(IMatrix B) {
+	IMatrix solve(IMatrix B) {
 		if (B.getRowDimension() != m) {
 			throw new IllegalArgumentException("Matrix row dimensions must agree.");
 		}

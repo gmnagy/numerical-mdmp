@@ -48,6 +48,15 @@ public final class MatrixMath {
 	}
 
 	/**
+	 * Matrix transpose.
+	 * 
+	 * @return A'
+	 */
+	public static IMatrix transpose(final IMatrix A) {
+		return Transpose.transpose(A);
+	}
+
+	/**
 	 * Generate identity matrix
 	 * 
 	 * @param m
@@ -78,6 +87,13 @@ public final class MatrixMath {
 		int n = matrix.getColumnDimension();
 		IMatrix identity = identity(m, m);
 
-		return (m == n ? (new LUDecomposition(matrix)).solve(identity) : (new QRDecomposition(matrix)).solve(identity));
+		if (m == n) {
+			return (new LUDecomposition(matrix)).solve(identity);
+		} else if (m > n) {
+			return (new QRDecomposition(matrix)).solve(identity);
+		} else {
+			IMatrix matrixT = transpose(matrix);
+			return transpose((new QRDecomposition(matrixT)).solve(identity(n, n)));
+		}
 	}
 }
