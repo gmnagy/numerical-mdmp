@@ -1,5 +1,6 @@
 package hu.nsmdmp.mosek;
 
+import hu.nsmdmp.matrices.IMatrix;
 import hu.nsmdmp.utils.Converters;
 import mosek.Env;
 import mosek.MosekException;
@@ -53,7 +54,7 @@ public final class LinearProgrammingEq {
 	 * Minimalizalas.
 	 * 
 	 */
-	public static LPSolution optimizeMin(final Apfloat[][] matrix, final Apfloat[] b, final Apfloat[] c) throws MosekException {
+	public static LPSolution optimizeMin(final IMatrix matrix, final Apfloat[] b, final Apfloat[] c) throws MosekException {
 		SparseMatrix sm = new SparseMatrix(matrix);
 
 		return new LinearProgrammingEq(sm.aval, sm.asub, Converters.convert(b), Converters.convert(c)).optimize(Env.objsense.minimize);
@@ -63,7 +64,7 @@ public final class LinearProgrammingEq {
 	 * Maximalizalasa.
 	 * 
 	 */
-	public static LPSolution optimizeMax(final Apfloat[][] matrix, final Apfloat[] b, final Apfloat[] c) throws MosekException {
+	public static LPSolution optimizeMax(final IMatrix matrix, final Apfloat[] b, final Apfloat[] c) throws MosekException {
 		SparseMatrix sm = new SparseMatrix(matrix);
 
 		return new LinearProgrammingEq(sm.aval, sm.asub, Converters.convert(b), Converters.convert(c)).optimize(Env.objsense.maximize);

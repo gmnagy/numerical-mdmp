@@ -1,27 +1,48 @@
 package hu.nsmdmp.matrices;
 
+import hu.nsmdmp.utils.Precision;
+
 import org.apfloat.Apfloat;
 
-public final class Matrix {
+public class Matrix extends AbstractMatrix {
 
-	public static IMatrix getMonomialMatrix(final Apfloat[][] vectorSet, final int maxOrder) {
-		MonomialMatrix matrix = new MonomialMatrix();
-		matrix.create(vectorSet, maxOrder);
-
-		return matrix;
+	public Matrix(int m, int n) {
+		this.m = m;
+		this.n = n;
+		matrix = new Apfloat[m][n];
 	}
 
-	public static IMatrix getChebyshevTMatrix(final Apfloat[][] vectorSet, final int maxOrder) {
-		ChebyshevTMatrix matrix = new ChebyshevTMatrix();
-		matrix.create(vectorSet, maxOrder);
+	public Matrix(Apfloat[][] matrix) {
+		this.m = matrix.length;
+		this.matrix = new Apfloat[m][];
 
-		return matrix;
+		int nn = 0;
+		for (int i = 0; i < m; i++) {
+			nn = matrix[i].length;
+			this.matrix[i] = new Apfloat[nn];
+
+			for (int j = 0; j < nn; j++) {
+				this.matrix[i][j] = matrix[i][j];
+			}
+		}
+
+		this.n = nn;
 	}
 
-	public static IMatrix getChebyshevUMatrix(final Apfloat[][] vectorSet, final int maxOrder) {
-		ChebyshevUMatrix matrix = new ChebyshevUMatrix();
-		matrix.create(vectorSet, maxOrder);
+	public Matrix(double[][] matrix) {
+		this.m = matrix.length;
+		this.matrix = new Apfloat[m][];
 
-		return matrix;
+		int nn = 0;
+		for (int i = 0; i < m; i++) {
+			nn = matrix[i].length;
+			this.matrix[i] = new Apfloat[nn];
+
+			for (int j = 0; j < nn; j++) {
+				this.matrix[i][j] = new Apfloat(matrix[i][j], Precision.SCALE);
+			}
+		}
+
+		this.n = nn;
 	}
 }

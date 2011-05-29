@@ -16,7 +16,7 @@ import org.opensourcephysics.numerics.specialfunctions.Chebyshev;
  * 
  * 
  */
-class ChebyshevUMatrix extends AbstractMatrix {
+class ChebyshevUMatrix extends AbstractPolynomialMatrix {
 
 	/**
 	 * Cached Chebyshev U polynomials.

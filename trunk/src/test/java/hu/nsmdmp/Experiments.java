@@ -1,7 +1,9 @@
 package hu.nsmdmp;
 
 import hu.nsmdmp.cvectors.CVector;
+import hu.nsmdmp.matrices.IMatrix;
 import hu.nsmdmp.matrices.Matrix;
+import hu.nsmdmp.matrices.MatrixFactory;
 import hu.nsmdmp.matrixmath.MatrixMath;
 import hu.nsmdmp.mosek.LPSolution;
 import hu.nsmdmp.mosek.LinearProgrammingEq;
@@ -28,19 +30,19 @@ public class Experiments {
 		Apfloat[] c = CVector.getStairsCVector(MatrixMath.createVariation(vSet)).getCVectorA();
 
 		// normalized vector set
-		Apfloat[][] normVSet = MatrixMath.normalize(Converters.convert(vectorSet));
+		IMatrix normVSet = MatrixMath.normalize(new Matrix(vectorSet));
 
-		int maxOrder = 8;
+		int maxOrder = 6;
 		for (int i = 1; i <= maxOrder; i++) {
 			System.out.println("MaxOrder: " + i);
 
-			Apfloat[][] normM = Matrix.getMonomialMatrix(normVSet, i).getMatrix();
+			IMatrix normM = MatrixFactory.getMonomialMatrix(normVSet.getMatrix(), i);
 			printMinMaxPrimalSolution(normM, distr, c, "MonomialMatrix: ");
 
-			Apfloat[][] chebTM = Matrix.getChebyshevTMatrix(normVSet, i).getMatrix();
+			IMatrix chebTM = MatrixFactory.getChebyshevTMatrix(normVSet.getMatrix(), i);
 			printMinMaxPrimalSolution(chebTM, distr, c, "ChebyshevTMatrix: ");
 
-			Apfloat[][] chebUM = Matrix.getChebyshevUMatrix(normVSet, i).getMatrix();
+			IMatrix chebUM = MatrixFactory.getChebyshevUMatrix(normVSet.getMatrix(), i);
 			printMinMaxPrimalSolution(chebUM, distr, c, "ChebyshevUMatrix: ");
 
 			System.out.println();
@@ -48,7 +50,7 @@ public class Experiments {
 
 	}
 
-	private void printMinMaxPrimalSolution(Apfloat[][] matrix, Apfloat[] distr, Apfloat[] c, String prefix) throws MosekException {
+	private void printMinMaxPrimalSolution(IMatrix matrix, Apfloat[] distr, Apfloat[] c, String prefix) throws MosekException {
 		Apfloat[] b = MatrixMath.multiply(matrix, distr);
 
 		LPSolution min = LinearProgrammingEq.optimizeMin(matrix, b, c);

@@ -4,7 +4,7 @@ import org.apfloat.Apfloat;
 
 final class Variation {
 
-	static Apfloat[][] createVariation(Apfloat[][] vectorSet) {
+	static Apfloat[][] createVariation(final Apfloat[][] vectorSet) {
 		int s = vectorSet.length;
 		int n = MatrixMath.getVariationsNumber(vectorSet);
 

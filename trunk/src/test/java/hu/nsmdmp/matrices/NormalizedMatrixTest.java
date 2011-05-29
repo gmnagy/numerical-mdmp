@@ -37,8 +37,9 @@ public class NormalizedMatrixTest {
 
 	@Test
 	public void simpleMatrixTest() {
-		Apfloat[][] normalized = MatrixMath.normalize(Converters.convert(vectorSet));
-		IMatrix m = Matrix.getMonomialMatrix(normalized, moment);
+		IMatrix M = new Matrix(vectorSet);
+		IMatrix normalizedVectorSet = MatrixMath.normalize(M);
+		IMatrix m = MatrixFactory.getMonomialMatrix(normalizedVectorSet.getMatrix(), moment);
 
 		Apfloat[][] expected = Converters.convert(expectedMatrix);
 

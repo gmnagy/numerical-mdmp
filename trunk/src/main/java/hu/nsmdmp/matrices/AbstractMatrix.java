@@ -1,83 +1,121 @@
 package hu.nsmdmp.matrices;
 
-import hu.nsmdmp.matrixmath.MatrixMath;
-import hu.nsmdmp.utils.Exponents;
-
-import java.util.List;
-
 import org.apfloat.Apfloat;
 
 abstract class AbstractMatrix implements IMatrix {
 
-	private Apfloat[][] matrix;
+	/**
+	 * The matrix;
+	 * 
+	 */
+	protected Apfloat[][] matrix;
 
-	AbstractMatrix() {
-	}
+	/**
+	 * Row and column dimensions.
+	 * 
+	 * @serial row dimension.
+	 * @serial column dimension.
+	 */
+	protected int m, n;
 
+	/**
+	 * Get the matrix.
+	 * 
+	 * @return Pointer to the two-dimensional array of matrix elements.
+	 */
 	@Override
 	public Apfloat[][] getMatrix() {
 		return matrix;
 	}
 
 	/**
-	 * This method returns the nth polynomial value.
+	 * Copy the internal two-dimensional array.
 	 * 
-	 * @param n
-	 *            degree of the polynomial function
-	 * @param x
-	 *            value at which the polynomial is evaluated
-	 * @return polynomial value.
+	 * @return two-dimensional array copy of matrix elements.
 	 */
-	protected abstract Apfloat getPolynomialValue(final int n, final Apfloat x);
+	@Override
+	public Apfloat[][] getArrayCopy() {
+		Apfloat[][] C = new Apfloat[m][n];
 
-	protected abstract void clearMemory();
-
-	/**
-	 * Matrix keszitese a <tt>vectorSet</tt>-bol.
-	 * 
-	 * @param vectorSet
-	 * @param maxOrder
-	 */
-	void create(final Apfloat[][] vectorSet, final int maxOrder) {
-		int s = vectorSet.length;
-
-		List<int[]> exponents = Exponents.getExponents(maxOrder, s);
-		int n = MatrixMath.getVariationsNumber(vectorSet);
-
-		matrix = new Apfloat[exponents.size()][n];
-
-		for (int j = 0; j < n; j++) {
-
-			Apfloat[] variations = MatrixMath.createVariation(j, vectorSet);
-
-			for (int i = 0; i < exponents.size(); i++) {
-				matrix[i][j] = getMatrixElement(exponents.get(i), variations);
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				C[i][j] = matrix[i][j];
 			}
 		}
+
+		return C;
 	}
 
 	/**
-	 * Az <tt>exponents</tt> halmaz k.-ik tagjabol n-ed foku polinomot allitunk elo, majd a
-	 * <tt>variation</tt> k.-ik tagjat a valtozo helyere behelyetesitjuk. A kapott ertekeket
-	 * osszeszorozuk.
+	 * Get row dimension.
 	 * 
-	 * @param exponents
-	 *            s darab kitevo
-	 * @param variation
-	 *            s darab valtozo
-	 * @return
+	 * @return m, the number of rows.
 	 */
-	private Apfloat getMatrixElement(final int[] exponents, final Apfloat[] variation) {
-		int s = variation.length;
-		Apfloat b = MatrixMath.ONE;
+	@Override
+	public int getRowDimension() {
+		return m;
+	}
 
-		for (int k = 0; k < s; k++) {
-			int exp = exponents[k];
+	/**
+	 * Get column dimension.
+	 * 
+	 * @return n, the number of columns.
+	 */
+	@Override
+	public int getColumnDimension() {
+		return n;
+	}
 
-			b = b.multiply(getPolynomialValue(exp, variation[k]));
+	/**
+	 * Get a submatrix.
+	 * 
+	 * @param r
+	 *            Array of row indices.
+	 * @param j0
+	 *            Initial column index
+	 * @param j1
+	 *            Final column index
+	 * @return A(r(:),j0:j1)
+	 */
+	@Override
+	public IMatrix getSubMatrix(int[] r, int j0, int j1) {
+		IMatrix X = new Matrix(r.length, j1 - j0 + 1);
+		Apfloat[][] B = X.getMatrix();
+
+		for (int i = 0; i < r.length; i++) {
+			for (int j = j0; j <= j1; j++) {
+				B[i][j - j0] = matrix[r[i]][j];
+			}
 		}
 
-		return b;
+		return X;
+	}
+
+	/**
+	 * Get a submatrix.
+	 * 
+	 * @param i0
+	 *            Initial row index
+	 * @param i1
+	 *            Final row index
+	 * @param j0
+	 *            Initial column index
+	 * @param j1
+	 *            Final column index
+	 * @return A(i0:i1,j0:j1)
+	 */
+	@Override
+	public Matrix getSubMatrix(int i0, int i1, int j0, int j1) {
+		Matrix X = new Matrix(i1 - i0 + 1, j1 - j0 + 1);
+		Apfloat[][] B = X.getMatrix();
+
+		for (int i = i0; i <= i1; i++) {
+			for (int j = j0; j <= j1; j++) {
+				B[i - i0][j - j0] = matrix[i][j];
+			}
+		}
+
+		return X;
 	}
 
 	@Override

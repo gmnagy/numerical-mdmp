@@ -16,7 +16,7 @@ import org.opensourcephysics.numerics.specialfunctions.Chebyshev;
  * 
  * 
  */
-class ChebyshevTMatrix extends AbstractMatrix {
+class ChebyshevTMatrix extends AbstractPolynomialMatrix {
 
 	/**
 	 * Cached Chebyshev T polynomials.

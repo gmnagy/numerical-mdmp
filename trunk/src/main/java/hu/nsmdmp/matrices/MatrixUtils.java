@@ -216,4 +216,8 @@ public final class MatrixUtils {
 
 		return true;
 	}
+
+	public static boolean equals(final IMatrix A, final IMatrix B) {
+		return equals(A.getMatrix(), B.getMatrix());
+	}
 }

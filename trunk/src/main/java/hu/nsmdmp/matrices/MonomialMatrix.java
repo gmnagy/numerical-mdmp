@@ -9,10 +9,10 @@ import java.util.Map;
 import org.apfloat.Apfloat;
 import org.apfloat.ApfloatMath;
 
-class MonomialMatrix extends AbstractMatrix {
+class MonomialMatrix extends AbstractPolynomialMatrix {
 
 	/**
-	 * Cached polynomial values of degree and variables.
+	 * Cached monomial values of degree and variables.
 	 * 
 	 */
 	private Map<Integer, Map<Apfloat, Apfloat>> solutions = new HashMap<Integer, Map<Apfloat, Apfloat>>();
@@ -22,13 +22,13 @@ class MonomialMatrix extends AbstractMatrix {
 	}
 
 	/**
-	 * This method returns the nth polynomial value.
+	 * This method returns the nth monomial value.
 	 * 
 	 * @param n
-	 *            degree of the polynomial function
+	 *            degree of the monomial function
 	 * @param x
-	 *            value at which the polynomial is evaluated
-	 * @return polynomial value.
+	 *            value at which the monomial is evaluated
+	 * @return monomial value.
 	 */
 	@Override
 	protected Apfloat getPolynomialValue(final int n, final Apfloat x) {
@@ -51,7 +51,7 @@ class MonomialMatrix extends AbstractMatrix {
 	}
 
 	/**
-	 * @return returns the nth polynomial value.
+	 * @return returns the nth monomial value.
 	 * 
 	 */
 	private Apfloat getValue(final int n, final Apfloat value) {

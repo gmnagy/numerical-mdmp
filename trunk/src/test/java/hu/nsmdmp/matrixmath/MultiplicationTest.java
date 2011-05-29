@@ -1,5 +1,7 @@
 package hu.nsmdmp.matrixmath;
 
+import hu.nsmdmp.matrices.IMatrix;
+import hu.nsmdmp.matrices.Matrix;
 import hu.nsmdmp.matrices.MatrixUtils;
 import hu.nsmdmp.utils.Converters;
 
@@ -12,9 +14,10 @@ public class MultiplicationTest {
 	@Test
 	public void test() {
 		double[][] matrix = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }, { 10, 11, 12 } };
+		IMatrix M = new Matrix(matrix);
 		double[] vector = { -2, 1, 0 };
 
-		Apfloat[] result = Multiplication.multiply(Converters.convert(matrix), Converters.convert(vector));
+		Apfloat[] result = Multiplication.multiply(M, Converters.convert(vector));
 
 		double[] expected = { 0, -3, -6, -9 };
 
@@ -29,10 +32,11 @@ public class MultiplicationTest {
 	@Test
 	public void test2() {
 		double[][] matrix = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }, { 10, 11, 12 } };
+		IMatrix M = new Matrix(matrix);
 		double[] vector = { -2, 1, 0, 1 };
 
 		try {
-			Multiplication.multiply(Converters.convert(matrix), Converters.convert(vector));
+			Multiplication.multiply(M, Converters.convert(vector));
 		} catch (MatrixMathException e) {
 			System.out.println(e.getMessage());
 
@@ -45,9 +49,10 @@ public class MultiplicationTest {
 	@Test
 	public void test3() {
 		double[][] matrix = { { 1, 1, 1, 1 }, { 0, 1, 0, 1 }, { 0, 0, 2, 2 } };
+		IMatrix M = new Matrix(matrix);
 		double[] vector = { 1.0 / 4.0, 1.0 / 4.0, 1.0 / 4.0, 1.0 / 4.0 };
 
-		Apfloat[] result = Multiplication.multiply(Converters.convert(matrix), Converters.convert(vector));
+		Apfloat[] result = Multiplication.multiply(M, Converters.convert(vector));
 
 		double[] expected = { 1, 2.0 / 4.0, 1 };
 
