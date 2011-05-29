@@ -20,15 +20,17 @@ abstract class AbstractMatrix implements IMatrix {
 	}
 
 	/**
-	 * Egy <tt>n</tt>-ed foku polinom erteke a <tt>value</tt> helyen.
+	 * This method returns the nth polynomial value.
 	 * 
 	 * @param n
-	 *            polinom foka
-	 * @param value
-	 *            a valtozo erteke
-	 * @return <tt>n</tt>-ed foku polinom erteke a <tt>value</tt> helyen
+	 *            degree of the polynomial function
+	 * @param x
+	 *            value at which the polynomial is evaluated
+	 * @return polynomial value.
 	 */
-	protected abstract Apfloat getPolynomialValue(final int n, final Apfloat value);
+	protected abstract Apfloat getPolynomialValue(final int n, final Apfloat x);
+
+	protected abstract void clearMemory();
 
 	/**
 	 * Matrix keszitese a <tt>vectorSet</tt>-bol.

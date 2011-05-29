@@ -17,7 +17,6 @@ public class Experiments {
 	public void test() throws MosekException {
 		double[][] vectorSet = { { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 }, { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 },
 				{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 } };
-//		double[][] vectorSet = { { 0, 1, 2, 3 }, { 0, 1, 2, 3 }, { 0, 1, 2, 3 } };
 
 		Apfloat[][] vSet = Converters.convert(vectorSet);
 		int variationNum = MatrixMath.getVariationsNumber(vSet);
@@ -31,42 +30,29 @@ public class Experiments {
 		// normalized vector set
 		Apfloat[][] normVSet = MatrixMath.normalize(Converters.convert(vectorSet));
 
-		int maxOrder = 7;
-		for (int i = 7; i <= maxOrder; i++) {
+		int maxOrder = 8;
+		for (int i = 1; i <= maxOrder; i++) {
 			System.out.println("MaxOrder: " + i);
 
 			Apfloat[][] normM = Matrix.getMonomialMatrix(normVSet, i).getMatrix();
 			printMinMaxPrimalSolution(normM, distr, c, "MonomialMatrix: ");
 
-//			Apfloat[][] chebTM = Matrix.getChebyshevTMatrix(normVSet, i).getMatrix();
-//			printMinMaxPrimalSolution(chebTM, distr, c, "ChebyshevTMatrix: ");
-
-//			Apfloat[][] chebUM = Matrix.getChebyshevUMatrix(normVSet, i).getMatrix();
-//			printMinMaxPrimalSolution(chebUM, distr, c, "ChebyshevUMatrix: ");
-
-			System.out.println();
-		}
-
-		for (int i = 7; i <= maxOrder; i++) {
-			System.out.println("MaxOrder: " + i);
-
 			Apfloat[][] chebTM = Matrix.getChebyshevTMatrix(normVSet, i).getMatrix();
 			printMinMaxPrimalSolution(chebTM, distr, c, "ChebyshevTMatrix: ");
 
+			Apfloat[][] chebUM = Matrix.getChebyshevUMatrix(normVSet, i).getMatrix();
+			printMinMaxPrimalSolution(chebUM, distr, c, "ChebyshevUMatrix: ");
+
 			System.out.println();
 		}
+
 	}
 
 	private void printMinMaxPrimalSolution(Apfloat[][] matrix, Apfloat[] distr, Apfloat[] c, String prefix) throws MosekException {
 		Apfloat[] b = MatrixMath.multiply(matrix, distr);
-//		System.out.println(MatrixUtils.print(matrix));
-//		System.out.println(MatrixUtils.print(b));
 
 		LPSolution min = LinearProgrammingEq.optimizeMin(matrix, b, c);
 		LPSolution max = LinearProgrammingEq.optimizeMax(matrix, b, c);
-
-//		System.out.println(MatrixUtils.print(min.getX()));
-//		System.out.println(MatrixUtils.print(max.getX()));
 
 		System.out.println(String.format("%s min: %s,\tmax: %s", prefix, min.getPrimalSolution(), max.getPrimalSolution()));
 	}

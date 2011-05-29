@@ -3,18 +3,58 @@ package hu.nsmdmp.matrices;
 import hu.nsmdmp.matrixmath.MatrixMath;
 import hu.nsmdmp.utils.Precision;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apfloat.Apfloat;
 import org.apfloat.ApfloatMath;
 
 class MonomialMatrix extends AbstractMatrix {
 
+	/**
+	 * Cached polynomial values of degree and variables.
+	 * 
+	 */
+	private Map<Integer, Map<Apfloat, Apfloat>> solutions = new HashMap<Integer, Map<Apfloat, Apfloat>>();
+
 	MonomialMatrix() {
 		super();
 	}
 
+	/**
+	 * This method returns the nth polynomial value.
+	 * 
+	 * @param n
+	 *            degree of the polynomial function
+	 * @param x
+	 *            value at which the polynomial is evaluated
+	 * @return polynomial value.
+	 */
 	@Override
-	protected Apfloat getPolynomialValue(final int n, final Apfloat value) {
+	protected Apfloat getPolynomialValue(final int n, final Apfloat x) {
 
+		// solutions of n
+		Map<Apfloat, Apfloat> solutionsN = solutions.get(n);
+		if (null == solutionsN) {
+			solutionsN = new HashMap<Apfloat, Apfloat>();
+			solutions.put(n, solutionsN);
+		}
+
+		// solution of n and x
+		Apfloat solution = solutionsN.get(x);
+		if (null == solution) {
+			solution = getValue(n, x);
+			solutionsN.put(x, solution);
+		}
+
+		return solution;
+	}
+
+	/**
+	 * @return returns the nth polynomial value.
+	 * 
+	 */
+	private Apfloat getValue(final int n, final Apfloat value) {
 		if (n == 0 && value.signum() == 0) {
 			return MatrixMath.ONE;
 		}
@@ -23,5 +63,10 @@ class MonomialMatrix extends AbstractMatrix {
 		}
 
 		return ApfloatMath.pow(value, n).precision(Precision.SCALE);
+	}
+
+	@Override
+	protected void clearMemory() {
+		solutions.clear();
 	}
 }
