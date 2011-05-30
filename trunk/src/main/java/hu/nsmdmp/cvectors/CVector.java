@@ -10,4 +10,11 @@ public class CVector {
 
 		return c;
 	}
+	
+	public static ICVector getExpCVector(final Apfloat[][] variations) {
+		ExpCVector c = new ExpCVector();
+		c.create(variations);
+
+		return c;
+	}
 }
