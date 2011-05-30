@@ -13,8 +13,8 @@ public class Experiments5 extends AExperiments {
 	@Test
 	@Override
 	public void run() throws MosekException {
-		double[][] vectorSet = new double[2][100];
-		for (double i = 0; i < 100; i++) {
+		double[][] vectorSet = new double[2][101];
+		for (double i = 0; i <= 100; i++) {
 			vectorSet[0][(int) i] = i;
 			vectorSet[1][(int) i] = i;
 		}
