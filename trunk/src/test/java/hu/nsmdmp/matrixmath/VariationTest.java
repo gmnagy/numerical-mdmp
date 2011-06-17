@@ -1,5 +1,6 @@
-package hu.nsmdmp.matrices;
+package hu.nsmdmp.matrixmath;
 
+import hu.nsmdmp.matrices.MatrixUtils;
 import hu.nsmdmp.matrixmath.MatrixMath;
 import hu.nsmdmp.utils.Converters;
 
