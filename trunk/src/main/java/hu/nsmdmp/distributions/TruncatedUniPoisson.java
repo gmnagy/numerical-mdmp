@@ -1,8 +1,8 @@
 package hu.nsmdmp.distributions;
 
 
-public class TrunkedUniPoisson {
-	public static double getTrunkedUniPoisson(final double lambda, final int k, final int maxOccur){
+public class TruncatedUniPoisson {
+	public static double getTruncatedUniPoisson(final double lambda, final int k, final int maxOccur){
 		double result=0;
 		double expPart=Math.exp(-lambda);
 		if(k==maxOccur){
