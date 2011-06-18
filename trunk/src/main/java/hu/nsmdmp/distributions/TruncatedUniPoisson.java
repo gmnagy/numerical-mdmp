@@ -8,22 +8,23 @@ public class TruncatedUniPoisson {
 		if(k==maxOccur){
 			result=1;
 			for(int i=0; i<=k-1; i++){
-				result=result-Math.pow(lambda,i)/factorial(i)*expPart;
+				result=result-getTruncatedUniPoisson(lambda,i,maxOccur);
 			}
 		}
 		else{
-			result=Math.pow(lambda,k)/factorial(k)*expPart;
+			if(k==0) result=expPart;
+			else result=lambda/k*getTruncatedUniPoisson(lambda,k-1,maxOccur);
 		}
 		return result;
 	}
 
-    public static long factorial( int n )
+ /*   public static long factorial( int n )
     {
         if( n <= 1 )     // base case
             return 1;
         else
             return n * factorial( n - 1 );
-    }
+    }*/
 
 	
 	

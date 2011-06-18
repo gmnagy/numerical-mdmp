@@ -17,4 +17,12 @@ public class CVector {
 
 		return c;
 	}
+
+	public static ICVector getSumProbEx4CVector(final Apfloat[][] variations) {
+		SumProbEx4CVector c = new SumProbEx4CVector();
+		c.create(variations);
+
+		return c;
+	}
+
 }
