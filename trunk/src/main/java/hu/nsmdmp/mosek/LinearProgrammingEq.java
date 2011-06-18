@@ -118,6 +118,7 @@ public final class LinearProgrammingEq {
 
 //		task.writedata("MDMP.lp");
 
+		task.putintparam(mosek.Env.iparam.optimizer, mosek.Env.optimizertype.dual_simplex.getValue());
 		Env.rescode r = task.optimize();
 		if (Env.rescode.ok != r) {
 			System.out.println(r);

@@ -38,8 +38,8 @@ abstract class AExperiments {
 		for (int i = 1; i <= maxOrder; i++) {
 			System.out.println("MaxOrder: " + i);
 
-			IMatrix normM = MatrixFactory.getMonomialMatrix(normVSet.getMatrix(), i);
-			printMinMaxPrimalSolution(normM, distr, c, "MonomialMatrix: ");
+			//IMatrix normM = MatrixFactory.getMonomialMatrix(normVSet.getMatrix(), i);
+			//printMinMaxPrimalSolution(normM, distr, c, "MonomialMatrix: ");
 
 			IMatrix chebTM = MatrixFactory.getChebyshevTMatrix(normVSet.getMatrix(), i);
 			printMinMaxPrimalSolution(chebTM, distr, c, "ChebyshevTMatrix: ");
