@@ -1,7 +1,7 @@
 package hu.nsmdmp.mosek;
 
-import hu.nsmdmp.matrices.IMatrix;
-import hu.nsmdmp.matrixmath.MatrixMath;
+import hu.nsmdmp.ApfloatUtils;
+import hu.nsmdmp.matrices.Matrix;
 
 import org.apfloat.Apfloat;
 
@@ -17,20 +17,20 @@ public final class SparseMatrix {
 	 */
 	int[][] asub;
 
-	SparseMatrix(final IMatrix matrix) {
+	SparseMatrix(final Matrix matrix) {
 		assign(matrix);
 	}
 
-	private void assign(final IMatrix matrix) {
+	private void assign(final Matrix matrix) {
 		int m = matrix.getRowDimension();
 		int n = matrix.getColumnDimension();
 		aval = new double[n][0];
 		asub = new int[n][0];
 
-		Apfloat[][] M = matrix.getMatrix();
+		Apfloat[][] M = matrix.getArray();
 		for (int j = 0; j < n; j++) {
 			for (int i = 0; i < m; i++) {
-				if (MatrixMath.ZERO.compareTo(M[i][j]) != 0) {
+				if (ApfloatUtils.ZERO.compareTo(M[i][j]) != 0) {
 					int s = aval[j].length;
 
 					double[] a = new double[s + 1];

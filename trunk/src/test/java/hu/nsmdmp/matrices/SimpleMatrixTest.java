@@ -5,7 +5,6 @@ import hu.nsmdmp.utils.Converters;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.apfloat.Apfloat;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,13 +35,14 @@ public class SimpleMatrixTest {
 
 	@Test
 	public void simpleMatrixTest() {
-		IMatrix sm = MatrixFactory.getMonomialMatrix(Converters.convert(vectorSet), moment);
+		Matrix sm = MatrixFactory.getSimpleMatrix(Converters.convert(vectorSet), moment);
 
-		Apfloat[][] em = Converters.convert(expectedMatrix);
+		Matrix em = new Matrix(expectedMatrix);
 
-		if (!MatrixUtils.equals(sm.getMatrix(), em)) {
-			System.out.println(MatrixUtils.print(em));
+		if (!sm.equals(em)) {
+			System.out.println(em);
 			System.out.println(sm);
+
 			Assert.assertTrue(false);
 		}
 	}

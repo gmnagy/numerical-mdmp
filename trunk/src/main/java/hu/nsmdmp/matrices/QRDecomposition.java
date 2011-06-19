@@ -1,7 +1,6 @@
-package hu.nsmdmp.matrixmath;
+package hu.nsmdmp.matrices;
 
-import hu.nsmdmp.matrices.IMatrix;
-import hu.nsmdmp.matrices.Matrix;
+import hu.nsmdmp.ApfloatUtils;
 
 import org.apfloat.Apfloat;
 import org.apfloat.ApfloatMath;
@@ -37,7 +36,7 @@ final class QRDecomposition {
 	 *            Rectangular matrix
 	 * @return Structure to access R and the Householder vectors and compute Q.
 	 */
-	QRDecomposition(final IMatrix A) {
+	QRDecomposition(final Matrix A) {
 
 		QR = A.getArrayCopy();
 		m = A.getRowDimension();
@@ -47,7 +46,7 @@ final class QRDecomposition {
 		// Main loop.
 		for (int k = 0; k < n; k++) {
 			// Compute 2-norm of k-th column without under/overflow.
-			Apfloat nrm = MatrixMath.ZERO;
+			Apfloat nrm = ApfloatUtils.ZERO;
 			for (int i = k; i < m; i++) {
 				nrm = hypot(nrm, QR[i][k]);
 			}
@@ -62,11 +61,11 @@ final class QRDecomposition {
 					QR[i][k] = QR[i][k].divide(nrm);
 				}
 
-				QR[k][k] = QR[k][k].add(MatrixMath.ONE);
+				QR[k][k] = QR[k][k].add(ApfloatUtils.ONE);
 
 				// Apply transformation to remaining columns.
 				for (int j = k + 1; j < n; j++) {
-					Apfloat s = MatrixMath.ZERO;
+					Apfloat s = ApfloatUtils.ZERO;
 					for (int i = k; i < m; i++) {
 						s = s.add(QR[i][k].multiply(QR[i][j]));
 					}
@@ -88,14 +87,14 @@ final class QRDecomposition {
 
 		if (ApfloatMath.abs(a).compareTo(ApfloatMath.abs(b)) > 0) {
 			r = b.divide(a);
-			Apfloat x = r.multiply(r).add(MatrixMath.ONE);
+			Apfloat x = r.multiply(r).add(ApfloatUtils.ONE);
 			r = ApfloatMath.abs(a).multiply(ApfloatMath.sqrt(x));
 		} else if (b.signum() != 0) {
 			r = a.divide(b);
-			Apfloat x = r.multiply(r).add(MatrixMath.ONE);
+			Apfloat x = r.multiply(r).add(ApfloatUtils.ONE);
 			r = ApfloatMath.abs(b).multiply(ApfloatMath.sqrt(x));
 		} else {
-			r = MatrixMath.ZERO;
+			r = ApfloatUtils.ZERO;
 		}
 
 		return r;
@@ -106,9 +105,9 @@ final class QRDecomposition {
 	 * 
 	 * @return R
 	 */
-	IMatrix getR() {
-		IMatrix X = new Matrix(n, n);
-		Apfloat[][] R = X.getMatrix();
+	Matrix getR() {
+		Matrix X = new Matrix(n, n);
+		Apfloat[][] R = X.getArray();
 
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
@@ -117,7 +116,7 @@ final class QRDecomposition {
 				} else if (i == j) {
 					R[i][j] = Rdiag[i];
 				} else {
-					R[i][j] = MatrixMath.ZERO;
+					R[i][j] = ApfloatUtils.ZERO;
 				}
 			}
 		}
@@ -130,20 +129,20 @@ final class QRDecomposition {
 	 * 
 	 * @return Q
 	 */
-	IMatrix getQ() {
-		IMatrix X = new Matrix(m, n);
-		Apfloat[][] Q = X.getMatrix();
+	Matrix getQ() {
+		Matrix X = new Matrix(m, n);
+		Apfloat[][] Q = X.getArray();
 
 		for (int k = n - 1; k >= 0; k--) {
 			for (int i = 0; i < m; i++) {
-				Q[i][k] = MatrixMath.ZERO;
+				Q[i][k] = ApfloatUtils.ZERO;
 			}
 
-			Q[k][k] = MatrixMath.ONE;
+			Q[k][k] = ApfloatUtils.ONE;
 
 			for (int j = k; j < n; j++) {
 				if (QR[k][k].signum() != 0) {
-					Apfloat s = MatrixMath.ZERO;
+					Apfloat s = ApfloatUtils.ZERO;
 
 					for (int i = k; i < m; i++) {
 						s = s.add(QR[i][k].multiply(Q[i][j]));
@@ -187,7 +186,7 @@ final class QRDecomposition {
 	 * @exception RuntimeException
 	 *                Matrix is rank deficient.
 	 */
-	IMatrix solve(IMatrix B) {
+	Matrix solve(final Matrix B) {
 		if (B.getRowDimension() != m) {
 			throw new IllegalArgumentException("Matrix row dimensions must agree.");
 		}
@@ -202,7 +201,7 @@ final class QRDecomposition {
 		// Compute Y = transpose(Q)*B
 		for (int k = 0; k < n; k++) {
 			for (int j = 0; j < nx; j++) {
-				Apfloat s = MatrixMath.ZERO;
+				Apfloat s = ApfloatUtils.ZERO;
 				for (int i = k; i < m; i++) {
 					s = s.add(QR[i][k].multiply(X[i][j]));
 				}

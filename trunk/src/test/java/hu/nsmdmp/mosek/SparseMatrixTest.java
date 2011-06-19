@@ -1,6 +1,5 @@
 package hu.nsmdmp.mosek;
 
-import hu.nsmdmp.matrices.IMatrix;
 import hu.nsmdmp.matrices.Matrix;
 import hu.nsmdmp.matrices.MatrixUtils;
 
@@ -12,7 +11,7 @@ public class SparseMatrixTest {
 	@Test
 	public void test() {
 		double m[][] = { { 1, 2, 3 }, { 4, 5, 6 }, { 0, 7, 0 }, { 8, 9, 0 } };
-		IMatrix M = new Matrix(m);
+		Matrix M = new Matrix(m);
 
 		SparseMatrix sm = new SparseMatrix(M);
 

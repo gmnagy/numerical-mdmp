@@ -1,14 +1,11 @@
 package hu.nsmdmp.cvectors;
 
-import hu.nsmdmp.matrixmath.MatrixMath;
-import hu.nsmdmp.utils.Precision;
+import hu.nsmdmp.ApfloatUtils;
 
 import org.apfloat.Apfloat;
-import org.apfloat.ApfloatMath;
-
 
 public class SumProbEx4CVector extends AbstractCVector {
-	
+
 	/**
 	 * f(z1,z2) = 0 if z1+z2<6, 1 otherwise .
 	 */
@@ -25,9 +22,10 @@ public class SumProbEx4CVector extends AbstractCVector {
 		//Apfloat a = z1.add(z2).divide(new Apfloat(50d, Precision.SCALE));
 		// (z1*z2)/10000
 		//Apfloat b = z1.multiply(z2).divide(new Apfloat(10000d, Precision.SCALE));
-		if (z1.add(z2).doubleValue()<6) return MatrixMath.ZERO;
-		else return MatrixMath.ONE;
+		if (z1.add(z2).doubleValue() < 6)
+			return ApfloatUtils.ZERO;
+		else
+			return ApfloatUtils.ONE;
 	}
 
-	
 }

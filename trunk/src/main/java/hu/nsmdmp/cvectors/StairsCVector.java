@@ -1,6 +1,6 @@
 package hu.nsmdmp.cvectors;
 
-import hu.nsmdmp.matrixmath.MatrixMath;
+import hu.nsmdmp.ApfloatUtils;
 
 import org.apfloat.Apfloat;
 
@@ -11,11 +11,11 @@ class StairsCVector extends AbstractCVector {
 		int n = variation.length;
 
 		for (int i = 0; i < n; i++) {
-			if (variation[i].compareTo(MatrixMath.ZERO) != 0) {
-				return MatrixMath.ONE;
+			if (variation[i].compareTo(ApfloatUtils.ZERO) != 0) {
+				return ApfloatUtils.ONE;
 			}
 		}
 
-		return MatrixMath.ZERO;
+		return ApfloatUtils.ZERO;
 	}
 }

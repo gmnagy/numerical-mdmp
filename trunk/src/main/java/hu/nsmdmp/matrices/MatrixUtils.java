@@ -1,5 +1,6 @@
 package hu.nsmdmp.matrices;
 
+
 import org.apfloat.Apfloat;
 import org.apfloat.spi.RadixConstants;
 
@@ -7,6 +8,31 @@ public final class MatrixUtils {
 
 	private static final double e = 0.00000000000001;
 
+	public static int getVariationsNumber(final Apfloat[][] vectorSet) {
+		int n = 1;
+		for (Apfloat[] row : vectorSet) {
+			n *= row.length;
+		}
+
+		return n;
+	}
+
+	/**
+	 * Get all variations of <tt>vectorSet</tt>.
+	 * 
+	 */
+	public static Apfloat[][] createVariation(final Apfloat[][] vectorSet) {
+		return Variation.createVariation(vectorSet);
+	}
+
+	/**
+	 * Get <tt>j</tt>-th variation of <tt>vectorSet</tt>.
+	 * 
+	 */
+	public static Apfloat[] createVariation(final int j, final Apfloat[][] vectorSet) {
+		return Variation.getVariation(j, vectorSet);
+	}
+	
 	public static String print(final Apfloat[][] m) {
 		StringBuilder sb = new StringBuilder();
 
@@ -217,7 +243,7 @@ public final class MatrixUtils {
 		return true;
 	}
 
-	public static boolean equals(final IMatrix A, final IMatrix B) {
-		return equals(A.getMatrix(), B.getMatrix());
+	public static boolean equals(final Matrix A, final Matrix B) {
+		return equals(A.getArray(), B.getArray());
 	}
 }

@@ -1,16 +1,13 @@
 package hu.nsmdmp.matrices;
 
-import hu.nsmdmp.matrixmath.MatrixMath;
+import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.utils.Exponents;
 
 import java.util.List;
 
 import org.apfloat.Apfloat;
 
-abstract class AbstractPolynomialMatrix extends AbstractMatrix {
-
-	AbstractPolynomialMatrix() {
-	}
+abstract class AbstractPolynomialMatrix {
 
 	/**
 	 * This method returns the nth polynomial value.
@@ -31,23 +28,25 @@ abstract class AbstractPolynomialMatrix extends AbstractMatrix {
 	 * @param vectorSet
 	 * @param maxOrder
 	 */
-	void create(final Apfloat[][] vectorSet, final int maxOrder) {
+	Matrix create(final Apfloat[][] vectorSet, final int maxOrder) {
 		int s = vectorSet.length;
 
 		List<int[]> exponents = Exponents.getExponents(maxOrder, s);
-		m = exponents.size();
-		n = MatrixMath.getVariationsNumber(vectorSet);
-
-		matrix = new Apfloat[m][n];
+		int m = exponents.size();
+		int n = MatrixUtils.getVariationsNumber(vectorSet);
+		Matrix M = new Matrix(m, n);
+		Apfloat[][] matrix = M.getArray();
 
 		for (int j = 0; j < n; j++) {
 
-			Apfloat[] variations = MatrixMath.createVariation(j, vectorSet);
+			Apfloat[] variations = MatrixUtils.createVariation(j, vectorSet);
 
 			for (int i = 0; i < m; i++) {
 				matrix[i][j] = getMatrixElement(exponents.get(i), variations);
 			}
 		}
+
+		return M;
 	}
 
 	/**
@@ -63,7 +62,7 @@ abstract class AbstractPolynomialMatrix extends AbstractMatrix {
 	 */
 	private Apfloat getMatrixElement(final int[] exponents, final Apfloat[] variation) {
 		int s = variation.length;
-		Apfloat b = MatrixMath.ONE;
+		Apfloat b = ApfloatUtils.ONE;
 
 		for (int k = 0; k < s; k++) {
 			int exp = exponents[k];

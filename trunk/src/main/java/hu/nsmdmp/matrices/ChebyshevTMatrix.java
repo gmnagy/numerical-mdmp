@@ -1,6 +1,6 @@
 package hu.nsmdmp.matrices;
 
-import hu.nsmdmp.matrixmath.MatrixMath;
+import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.utils.Precision;
 
 import java.util.HashMap;
@@ -70,7 +70,7 @@ class ChebyshevTMatrix extends AbstractPolynomialMatrix {
 	private Apfloat getValue(final int n, final Apfloat value) {
 		Polynomial polynom = getPolynomial(n);
 
-		Apfloat r = MatrixMath.ZERO;
+		Apfloat r = ApfloatUtils.ZERO;
 		int i = 0;
 		for (double coef : polynom.getCoefficients()) {
 			Apfloat power = pow(value, i);
@@ -108,10 +108,10 @@ class ChebyshevTMatrix extends AbstractPolynomialMatrix {
 	 */
 	private Apfloat pow(final Apfloat x, final int n) {
 		if (n == 0 && x.signum() == 0) {
-			return MatrixMath.ONE;
+			return ApfloatUtils.ONE;
 		}
 		if (n != 0 && x.signum() == 0) {
-			return MatrixMath.ZERO;
+			return ApfloatUtils.ZERO;
 		}
 
 		return ApfloatMath.pow(x, n).precision(Precision.SCALE);

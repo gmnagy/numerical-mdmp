@@ -1,4 +1,4 @@
-package hu.nsmdmp.matrixmath;
+package hu.nsmdmp.matrices;
 
 import org.apfloat.Apfloat;
 
@@ -6,7 +6,7 @@ final class Variation {
 
 	static Apfloat[][] createVariation(final Apfloat[][] vectorSet) {
 		int s = vectorSet.length;
-		int n = MatrixMath.getVariationsNumber(vectorSet);
+		int n = MatrixUtils.getVariationsNumber(vectorSet);
 
 		Apfloat[][] variations = new Apfloat[n][s];
 

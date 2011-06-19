@@ -1,7 +1,6 @@
-package hu.nsmdmp.matrixmath;
+package hu.nsmdmp.matrices;
 
-import hu.nsmdmp.matrices.IMatrix;
-import hu.nsmdmp.matrices.Matrix;
+import hu.nsmdmp.ApfloatUtils;
 
 import org.apfloat.Apfloat;
 import org.apfloat.ApfloatMath;
@@ -38,7 +37,7 @@ final class LUDecomposition {
 	 *            Rectangular matrix
 	 * @return Structure to access L, U and piv.
 	 */
-	LUDecomposition(final IMatrix A) {
+	LUDecomposition(final Matrix A) {
 
 		// Use a "left-looking", dot-product, Crout/Doolittle algorithm.
 
@@ -68,7 +67,7 @@ final class LUDecomposition {
 
 				// Most of the time is spent in the following dot product.
 				int kmax = Math.min(i, j);
-				Apfloat s = MatrixMath.ZERO;
+				Apfloat s = ApfloatUtils.ZERO;
 				for (int k = 0; k < kmax; k++) {
 					s = s.add(LUrowi[k].multiply(LUcolj[k]));
 				}
@@ -124,19 +123,19 @@ final class LUDecomposition {
 	 * 
 	 * @return L
 	 */
-	IMatrix getL() {
-		IMatrix X = new Matrix(m, n);
+	Matrix getL() {
+		Matrix X = new Matrix(m, n);
 
-		Apfloat[][] L = X.getMatrix();
+		Apfloat[][] L = X.getArray();
 
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < n; j++) {
 				if (i > j) {
 					L[i][j] = LU[i][j];
 				} else if (i == j) {
-					L[i][j] = MatrixMath.ONE;
+					L[i][j] = ApfloatUtils.ONE;
 				} else {
-					L[i][j] = MatrixMath.ZERO;
+					L[i][j] = ApfloatUtils.ZERO;
 				}
 			}
 		}
@@ -149,17 +148,17 @@ final class LUDecomposition {
 	 * 
 	 * @return U
 	 */
-	IMatrix getU() {
-		IMatrix X = new Matrix(n, n);
+	Matrix getU() {
+		Matrix X = new Matrix(n, n);
 
-		Apfloat[][] U = X.getMatrix();
+		Apfloat[][] U = X.getArray();
 
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
 				if (i <= j) {
 					U[i][j] = LU[i][j];
 				} else {
-					U[i][j] = MatrixMath.ZERO;
+					U[i][j] = ApfloatUtils.ZERO;
 				}
 			}
 		}
@@ -225,7 +224,7 @@ final class LUDecomposition {
 	 * @exception RuntimeException
 	 *                Matrix is singular.
 	 */
-	IMatrix solve(final IMatrix B) {
+	Matrix solve(final Matrix B) {
 		if (B.getRowDimension() != m) {
 			throw new IllegalArgumentException("Matrix row dimensions must agree.");
 		}
@@ -235,8 +234,8 @@ final class LUDecomposition {
 
 		// Copy right hand side with pivoting
 		int nx = B.getColumnDimension();
-		IMatrix Xmat = B.getSubMatrix(piv, 0, nx - 1);
-		Apfloat[][] X = Xmat.getMatrix();
+		Matrix Xmat = B.getSubMatrix(piv, 0, nx - 1);
+		Apfloat[][] X = Xmat.getArray();
 
 		// Solve L*Y = B(piv,:)
 		for (int k = 0; k < n; k++) {

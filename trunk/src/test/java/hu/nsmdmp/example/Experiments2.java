@@ -1,8 +1,9 @@
 package hu.nsmdmp.example;
 
+import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.cvectors.CVector;
 import hu.nsmdmp.cvectors.ICVector;
-import hu.nsmdmp.matrixmath.MatrixMath;
+import hu.nsmdmp.matrices.MatrixUtils;
 import mosek.MosekException;
 
 import org.apfloat.Apfloat;
@@ -24,7 +25,7 @@ public class Experiments2 extends AExperiments {
 		Apfloat[] b = new Apfloat[n];
 
 		for (int i = 0; i < n; i++) {
-			b[i] = MatrixMath.ONE.divide(new Apfloat(n));
+			b[i] = ApfloatUtils.ONE.divide(new Apfloat(n));
 		}
 
 		return b;
@@ -37,6 +38,6 @@ public class Experiments2 extends AExperiments {
 
 	@Override
 	protected ICVector getCVector(final Apfloat[][] vSet) {
-		return CVector.getStairsCVector(MatrixMath.createVariation(vSet));
+		return CVector.getStairsCVector(MatrixUtils.createVariation(vSet));
 	}
 }

@@ -1,14 +1,14 @@
 package hu.nsmdmp.example;
 
-
-import java.util.Arrays;
-
 import hu.nsmdmp.cvectors.CVector;
 import hu.nsmdmp.cvectors.ICVector;
 import hu.nsmdmp.distributions.BivPoissDistrVector;
 import hu.nsmdmp.distributions.TruncBivPoissArray;
-import hu.nsmdmp.matrixmath.MatrixMath;
+import hu.nsmdmp.matrices.MatrixUtils;
 import hu.nsmdmp.utils.Precision;
+
+import java.util.Arrays;
+
 import mosek.MosekException;
 
 import org.apfloat.Apfloat;
@@ -32,10 +32,10 @@ public class Experiments4 extends AExperiments {
 	protected Apfloat[] distribution(int n) {
 		Apfloat[] b = new Apfloat[n];
 
-		double[] bivPoissDistrVector=BivPoissDistrVector.getBivPoissDistrVector(TruncBivPoissArray.getTruncBivPoissArray(1, 2, 3, 100, 100));
+		double[] bivPoissDistrVector = BivPoissDistrVector.getBivPoissDistrVector(TruncBivPoissArray.getTruncBivPoissArray(1, 2, 3, 100, 100));
 		System.out.println(Arrays.toString(bivPoissDistrVector));
 		for (int i = 0; i < n; i++) {
-			b[i] = new Apfloat(bivPoissDistrVector[i] , Precision.SCALE);
+			b[i] = new Apfloat(bivPoissDistrVector[i], Precision.SCALE);
 		}
 
 		return b;
@@ -48,7 +48,6 @@ public class Experiments4 extends AExperiments {
 
 	@Override
 	protected ICVector getCVector(Apfloat[][] vSet) {
-		return CVector.getSumProbEx4CVector(MatrixMath.createVariation(vSet));
+		return CVector.getSumProbEx4CVector(MatrixUtils.createVariation(vSet));
 	}
 }
-

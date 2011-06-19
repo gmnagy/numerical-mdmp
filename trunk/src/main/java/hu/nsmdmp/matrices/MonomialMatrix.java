@@ -1,6 +1,6 @@
 package hu.nsmdmp.matrices;
 
-import hu.nsmdmp.matrixmath.MatrixMath;
+import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.utils.Precision;
 
 import java.util.HashMap;
@@ -56,10 +56,10 @@ class MonomialMatrix extends AbstractPolynomialMatrix {
 	 */
 	private Apfloat getValue(final int n, final Apfloat value) {
 		if (n == 0 && value.signum() == 0) {
-			return MatrixMath.ONE;
+			return ApfloatUtils.ONE;
 		}
 		if (n != 0 && value.signum() == 0) {
-			return MatrixMath.ZERO;
+			return ApfloatUtils.ZERO;
 		}
 
 		return ApfloatMath.pow(value, n).precision(Precision.SCALE);

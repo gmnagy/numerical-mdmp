@@ -1,19 +1,19 @@
 package hu.nsmdmp.matrixmath;
 
-import hu.nsmdmp.matrices.IMatrix;
+import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.matrices.Matrix;
 
 import org.apfloat.Apfloat;
 
 final class Normalization {
 
-	static IMatrix normalize(final IMatrix matrix) {
+	static Matrix normalize(final Matrix matrix) {
 		int m = matrix.getRowDimension();
 		int n = matrix.getColumnDimension();
-		Apfloat[][] M = matrix.getMatrix();
+		Apfloat[][] M = matrix.getArray();
 
-		IMatrix NM = new Matrix(m, n);
-		Apfloat[][] normM = NM.getMatrix();
+		Matrix NM = new Matrix(m, n);
+		Apfloat[][] normM = NM.getArray();
 
 		for (int i = 0; i < m; i++) {
 			Apfloat min = M[i][0];
@@ -32,12 +32,12 @@ final class Normalization {
 			}
 
 			// (min + max) / 2;
-			Apfloat mid = min.add(max).divide(MatrixMath.TWO);
+			Apfloat mid = min.add(max).divide(ApfloatUtils.TWO);
 
 			for (int j = 0; j < n; j++) {
 
 				// 2 * (vSet[i][j] - mid)
-				Apfloat a = M[i][j].subtract(mid).multiply(MatrixMath.TWO);
+				Apfloat a = M[i][j].subtract(mid).multiply(ApfloatUtils.TWO);
 
 				// max - min
 				Apfloat b = max.subtract(min);

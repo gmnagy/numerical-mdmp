@@ -1,6 +1,5 @@
 package hu.nsmdmp.mosek;
 
-import hu.nsmdmp.matrices.IMatrix;
 import hu.nsmdmp.matrices.Matrix;
 import hu.nsmdmp.matrices.MatrixUtils;
 import hu.nsmdmp.utils.Converters;
@@ -15,7 +14,7 @@ public class LinearProgrammingEqTest {
 	public void test() throws MosekException {
 
 		double m[][] = { { 1, 1, 1, 1 }, { 0, 1, 0, 1 }, { 0, 0, 2, 2 } };
-		IMatrix M = new Matrix(m);
+		Matrix M = new Matrix(m);
 		double b[] = { 1, 0.5, 1 };
 		double c[] = { 0, 1, 1, 1 };
 

@@ -1,13 +1,14 @@
 package hu.nsmdmp.example;
 
 import hu.nsmdmp.cvectors.ICVector;
-import hu.nsmdmp.matrices.IMatrix;
 import hu.nsmdmp.matrices.Matrix;
 import hu.nsmdmp.matrices.MatrixFactory;
+import hu.nsmdmp.matrices.MatrixUtils;
 import hu.nsmdmp.matrixmath.MatrixMath;
 import hu.nsmdmp.mosek.LPSolution;
 import hu.nsmdmp.mosek.LinearProgrammingEq;
 import hu.nsmdmp.utils.Converters;
+import hu.nsmdmp.vectors.Vector;
 import mosek.MosekException;
 
 import org.apfloat.Apfloat;
@@ -23,7 +24,7 @@ abstract class AExperiments {
 	protected void run(double[][] vectorSet) throws MosekException {
 
 		Apfloat[][] vSet = Converters.convert(vectorSet);
-		int variationNum = MatrixMath.getVariationsNumber(vSet);
+		int variationNum = MatrixUtils.getVariationsNumber(vSet);
 
 		// distribution
 		Apfloat[] distr = distribution(variationNum);
@@ -32,7 +33,7 @@ abstract class AExperiments {
 		Apfloat[] c = getCVector(vSet).getCVectorA();
 
 		// normalized vector set
-		IMatrix normVSet = MatrixMath.normalize(new Matrix(vectorSet));
+		Matrix normVSet = MatrixMath.normalize(new Matrix(vectorSet));
 
 		int maxOrder = getMaxOrder();
 		for (int i = 1; i <= maxOrder; i++) {
@@ -41,10 +42,10 @@ abstract class AExperiments {
 			//IMatrix normM = MatrixFactory.getMonomialMatrix(normVSet.getMatrix(), i);
 			//printMinMaxPrimalSolution(normM, distr, c, "MonomialMatrix: ");
 
-			IMatrix chebTM = MatrixFactory.getChebyshevTMatrix(normVSet.getMatrix(), i);
+			Matrix chebTM = MatrixFactory.getChebyshevTMatrix(normVSet.getArray(), i);
 			printMinMaxPrimalSolution(chebTM, distr, c, "ChebyshevTMatrix: ");
 
-			IMatrix chebUM = MatrixFactory.getChebyshevUMatrix(normVSet.getMatrix(), i);
+			Matrix chebUM = MatrixFactory.getChebyshevUMatrix(normVSet.getArray(), i);
 			printMinMaxPrimalSolution(chebUM, distr, c, "ChebyshevUMatrix: ");
 
 			System.out.println();
@@ -58,11 +59,11 @@ abstract class AExperiments {
 	 */
 	protected abstract Apfloat[] distribution(final int n);
 
-	protected void printMinMaxPrimalSolution(IMatrix matrix, Apfloat[] distr, Apfloat[] c, String prefix) throws MosekException {
-		Apfloat[] b = MatrixMath.multiply(matrix, distr);
+	protected void printMinMaxPrimalSolution(Matrix matrix, Apfloat[] distr, Apfloat[] c, String prefix) throws MosekException {
+		Vector b = MatrixMath.multiply(matrix, new Vector(distr));
 
-		LPSolution min = LinearProgrammingEq.optimizeMin(matrix, b, c);
-		LPSolution max = LinearProgrammingEq.optimizeMax(matrix, b, c);
+		LPSolution min = LinearProgrammingEq.optimizeMin(matrix, b.getArray(), c);
+		LPSolution max = LinearProgrammingEq.optimizeMax(matrix, b.getArray(), c);
 
 		System.out.println(String.format("%s min: %s,\tmax: %s", prefix, min.getPrimalSolution(), max.getPrimalSolution()));
 	}

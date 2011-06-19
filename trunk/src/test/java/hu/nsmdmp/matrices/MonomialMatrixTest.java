@@ -1,12 +1,10 @@
 package hu.nsmdmp.matrices;
 
-import hu.nsmdmp.matrixmath.MatrixMath;
 import hu.nsmdmp.utils.Converters;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.apfloat.Apfloat;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +12,7 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(value = Parameterized.class)
-public class NormalizedMatrixTest {
+public class MonomialMatrixTest {
 
 	private final int moment;
 
@@ -22,7 +20,7 @@ public class NormalizedMatrixTest {
 
 	private final double[][] expectedMatrix;
 
-	public NormalizedMatrixTest(int moment, double[][] vectorSet, double[][] expectedMatrix) {
+	public MonomialMatrixTest(int moment, double[][] vectorSet, double[][] expectedMatrix) {
 		this.moment = moment;
 		this.vectorSet = vectorSet;
 		this.expectedMatrix = expectedMatrix;
@@ -37,15 +35,13 @@ public class NormalizedMatrixTest {
 
 	@Test
 	public void simpleMatrixTest() {
-		IMatrix M = new Matrix(vectorSet);
-		IMatrix normalizedVectorSet = MatrixMath.normalize(M);
-		IMatrix m = MatrixFactory.getMonomialMatrix(normalizedVectorSet.getMatrix(), moment);
+		Matrix monomial = MatrixFactory.getMonomialMatrix(Converters.convert(vectorSet), moment);
 
-		Apfloat[][] expected = Converters.convert(expectedMatrix);
+		Matrix em = new Matrix(expectedMatrix);
 
-		if (!MatrixUtils.equals(m.getMatrix(), expected)) {
-			System.out.println(MatrixUtils.print(expected));
-			System.out.println(m);
+		if (!monomial.equals(em)) {
+			System.out.println(monomial);
+			System.out.println(em);
 			Assert.assertTrue(false);
 		}
 	}
