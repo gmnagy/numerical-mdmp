@@ -24,7 +24,7 @@ public class NormalizationTest {
 
 		if (!normalized.equals(em)) {
 			System.out.println(em);
-			System.out.println(normalized);
+			System.err.println(normalized);
 
 			Assert.assertTrue(false);
 		}
@@ -41,7 +41,7 @@ public class NormalizationTest {
 
 		if (!normalized.equals(em)) {
 			System.out.println(em);
-			System.out.println(normalized);
+			System.err.println(normalized);
 
 			Assert.assertTrue(false);
 		}
@@ -58,7 +58,7 @@ public class NormalizationTest {
 
 		if (!normalized.equals(em)) {
 			System.out.println(em);
-			System.out.println(normalized);
+			System.err.println(normalized);
 
 			Assert.assertTrue(false);
 		}

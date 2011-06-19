@@ -119,4 +119,26 @@ public final class MatrixMath {
 	public static Matrix multiply(final Matrix A, final Matrix B) {
 		return Multiplication.multiply(A, B);
 	}
+
+	/**
+	 * Solve A * X = B
+	 * 
+	 * @param B
+	 *            right hand side
+	 * @return solution if A is square, least squares solution otherwise
+	 */
+	public static Matrix solve(final Matrix A, final Matrix B) {
+		return (A.isSquare() ? A.getLU().solve(B) : A.getQR().solve(B));
+	}
+
+	/**
+	 * Solve X * A = B, which is also A' * X' = B'
+	 * 
+	 * @param B
+	 *            right hand side
+	 * @return solution if A is square, least squares solution otherwise.
+	 */
+	public static Matrix solveTranspose(final Matrix A, final Matrix B) {
+		return solve(A.transpose(), B.transpose());
+	}
 }

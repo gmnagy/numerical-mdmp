@@ -41,7 +41,7 @@ public class SimpleMatrixTest {
 
 		if (!sm.equals(em)) {
 			System.out.println(em);
-			System.out.println(sm);
+			System.err.println(sm);
 
 			Assert.assertTrue(false);
 		}

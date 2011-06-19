@@ -17,7 +17,7 @@ public class InverseTest {
 
 		if (!expectedA.equals(inverseA)) {
 			System.out.println(expectedA);
-			System.out.println(inverseA);
+			System.err.println(inverseA);
 
 			Assert.assertTrue("L: ", false);
 		}
@@ -35,7 +35,7 @@ public class InverseTest {
 
 		if (!expectedA.equals(inverseA)) {
 			System.out.println(expectedA);
-			System.out.println(inverseA);
+			System.err.println(inverseA);
 
 			Assert.assertTrue("L: ", false);
 		}
@@ -53,7 +53,7 @@ public class InverseTest {
 
 		if (!expectedA.equals(inverseA)) {
 			System.out.println(expectedA);
-			System.out.println(inverseA);
+			System.err.println(inverseA);
 
 			Assert.assertTrue("L: ", false);
 		}
@@ -71,9 +71,25 @@ public class InverseTest {
 
 		if (!expectedA.equals(inverseA)) {
 			System.out.println(expectedA);
-			System.out.println(inverseA);
+			System.err.println(inverseA);
 
 			Assert.assertTrue("L: ", false);
 		}
+	}
+
+	@Test
+	public void test5() {
+		double[][] m = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+		Matrix A = new Matrix(m);
+
+		try {
+			A.inverse();
+		} catch (RuntimeException e) {
+			Assert.assertEquals("Matrix is singular.", e.getMessage());
+
+			return;
+		}
+
+		Assert.assertTrue("Szingularis matrixot nem lehet invertalni!!! ", false);
 	}
 }

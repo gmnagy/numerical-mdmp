@@ -113,6 +113,17 @@ public class Matrix {
 	}
 
 	/**
+	 * Is <code>true</code> if this row dimension equals with column dimension, <code>false</code>
+	 * otherwise.
+	 * 
+	 * @return <code>true</code> if this row dimension equals with column dimension,
+	 *         <code>false</code> otherwise.
+	 */
+	public boolean isSquare() {
+		return m == n;
+	}
+
+	/**
 	 * Copy the internal two-dimensional array.
 	 * 
 	 * @return Two-dimensional array copy of matrix elements.
@@ -289,6 +300,26 @@ public class Matrix {
 	}
 
 	/**
+	 * Get LU Decomposition.
+	 * 
+	 * @return LUDecomposition
+	 * @see LUDecomposition
+	 */
+	public LUDecomposition getLU() {
+		return new LUDecomposition(this);
+	}
+
+	/**
+	 * Get QR Decomposition.
+	 * 
+	 * @return QRDecomposition
+	 * @see QRDecomposition
+	 */
+	public QRDecomposition getQR() {
+		return new QRDecomposition(this);
+	}
+
+	/**
 	 * Matrix inverse or pseudoinverse.
 	 * 
 	 * @return inverse(A) if A is square, pseudoinverse otherwise.
@@ -296,13 +327,13 @@ public class Matrix {
 	public Matrix inverse() {
 		Matrix identity = MatrixMath.identity(m, m);
 
-		if (m == n) {
-			return (new LUDecomposition(this)).solve(identity);
+		if (isSquare()) {
+			return getLU().solve(identity);
 		} else if (m > n) {
-			return (new QRDecomposition(this)).solve(identity);
+			return getQR().solve(identity);
 		} else {
 			Matrix transposed = transpose();
-			return (new QRDecomposition(transposed)).solve(MatrixMath.identity(n, n)).transpose();
+			return transposed.getQR().solve(MatrixMath.identity(n, n)).transpose();
 		}
 	}
 

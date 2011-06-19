@@ -23,7 +23,7 @@ public class VariationTest {
 
 		if (!MatrixUtils.equals(Converters.convert(expected), variation)) {
 			System.out.println(MatrixUtils.print(expected));
-			System.out.println(MatrixUtils.print(variation));
+			System.err.println(MatrixUtils.print(variation));
 
 			Assert.assertTrue(false);
 		}
@@ -39,7 +39,7 @@ public class VariationTest {
 
 		if (!MatrixUtils.equals(Converters.convert(expected), variation)) {
 			System.out.println(MatrixUtils.print(expected));
-			System.out.println(MatrixUtils.print(variation));
+			System.err.println(MatrixUtils.print(variation));
 
 			Assert.assertTrue(false);
 		}
@@ -55,7 +55,7 @@ public class VariationTest {
 
 		if (!MatrixUtils.equals(Converters.convert(expected), variation)) {
 			System.out.println(MatrixUtils.print(expected));
-			System.out.println(MatrixUtils.print(variation));
+			System.err.println(MatrixUtils.print(variation));
 
 			Assert.assertTrue(false);
 		}

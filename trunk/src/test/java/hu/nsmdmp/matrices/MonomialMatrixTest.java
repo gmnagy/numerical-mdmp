@@ -40,8 +40,9 @@ public class MonomialMatrixTest {
 		Matrix em = new Matrix(expectedMatrix);
 
 		if (!monomial.equals(em)) {
-			System.out.println(monomial);
 			System.out.println(em);
+			System.err.println(monomial);
+
 			Assert.assertTrue(false);
 		}
 	}

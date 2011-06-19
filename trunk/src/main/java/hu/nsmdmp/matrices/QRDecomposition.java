@@ -5,7 +5,19 @@ import hu.nsmdmp.ApfloatUtils;
 import org.apfloat.Apfloat;
 import org.apfloat.ApfloatMath;
 
-final class QRDecomposition {
+/**
+ * QR Decomposition from Jama(A Java Matrix Package): http://math.nist.gov/javanumerics/jama/
+ * 
+ * <P>
+ * For an m-by-n matrix A with m >= n, the QR decomposition is an m-by-n orthogonal matrix Q and an
+ * n-by-n upper triangular matrix R so that A = Q*R.
+ * <P>
+ * The QR decompostion always exists, even if the matrix does not have full rank, so the constructor
+ * will never fail. The primary use of the QR decomposition is in the least squares solution of
+ * nonsquare systems of simultaneous linear equations. This will fail if isFullRank() returns false.
+ * 
+ */
+public final class QRDecomposition {
 
 	/**
 	 * Array for internal storage of decomposition.
@@ -186,7 +198,7 @@ final class QRDecomposition {
 	 * @exception RuntimeException
 	 *                Matrix is rank deficient.
 	 */
-	Matrix solve(final Matrix B) {
+	public Matrix solve(final Matrix B) {
 		if (B.getRowDimension() != m) {
 			throw new IllegalArgumentException("Matrix row dimensions must agree.");
 		}

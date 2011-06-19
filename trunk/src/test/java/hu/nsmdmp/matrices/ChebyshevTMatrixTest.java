@@ -40,8 +40,9 @@ public class ChebyshevTMatrixTest {
 		Matrix em = new Matrix(expectedMatrix);
 
 		if (!chebT.equals(em)) {
-			System.out.println(chebT);
 			System.out.println(em);
+			System.err.println(chebT);
+
 			Assert.assertTrue(false);
 		}
 	}
