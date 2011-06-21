@@ -2,7 +2,7 @@ package hu.nsmdmp.mosek;
 
 import hu.nsmdmp.matrices.Matrix;
 import hu.nsmdmp.matrices.MatrixUtils;
-import hu.nsmdmp.utils.Converters;
+import hu.nsmdmp.vectors.Vector;
 import mosek.MosekException;
 
 import org.junit.Assert;
@@ -16,10 +16,12 @@ public class LinearProgrammingEqTest {
 		double m[][] = { { 1, 1, 1, 1 }, { 0, 1, 0, 1 }, { 0, 0, 2, 2 } };
 		Matrix M = new Matrix(m);
 		double b[] = { 1, 0.5, 1 };
+		Vector B = new Vector(b);
 		double c[] = { 0, 1, 1, 1 };
+		Vector C = new Vector(c);
 
 		// A minimization problem 
-		double[] rMin = LinearProgrammingEq.optimizeMin(M, Converters.convert(b), Converters.convert(c)).getX();
+		double[] rMin = LinearProgrammingEq.optimizeMin(M, B, C).getX();
 
 		double expectedMin[] = { 0.5, 0, 0, 0.5 };
 
@@ -31,7 +33,7 @@ public class LinearProgrammingEqTest {
 		}
 
 		// A maximization problem 
-		double[] rMax = LinearProgrammingEq.optimizeMax(M, Converters.convert(b), Converters.convert(c)).getX();
+		double[] rMax = LinearProgrammingEq.optimizeMax(M, B, C).getX();
 
 		double expectedMax[] = { 0, 0.5, 0.5, 0 };
 

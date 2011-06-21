@@ -1,6 +1,5 @@
 package hu.nsmdmp.example;
 
-import hu.nsmdmp.cvectors.ICVector;
 import hu.nsmdmp.matrices.Matrix;
 import hu.nsmdmp.matrices.MatrixFactory;
 import hu.nsmdmp.matrices.MatrixUtils;
@@ -19,7 +18,7 @@ abstract class AExperiments {
 
 	protected abstract int getMaxOrder();
 
-	protected abstract ICVector getCVector(final Apfloat[][] vSet);
+	protected abstract Vector getCVector(final Apfloat[][] vSet);
 
 	protected void run(double[][] vectorSet) throws MosekException {
 
@@ -27,10 +26,10 @@ abstract class AExperiments {
 		int variationNum = MatrixUtils.getVariationsNumber(vSet);
 
 		// distribution
-		Apfloat[] distr = distribution(variationNum);
+		Vector distr = distribution(variationNum);
 
 		// coefficient vector
-		Apfloat[] c = getCVector(vSet).getCVectorA();
+		Vector c = getCVector(vSet);
 
 		// normalized vector set
 		Matrix normVSet = MatrixMath.normalize(new Matrix(vectorSet));
@@ -57,13 +56,13 @@ abstract class AExperiments {
 	 * Create distribution.
 	 * 
 	 */
-	protected abstract Apfloat[] distribution(final int n);
+	protected abstract Vector distribution(final int n);
 
-	protected void printMinMaxPrimalSolution(Matrix matrix, Apfloat[] distr, Apfloat[] c, String prefix) throws MosekException {
-		Vector b = MatrixMath.multiply(matrix, new Vector(distr));
+	protected void printMinMaxPrimalSolution(Matrix matrix, Vector distr, Vector c, String prefix) throws MosekException {
+		Vector b = MatrixMath.multiply(matrix, distr);
 
-		LPSolution min = LinearProgrammingEq.optimizeMin(matrix, b.getArray(), c);
-		LPSolution max = LinearProgrammingEq.optimizeMax(matrix, b.getArray(), c);
+		LPSolution min = LinearProgrammingEq.optimizeMin(matrix, b, c);
+		LPSolution max = LinearProgrammingEq.optimizeMax(matrix, b, c);
 
 		System.out.println(String.format("%s min: %s,\tmax: %s", prefix, min.getPrimalSolution(), max.getPrimalSolution()));
 	}

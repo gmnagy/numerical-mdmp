@@ -1,35 +1,22 @@
 package hu.nsmdmp.cvectors;
 
+import hu.nsmdmp.vectors.Vector;
+
 import org.apfloat.Apfloat;
 
-public abstract class AbstractCVector implements ICVector {
+abstract class AbstractCVector {
 
-	private Apfloat[] cVectorA;
-
-	private double[] cVectorD;
-
-	void create(final Apfloat[][] variations) {
+	Vector create(final Apfloat[][] variations) {
 		int n = variations.length;
-
-		cVectorA = new Apfloat[n];
-		cVectorD = new double[n];
+		Vector C = new Vector(n);
 
 		for (int i = 0; i < n; i++) {
 			Apfloat d = function(variations[i]);
-			cVectorA[i] = d;
-			cVectorD[i] = d.doubleValue();
+			C.set(i, d);
 		}
+
+		return C;
 	}
 
 	abstract Apfloat function(final Apfloat[] variation);
-
-	@Override
-	public Apfloat[] getCVectorA() {
-		return cVectorA;
-	}
-
-	@Override
-	public double[] getCVectorD() {
-		return cVectorD;
-	}
 }

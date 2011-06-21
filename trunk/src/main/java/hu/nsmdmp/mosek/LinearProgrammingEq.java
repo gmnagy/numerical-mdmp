@@ -2,11 +2,10 @@ package hu.nsmdmp.mosek;
 
 import hu.nsmdmp.matrices.Matrix;
 import hu.nsmdmp.utils.Converters;
+import hu.nsmdmp.vectors.Vector;
 import mosek.Env;
 import mosek.MosekException;
 import mosek.Task;
-
-import org.apfloat.Apfloat;
 
 /**
  * Subject: Ax = b, x >= 0
@@ -54,20 +53,20 @@ public final class LinearProgrammingEq {
 	 * Minimalizalas.
 	 * 
 	 */
-	public static LPSolution optimizeMin(final Matrix matrix, final Apfloat[] b, final Apfloat[] c) throws MosekException {
+	public static LPSolution optimizeMin(final Matrix matrix, final Vector b, final Vector c) throws MosekException {
 		SparseMatrix sm = new SparseMatrix(matrix);
 
-		return new LinearProgrammingEq(sm.aval, sm.asub, Converters.convert(b), Converters.convert(c)).optimize(Env.objsense.minimize);
+		return new LinearProgrammingEq(sm.aval, sm.asub, Converters.convert(b.getArray()), Converters.convert(c.getArray())).optimize(Env.objsense.minimize);
 	}
 
 	/**
 	 * Maximalizalasa.
 	 * 
 	 */
-	public static LPSolution optimizeMax(final Matrix matrix, final Apfloat[] b, final Apfloat[] c) throws MosekException {
+	public static LPSolution optimizeMax(final Matrix matrix, final Vector b, final Vector c) throws MosekException {
 		SparseMatrix sm = new SparseMatrix(matrix);
 
-		return new LinearProgrammingEq(sm.aval, sm.asub, Converters.convert(b), Converters.convert(c)).optimize(Env.objsense.maximize);
+		return new LinearProgrammingEq(sm.aval, sm.asub, Converters.convert(b.getArray()), Converters.convert(c.getArray())).optimize(Env.objsense.maximize);
 	}
 
 	private LPSolution optimize(final Env.objsense objsense) throws MosekException {

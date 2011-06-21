@@ -2,6 +2,7 @@ package hu.nsmdmp.cvectors;
 
 import hu.nsmdmp.matrices.MatrixUtils;
 import hu.nsmdmp.utils.Converters;
+import hu.nsmdmp.vectors.Vector;
 
 import org.apfloat.Apfloat;
 import org.junit.Assert;
@@ -14,13 +15,14 @@ public class StairsCVectorTest {
 		double[][] m = { { 0, 1, 2 }, { 0, 1, 2 }, { 0, 1, 2 } };
 		Apfloat[][] variation = MatrixUtils.createVariation(Converters.convert(m));
 
-		ICVector cVector = CVector.getStairsCVector(variation);
+		Vector cVector = CVectorFactory.getStairsCVector(variation);
 
 		double[] expected = { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+		Vector ev = new Vector(expected);
 
-		if (!MatrixUtils.equals(expected, cVector.getCVectorD())) {
-			System.out.println(MatrixUtils.print(expected));
-			System.out.println(MatrixUtils.print(cVector.getCVectorD()));
+		if (!ev.equals(cVector)) {
+			System.out.println(ev);
+			System.err.println(cVector);
 
 			Assert.assertTrue(false);
 		}
@@ -31,13 +33,14 @@ public class StairsCVectorTest {
 		double[][] m = { { 0, 1, 2, 3 }, { 1, 2, 3, 4 } };
 		Apfloat[][] variation = MatrixUtils.createVariation(Converters.convert(m));
 
-		ICVector cVector = CVector.getStairsCVector(variation);
+		Vector cVector = CVectorFactory.getStairsCVector(variation);
 
 		double[] expected = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+		Vector ev = new Vector(expected);
 
-		if (!MatrixUtils.equals(expected, cVector.getCVectorD())) {
-			System.out.println(MatrixUtils.print(expected));
-			System.out.println(MatrixUtils.print(cVector.getCVectorD()));
+		if (!ev.equals(cVector)) {
+			System.out.println(ev);
+			System.err.println(cVector);
 
 			Assert.assertTrue(false);
 		}

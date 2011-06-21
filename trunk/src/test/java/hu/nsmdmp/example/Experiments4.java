@@ -1,11 +1,11 @@
 package hu.nsmdmp.example;
 
-import hu.nsmdmp.cvectors.CVector;
-import hu.nsmdmp.cvectors.ICVector;
+import hu.nsmdmp.cvectors.CVectorFactory;
 import hu.nsmdmp.distributions.BivPoissDistrVector;
 import hu.nsmdmp.distributions.TruncBivPoissArray;
 import hu.nsmdmp.matrices.MatrixUtils;
 import hu.nsmdmp.utils.Precision;
+import hu.nsmdmp.vectors.Vector;
 
 import java.util.Arrays;
 
@@ -29,16 +29,16 @@ public class Experiments4 extends AExperiments {
 	}
 
 	@Override
-	protected Apfloat[] distribution(int n) {
-		Apfloat[] b = new Apfloat[n];
+	protected Vector distribution(int n) {
+		Vector D = new Vector(n);
 
 		double[] bivPoissDistrVector = BivPoissDistrVector.getBivPoissDistrVector(TruncBivPoissArray.getTruncBivPoissArray(1, 2, 3, 100, 100));
 		System.out.println(Arrays.toString(bivPoissDistrVector));
 		for (int i = 0; i < n; i++) {
-			b[i] = new Apfloat(bivPoissDistrVector[i], Precision.SCALE);
+			D.set(i, new Apfloat(bivPoissDistrVector[i], Precision.SCALE));
 		}
 
-		return b;
+		return D;
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class Experiments4 extends AExperiments {
 	}
 
 	@Override
-	protected ICVector getCVector(Apfloat[][] vSet) {
-		return CVector.getSumProbEx4CVector(MatrixUtils.createVariation(vSet));
+	protected Vector getCVector(Apfloat[][] vSet) {
+		return CVectorFactory.getSumProbEx4CVector(MatrixUtils.createVariation(vSet));
 	}
 }
