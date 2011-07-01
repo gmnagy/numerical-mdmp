@@ -6,7 +6,7 @@ import hu.nsmdmp.vectors.Vector;
 
 import org.apfloat.Apfloat;
 
-final class Multiplication {
+public final class Multiplication {
 
 	/**
 	 * Matrix-Vector multiplication.
@@ -55,7 +55,7 @@ final class Multiplication {
 	 * @exception IllegalArgumentException
 	 *                Matrix inner dimensions must agree.
 	 */
-	static Matrix multiply(final Matrix A, final Matrix B) {
+	public static Matrix multiply(final Matrix A, final Matrix B) {
 		if (B.getRowDimension() != A.getColumnDimension()) {
 			throw new IllegalArgumentException("Matrix inner dimensions must agree.");
 		}

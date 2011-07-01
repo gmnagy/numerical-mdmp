@@ -136,6 +136,7 @@ public final class LinearProgrammingEq {
 		LPSolution lpSolution = new LPSolution();
 		lpSolution.x = xx;
 		lpSolution.primalSolution = task.getprimalobj(Env.soltype.bas);
+		//!!!lpSolution.basisIndex=mosek.Task.initbasissolve
 		//task.getprimalobj(arg0, arg1)
 
 		return lpSolution;
