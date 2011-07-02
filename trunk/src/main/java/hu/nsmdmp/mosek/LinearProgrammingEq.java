@@ -1,5 +1,7 @@
 package hu.nsmdmp.mosek;
 
+import java.util.Arrays;
+
 import hu.nsmdmp.matrices.Matrix;
 import hu.nsmdmp.utils.Converters;
 import hu.nsmdmp.vectors.Vector;
@@ -136,8 +138,10 @@ public final class LinearProgrammingEq {
 		LPSolution lpSolution = new LPSolution();
 		lpSolution.x = xx;
 		lpSolution.primalSolution = task.getprimalobj(Env.soltype.bas);
-		//!!!lpSolution.basisIndex=mosek.Task.initbasissolve
+		lpSolution.basisIndex=new int[NUMCON];
+		task.initbasissolve(lpSolution.basisIndex);
 		//task.getprimalobj(arg0, arg1)
+		//System.out.println(Arrays.toString(lpSolution.basisIndex));
 
 		return lpSolution;
 	}
