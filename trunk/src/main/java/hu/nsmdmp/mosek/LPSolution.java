@@ -6,7 +6,7 @@ public class LPSolution {
 
 	double primalSolution;
 	
-	int[] basisIndex;
+	int[] basisIndexes;
 
 	LPSolution() {
 	}
@@ -19,8 +19,8 @@ public class LPSolution {
 		return primalSolution;
 	}
 
-	public int[] getBasisIndex() {
-		return basisIndex;
+	public int[] getBasisIndexes() {
+		return basisIndexes;
 	}
 
 

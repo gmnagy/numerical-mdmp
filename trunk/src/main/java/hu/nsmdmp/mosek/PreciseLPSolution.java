@@ -3,16 +3,32 @@ package hu.nsmdmp.mosek;
 import org.apfloat.Apfloat;
 
 public class PreciseLPSolution {
+	
+	int[] basisIndexes;
+	
 	Apfloat[] x;
 
-	Apfloat primalSolution;
+	Apfloat objectiveValue;
 	
-	Apfloat primalInfeas;
+	Apfloat primalNonnegInfeas;
 	
 	Apfloat dualInfeas;
 	
+	Apfloat primalEqInfeas;
+	
+	int primalNonnegInfeasIndex;
+	
+	int dualInfeasIndex;
+	
+	int primalEqInfeasIndex;
+	
 
 	PreciseLPSolution() {
+	}
+
+
+	public int[] getBasisIndexes() {
+		return basisIndexes;
 	}
 
 
@@ -21,18 +37,38 @@ public class PreciseLPSolution {
 	}
 
 
-	public Apfloat getPrimalSolution() {
-		return primalSolution;
+	public Apfloat getObjectiveValue() {
+		return objectiveValue;
 	}
 
 
-	public Apfloat getPrimalInfeas() {
-		return primalInfeas;
+	public Apfloat getPrimalNonnegInfeas() {
+		return primalNonnegInfeas;
 	}
 
 
 	public Apfloat getDualInfeas() {
 		return dualInfeas;
+	}
+
+
+	public Apfloat getPrimalEqInfeas() {
+		return primalEqInfeas;
+	}
+
+
+	public int getPrimalNonnegInfeasIndex() {
+		return primalNonnegInfeasIndex;
+	}
+
+
+	public int getDualInfeasIndex() {
+		return dualInfeasIndex;
+	}
+
+
+	public int getPrimalEqInfeasIndex() {
+		return primalEqInfeasIndex;
 	}
 
 }

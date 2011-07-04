@@ -138,10 +138,10 @@ public final class LinearProgrammingEq {
 		LPSolution lpSolution = new LPSolution();
 		lpSolution.x = xx;
 		lpSolution.primalSolution = task.getprimalobj(Env.soltype.bas);
-		lpSolution.basisIndex=new int[NUMCON];
-		task.initbasissolve(lpSolution.basisIndex);
+		lpSolution.basisIndexes=new int[NUMCON];
+		task.initbasissolve(lpSolution.basisIndexes);
 		//task.getprimalobj(arg0, arg1)
-		//System.out.println(Arrays.toString(lpSolution.basisIndex));
+		System.out.println(Arrays.toString(lpSolution.basisIndexes));
 
 		return lpSolution;
 	}
