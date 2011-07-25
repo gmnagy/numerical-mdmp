@@ -141,7 +141,7 @@ public final class LinearProgrammingEq {
 		lpSolution.basisIndexes=new int[NUMCON];
 		task.initbasissolve(lpSolution.basisIndexes);
 		//task.getprimalobj(arg0, arg1)
-		System.out.println(Arrays.toString(lpSolution.basisIndexes));
+		//System.out.println(Arrays.toString(lpSolution.basisIndexes));
 
 		return lpSolution;
 	}

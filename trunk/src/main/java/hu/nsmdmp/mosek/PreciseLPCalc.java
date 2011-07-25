@@ -5,9 +5,7 @@ import org.apfloat.Apfloat;
 import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.matrices.Matrix;
 import hu.nsmdmp.matrixmath.MatrixMath;
-import hu.nsmdmp.utils.Converters;
 import hu.nsmdmp.vectors.Vector;
-import mosek.Env;
 import mosek.MosekException;
 
 public class PreciseLPCalc {
