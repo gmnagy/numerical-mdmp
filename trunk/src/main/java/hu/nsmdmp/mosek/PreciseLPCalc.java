@@ -19,7 +19,7 @@ public class PreciseLPCalc {
 	public static PreciseLPSolution optimizeMin(final Matrix matrix, final Vector b, final Vector c) throws MosekException {
 		PreciseLPSolution result;
 		solverResult=LinearProgrammingEq.optimizeMin(matrix, b, c);
-		result=calcResult(solverResult.basisIndexes,matrix, b, c, 1);
+		result=calcResult(solverResult.basisIndexes,matrix, b, c, -1);
 		return result;
 	}
 
@@ -30,38 +30,46 @@ public class PreciseLPCalc {
 	public static PreciseLPSolution optimizeMax(final Matrix matrix, final Vector b, final Vector c) throws MosekException {
 		PreciseLPSolution result;
 		solverResult=LinearProgrammingEq.optimizeMax(matrix, b, c);
-		result=calcResult(solverResult.basisIndexes,matrix, b, c, -1);
+		result=calcResult(solverResult.basisIndexes,matrix, b, c, 1);
 		return result;
 	}
 
 	/*
-	 * final int sense is -1 in case of max problem
+	 * final int sense is -1 in case of min problem
 	 */
 	private static PreciseLPSolution calcResult(final int[] basisIndexes, final Matrix matrix, final Vector b, final Vector c, final int sense){
 		PreciseLPSolution result=new PreciseLPSolution();
 		result.basisIndexes=basisIndexes;
-		result.dualInfeasIndex=-1;
-		result.primalEqInfeasIndex=-1;
-		result.primalNonnegInfeasIndex=-1;	
+		result.dualSlackInfeasIndex=-1;
+		result.primalNonnegInfeasIndex=-1;
+		result.primalSlackInfeasIndex=-1;	
 		result.primalNonnegInfeas=ApfloatUtils.ZERO;
-		result.dualInfeas=ApfloatUtils.ZERO;
-		result.primalEqInfeas=ApfloatUtils.ZERO;
+		result.primalSlackInfeas=ApfloatUtils.ZERO;
+		result.dualSlackInfeas=ApfloatUtils.ZERO;
 		
 		
 		
+		/* basis matrix and obj. coefficients */
 		Matrix basisMatrix=new Matrix(matrix.getRowDimension(),matrix.getRowDimension());
+		Vector cBasis=new Vector(matrix.getRowDimension());
+		
 		for(int j=0; j<matrix.getRowDimension(); j++){
 			if (basisIndexes[j]<matrix.getRowDimension()){
 				for(int i=0; i<matrix.getRowDimension(); i++){
 					basisMatrix.set(i, j, ApfloatUtils.ZERO);
 				}
 			basisMatrix.set(basisIndexes[j], j, ApfloatUtils.ONE);	
+			cBasis.set(j, ApfloatUtils.ZERO);
 			}
 			else{				
 				for(int i=0; i<matrix.getRowDimension(); i++){
 					basisMatrix.set(i, j, matrix.get(i, basisIndexes[j]-matrix.getRowDimension()));
 				}
-
+				if(sense==1){	
+					cBasis.set(j, c.get(basisIndexes[j]-matrix.getRowDimension()));
+				}else{
+					cBasis.set(j, c.get(basisIndexes[j]-matrix.getRowDimension()).negate());
+				}
 			}
 			
 		}
@@ -71,7 +79,12 @@ public class PreciseLPCalc {
 		
 		
 		result.x=new Apfloat[matrix.getColumnDimension()];
-		for(int j=0; j<matrix.getRowDimension(); j++){
+		for (int j=0; j<matrix.getColumnDimension(); j++){
+			result.x[j]=ApfloatUtils.ZERO;
+		}
+			
+		
+		for(int j=0; j<matrix.getRowDimension(); j++){			
 			if (basisIndexes[j]<matrix.getRowDimension()){
 	
 				Apfloat abs=xBasis.get(j);
@@ -79,9 +92,9 @@ public class PreciseLPCalc {
 					abs=abs.negate();
 				}
 				
-				if(abs.compareTo(result.primalEqInfeas)>0){
-					result.primalEqInfeas=abs;
-					result.primalEqInfeasIndex=basisIndexes[j];					
+				if(abs.compareTo(result.primalSlackInfeas)>0){
+					result.primalSlackInfeas=abs;
+					result.primalSlackInfeasIndex=basisIndexes[j];					
 				}			
 			}
 			else{				
@@ -94,6 +107,16 @@ public class PreciseLPCalc {
 			
 		}
 
+		/* dual feasibilities */
+		Vector yDual=MatrixMath.multiply(basisMatrix.inverse().transpose(),cBasis);
+		Vector slackDual=MatrixMath.multiply(matrix.transpose(),yDual);
+		for(int j=0; j<matrix.getColumnDimension(); j++){
+			if((slackDual.get(j).subtract(c.get(j))).compareTo(result.dualSlackInfeas)<0){
+				result.dualSlackInfeas=(slackDual.get(j).subtract(c.get(j)));
+				result.dualSlackInfeasIndex=j;	
+			}
+		}
+		
 		
 		
 		

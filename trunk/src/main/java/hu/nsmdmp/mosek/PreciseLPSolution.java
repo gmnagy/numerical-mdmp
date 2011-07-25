@@ -11,17 +11,16 @@ public class PreciseLPSolution {
 	Apfloat objectiveValue;
 	
 	Apfloat primalNonnegInfeas;
-	
-	Apfloat dualInfeas;
-	
-	Apfloat primalEqInfeas;
+		
+	Apfloat primalSlackInfeas;
+
+	Apfloat dualSlackInfeas;
 	
 	int primalNonnegInfeasIndex;
 	
-	int dualInfeasIndex;
-	
-	int primalEqInfeasIndex;
-	
+	int primalSlackInfeasIndex;
+		
+	int dualSlackInfeasIndex;
 
 	PreciseLPSolution() {
 	}
@@ -47,13 +46,13 @@ public class PreciseLPSolution {
 	}
 
 
-	public Apfloat getDualInfeas() {
-		return dualInfeas;
+	public Apfloat getPrimalSlackInfeas() {
+		return primalSlackInfeas;
 	}
 
 
-	public Apfloat getPrimalEqInfeas() {
-		return primalEqInfeas;
+	public Apfloat getDualSlackInfeas() {
+		return dualSlackInfeas;
 	}
 
 
@@ -61,14 +60,15 @@ public class PreciseLPSolution {
 		return primalNonnegInfeasIndex;
 	}
 
-
-	public int getDualInfeasIndex() {
-		return dualInfeasIndex;
+	public int getPrimalSlackInfeasIndex() {
+		return primalSlackInfeasIndex;
 	}
 
 
-	public int getPrimalEqInfeasIndex() {
-		return primalEqInfeasIndex;
+	public int getDualSlackInfeasIndex() {
+		return dualSlackInfeasIndex;
 	}
+
+
 
 }
