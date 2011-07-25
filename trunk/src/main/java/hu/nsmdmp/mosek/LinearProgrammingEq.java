@@ -1,7 +1,5 @@
 package hu.nsmdmp.mosek;
 
-import java.util.Arrays;
-
 import hu.nsmdmp.matrices.Matrix;
 import hu.nsmdmp.utils.Converters;
 import hu.nsmdmp.vectors.Vector;
