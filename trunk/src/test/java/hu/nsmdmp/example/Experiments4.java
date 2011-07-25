@@ -33,7 +33,7 @@ public class Experiments4 extends AExperiments {
 		Vector D = new Vector(n);
 
 		double[] bivPoissDistrVector = BivPoissDistrVector.getBivPoissDistrVector(TruncBivPoissArray.getTruncBivPoissArray(1, 2, 3, 100, 100));
-		System.out.println(Arrays.toString(bivPoissDistrVector));
+		//System.out.println(Arrays.toString(bivPoissDistrVector));
 		for (int i = 0; i < n; i++) {
 			D.set(i, new Apfloat(bivPoissDistrVector[i], Precision.SCALE));
 		}

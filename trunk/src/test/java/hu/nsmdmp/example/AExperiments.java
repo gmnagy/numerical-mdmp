@@ -1,11 +1,16 @@
 package hu.nsmdmp.example;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 import hu.nsmdmp.matrices.Matrix;
 import hu.nsmdmp.matrices.MatrixFactory;
 import hu.nsmdmp.matrices.MatrixUtils;
 import hu.nsmdmp.matrixmath.MatrixMath;
 import hu.nsmdmp.mosek.LPSolution;
 import hu.nsmdmp.mosek.LinearProgrammingEq;
+import hu.nsmdmp.mosek.PreciseLPCalc;
+import hu.nsmdmp.mosek.PreciseLPSolution;
 import hu.nsmdmp.utils.Converters;
 import hu.nsmdmp.vectors.Vector;
 import mosek.MosekException;
@@ -61,9 +66,32 @@ abstract class AExperiments {
 	protected void printMinMaxPrimalSolution(Matrix matrix, Vector distr, Vector c, String prefix) throws MosekException {
 		Vector b = MatrixMath.multiply(matrix, distr);
 
-		LPSolution min = LinearProgrammingEq.optimizeMin(matrix, b, c);
-		LPSolution max = LinearProgrammingEq.optimizeMax(matrix, b, c);
 
-		System.out.println(String.format("%s min: %s,\tmax: %s", prefix, min.getPrimalSolution(), max.getPrimalSolution()));
+	    NumberFormat formatter = new DecimalFormat();
+	    formatter = new DecimalFormat("0.#################E0");
+
+		System.out.println(prefix);
+
+		LPSolution min = LinearProgrammingEq.optimizeMin(matrix, b, c);
+		System.out.println(String.format("%s \tmin: %s", "mosek: ", formatter.format(min.getPrimalSolution())));
+
+		PreciseLPSolution precMin = PreciseLPCalc.optimizeMin(matrix, b, c);
+		System.out.println(String.format("%s \tmin: %s", "precise: ", precMin.getObjectiveValue().toString()));
+		System.out.println(String.format("%s nonneg: %s,\tslack: %s", "infeasibility: ", precMin.getPrimalNonnegInfeas().toString(), 
+				precMin.getPrimalSlackInfeas().toString()));
+		System.out.println(String.format("%s slack: %s", "dual infeas: ", precMin.getDualSlackInfeas().toString()));
+		
+		LPSolution max = LinearProgrammingEq.optimizeMax(matrix, b, c);
+		System.out.println(String.format("%s \tmax: %s", "mosek: ", formatter.format(max.getPrimalSolution())));
+
+		PreciseLPSolution precMax = PreciseLPCalc.optimizeMax(matrix, b, c);
+		System.out.println(String.format("%s \tmax: %s", "precise: ", precMax.getObjectiveValue().toString()));
+		System.out.println(String.format("%s nonneg: %s,\tslack: %s", "infeasibility: ", precMax.getPrimalNonnegInfeas().toString(), 
+				precMax.getPrimalSlackInfeas().toString()));
+		System.out.println(String.format("%s slack: %s", "dual infeas: ", precMax.getDualSlackInfeas().toString()));
+
+
+		
+	
 	}
 }

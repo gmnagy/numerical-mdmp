@@ -33,7 +33,7 @@ public class Experiments2 extends AExperiments {
 
 	@Override
 	protected int getMaxOrder() {
-		return 6;
+		return 8;
 	}
 
 	@Override
