@@ -37,6 +37,7 @@ public class PreciseLPCalc {
 	 */
 	private static PreciseLPSolution calcResult(final int[] basisIndexes, final Matrix matrix, final Vector b, final Vector c, final int sense){
 		PreciseLPSolution result=new PreciseLPSolution();
+		//result.objectiveValue????
 		result.basisIndexes=basisIndexes;
 		result.dualSlackInfeasIndex=-1;
 		result.primalNonnegInfeasIndex=-1;
@@ -44,7 +45,6 @@ public class PreciseLPCalc {
 		result.primalNonnegInfeas=ApfloatUtils.ZERO;
 		result.primalSlackInfeas=ApfloatUtils.ZERO;
 		result.dualSlackInfeas=ApfloatUtils.ZERO;
-		
 		
 		
 		/* basis matrix and obj. coefficients */
@@ -63,24 +63,24 @@ public class PreciseLPCalc {
 				for(int i=0; i<matrix.getRowDimension(); i++){
 					basisMatrix.set(i, j, matrix.get(i, basisIndexes[j]-matrix.getRowDimension()));
 				}
-				if(sense==1){	
-					cBasis.set(j, c.get(basisIndexes[j]-matrix.getRowDimension()));
-				}else{
-					cBasis.set(j, c.get(basisIndexes[j]-matrix.getRowDimension()).negate());
-				}
+				cBasis.set(j, c.get(basisIndexes[j]-matrix.getRowDimension()));
 			}
 			
 		}
 		
 		/* primal infeasibilities */
 		Vector xBasis=MatrixMath.multiply(basisMatrix.inverse(),b);
-		
+		result.objectiveValue=ApfloatUtils.ZERO;
+		for(int i=0; i<matrix.getRowDimension(); i++){
+			result.objectiveValue=result.objectiveValue.add(cBasis.get(i).multiply(xBasis.get(i)));
+		}
 		
 		result.x=new Apfloat[matrix.getColumnDimension()];
 		for (int j=0; j<matrix.getColumnDimension(); j++){
 			result.x[j]=ApfloatUtils.ZERO;
 		}
 			
+		
 		
 		for(int j=0; j<matrix.getRowDimension(); j++){			
 			if (basisIndexes[j]<matrix.getRowDimension()){
@@ -109,9 +109,16 @@ public class PreciseLPCalc {
 		Vector yDual=MatrixMath.multiply(basisMatrix.inverse().transpose(),cBasis);
 		Vector slackDual=MatrixMath.multiply(matrix.transpose(),yDual);
 		for(int j=0; j<matrix.getColumnDimension(); j++){
-			if((slackDual.get(j).subtract(c.get(j))).compareTo(result.dualSlackInfeas)<0){
-				result.dualSlackInfeas=(slackDual.get(j).subtract(c.get(j)));
-				result.dualSlackInfeasIndex=j;	
+			if(sense==1){
+				if((slackDual.get(j).subtract(c.get(j))).compareTo(result.dualSlackInfeas)<0){
+					result.dualSlackInfeas=(slackDual.get(j).subtract(c.get(j)));
+					result.dualSlackInfeasIndex=j;
+				}
+			}else{
+				if((slackDual.get(j).subtract(c.get(j))).compareTo(result.dualSlackInfeas)>0){
+					result.dualSlackInfeas=(slackDual.get(j).subtract(c.get(j)));
+					result.dualSlackInfeasIndex=j;	
+				}
 			}
 		}
 		

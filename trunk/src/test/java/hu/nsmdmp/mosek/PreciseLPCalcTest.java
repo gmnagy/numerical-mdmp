@@ -1,5 +1,7 @@
 package hu.nsmdmp.mosek;
 
+import java.util.Arrays;
+
 import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.matrices.Matrix;
 import hu.nsmdmp.matrices.MatrixUtils;
@@ -36,17 +38,22 @@ public class PreciseLPCalcTest {
 			Assert.assertTrue(false);
 		}
 		
-		//result.basisIndexes=basisIndexes;
-		//Assert.assertEquals(result.getDualSlackInfeasIndex(),-1);
-		//Assert.assertEquals(result.getPrimalNonnegInfeasIndex(),-1);
-		//Assert.assertEquals(result.getPrimalSlackInfeasIndex(),-1);
-		//Assert.assertTrue(result.primalNonnegInfeas.equals(ApfloatUtils.ZERO));
-		//Assert.assertTrue(result.primalSlackInfeas.equals(ApfloatUtils.ZERO));
-		//Assert.assertTrue(result.dualSlackInfeas.equals(ApfloatUtils.ZERO));
+		// a non-degenarate example would be more usefull
+		int[] expBasisIndexes={3,4,6};
+		Assert.assertEquals(result.getDualSlackInfeasIndex(),-1);
+		Assert.assertEquals(result.getPrimalNonnegInfeasIndex(),-1);
+		Assert.assertEquals(result.getPrimalSlackInfeasIndex(),-1);
+		Assert.assertTrue(result.getPrimalNonnegInfeas().equals(ApfloatUtils.ZERO));
+		Assert.assertTrue(result.getPrimalSlackInfeas().equals(ApfloatUtils.ZERO));
+		Assert.assertTrue(result.getDualSlackInfeas().equals(ApfloatUtils.ZERO));
+		Assert.assertTrue(result.getObjectiveValue().equals(new Apfloat(0.5,Precision.SCALE)));
+		Assert.assertTrue(Arrays.equals(result.getBasisIndexes(), expBasisIndexes));
+		//System.out.println(Arrays.toString(result.basisIndexes));
+		
 
 		// A maximization problem 
-		Apfloat[] rMax = PreciseLPCalc.optimizeMax(M, B, C).getX();
-
+		result = PreciseLPCalc.optimizeMax(M, B, C);
+		Apfloat[] rMax=result.getX();
 		Apfloat expectedMax[] = { ApfloatUtils.ZERO, new Apfloat(0.5, Precision.SCALE), new Apfloat(0.5, Precision.SCALE), ApfloatUtils.ZERO};
 
 		if (!MatrixUtils.equals(expectedMax, rMax)) {
@@ -55,6 +62,19 @@ public class PreciseLPCalcTest {
 
 			Assert.assertTrue(false);
 		}
+		
+		// a non-degenarate example would be more usefull
+		int[] expBasisIndexes2={4,5,6};
+		Assert.assertEquals(result.getDualSlackInfeasIndex(),-1);
+		Assert.assertEquals(result.getPrimalNonnegInfeasIndex(),-1);
+		Assert.assertEquals(result.getPrimalSlackInfeasIndex(),-1);
+		Assert.assertTrue(result.getPrimalNonnegInfeas().equals(ApfloatUtils.ZERO));
+		Assert.assertTrue(result.getPrimalSlackInfeas().equals(ApfloatUtils.ZERO));
+		Assert.assertTrue(result.getDualSlackInfeas().equals(ApfloatUtils.ZERO));
+		Assert.assertTrue(result.getObjectiveValue().equals(new Apfloat(1.0,Precision.SCALE)));
+		Assert.assertTrue(Arrays.equals(result.getBasisIndexes(), expBasisIndexes2));
+		//System.out.println(Arrays.toString(result.basisIndexes));
+		
 	}
 	
 }
