@@ -23,4 +23,12 @@ public class CVectorFactory {
 
 		return vector.create(vectorSet);
 	}
+
+	public static Vector getProbSumNotLess15Vector(final Apfloat[][] vectorSet) {
+		ProbSumNotLess15Vector vector = new ProbSumNotLess15Vector();
+
+		return vector.create(vectorSet);
+	}
+
+
 }

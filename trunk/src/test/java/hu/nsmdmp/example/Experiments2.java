@@ -38,6 +38,7 @@ public class Experiments2 extends AExperiments {
 
 	@Override
 	protected Vector getCVector(final Apfloat[][] vSet) {
-		return CVectorFactory.getStairsCVector(MatrixUtils.createVariation(vSet));
+		//return CVectorFactory.getStairsCVector(MatrixUtils.createVariation(vSet));
+		return CVectorFactory.getProbSumNotLess15Vector(MatrixUtils.createVariation(vSet));
 	}
 }
