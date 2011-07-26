@@ -19,12 +19,14 @@ public class Experiments4 extends AExperiments {
 	@Test
 	@Override
 	public void run() throws MosekException {
+		long starttime=System.currentTimeMillis();
 		double[][] vectorSet = new double[2][101];
 		for (double i = 0; i <= 100; i++) {
 			vectorSet[0][(int) i] = i;
 			vectorSet[1][(int) i] = i;
 		}
 
+		System.out.println("Experiments 4 Vectorset prepare time: "+ (System.currentTimeMillis()-starttime));
 		run(vectorSet);
 	}
 

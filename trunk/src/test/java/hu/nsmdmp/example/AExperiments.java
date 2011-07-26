@@ -26,7 +26,7 @@ abstract class AExperiments {
 	protected abstract Vector getCVector(final Apfloat[][] vSet);
 
 	protected void run(double[][] vectorSet) throws MosekException {
-
+		long starttime=System.currentTimeMillis();
 		Apfloat[][] vSet = Converters.convert(vectorSet);
 		int variationNum = MatrixUtils.getVariationsNumber(vSet);
 
@@ -39,18 +39,26 @@ abstract class AExperiments {
 		// normalized vector set
 		Matrix normVSet = MatrixMath.normalize(new Matrix(vectorSet));
 
+		System.out.println("AExperiments disrt, obj, var vectors prepare time: "+ (System.currentTimeMillis()-starttime));
 		int maxOrder = getMaxOrder();
 		for (int i = 1; i <= maxOrder; i++) {
 			System.out.println("MaxOrder: " + i);
 
 			//IMatrix normM = MatrixFactory.getMonomialMatrix(normVSet.getMatrix(), i);
 			//printMinMaxPrimalSolution(normM, distr, c, "MonomialMatrix: ");
-
+			System.out.println("ChebyshevTMatrix: ");
+			starttime=System.currentTimeMillis();
 			Matrix chebTM = MatrixFactory.getChebyshevTMatrix(normVSet.getArray(), i);
-			printMinMaxPrimalSolution(chebTM, distr, c, "ChebyshevTMatrix: ");
+			Vector b = MatrixMath.multiply(chebTM, distr);
+			System.out.println("Matrix and RHS prepare time: "+ (System.currentTimeMillis()-starttime));
+			printMinMaxPrimalSolution(chebTM, b, c, "ChebyshevTMatrix: ");
 
+			System.out.println("ChebyshevUMatrix: ");
+			starttime=System.currentTimeMillis();
 			Matrix chebUM = MatrixFactory.getChebyshevUMatrix(normVSet.getArray(), i);
-			printMinMaxPrimalSolution(chebUM, distr, c, "ChebyshevUMatrix: ");
+			b = MatrixMath.multiply(chebUM, distr);		
+			System.out.println("Matrix and RHS prepare time: "+ (System.currentTimeMillis()-starttime));		
+			printMinMaxPrimalSolution(chebUM, b, c, "ChebyshevUMatrix: ");
 
 			System.out.println();
 		}
@@ -63,29 +71,33 @@ abstract class AExperiments {
 	 */
 	protected abstract Vector distribution(final int n);
 
-	protected void printMinMaxPrimalSolution(Matrix matrix, Vector distr, Vector c, String prefix) throws MosekException {
-		Vector b = MatrixMath.multiply(matrix, distr);
-
-
+	protected void printMinMaxPrimalSolution(Matrix matrix, Vector b, Vector c, String prefix) throws MosekException {
+		
 	    NumberFormat formatter = new DecimalFormat();
 	    formatter = new DecimalFormat("0.#################E0");
 
-		System.out.println(prefix);
-
+		long starttime=System.currentTimeMillis();
 		LPSolution min = LinearProgrammingEq.optimizeMin(matrix, b, c);
-		System.out.println(String.format("%s \tmin: %s", "mosek: ", formatter.format(min.getPrimalSolution())));
+		System.out.println(String.format("%s \tmin: %s \ttime: %s", "mosek: ", formatter.format(min.getPrimalSolution()), 
+				(System.currentTimeMillis()-starttime)));
 
+		starttime=System.currentTimeMillis();
 		PreciseLPSolution precMin = PreciseLPCalc.optimizeMin(matrix, b, c);
-		System.out.println(String.format("%s \tmin: %s", "precise: ", precMin.getObjectiveValue().toString()));
+		System.out.println(String.format("%s \tmin: %s \ttime: %s", "precise: ", precMin.getObjectiveValue().toString(),
+				(System.currentTimeMillis()-starttime)));
 		System.out.println(String.format("%s nonneg: %s,\tslack: %s", "infeasibility: ", precMin.getPrimalNonnegInfeas().toString(), 
 				precMin.getPrimalSlackInfeas().toString()));
 		System.out.println(String.format("%s slack: %s", "dual infeas: ", precMin.getDualSlackInfeas().toString()));
 		
+		starttime=System.currentTimeMillis();
 		LPSolution max = LinearProgrammingEq.optimizeMax(matrix, b, c);
-		System.out.println(String.format("%s \tmax: %s", "mosek: ", formatter.format(max.getPrimalSolution())));
+		System.out.println(String.format("%s \tmax: %s \ttime: %s", "mosek: ", formatter.format(max.getPrimalSolution()),
+				(System.currentTimeMillis()-starttime)));
 
+		starttime=System.currentTimeMillis();
 		PreciseLPSolution precMax = PreciseLPCalc.optimizeMax(matrix, b, c);
-		System.out.println(String.format("%s \tmax: %s", "precise: ", precMax.getObjectiveValue().toString()));
+		System.out.println(String.format("%s \tmax: %s \ttime: %s", "precise: ", precMax.getObjectiveValue().toString(),
+				(System.currentTimeMillis()-starttime)));
 		System.out.println(String.format("%s nonneg: %s,\tslack: %s", "infeasibility: ", precMax.getPrimalNonnegInfeas().toString(), 
 				precMax.getPrimalSlackInfeas().toString()));
 		System.out.println(String.format("%s slack: %s", "dual infeas: ", precMax.getDualSlackInfeas().toString()));
