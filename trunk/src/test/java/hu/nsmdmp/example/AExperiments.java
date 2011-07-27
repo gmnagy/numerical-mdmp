@@ -83,11 +83,11 @@ abstract class AExperiments {
 
 		starttime=System.currentTimeMillis();
 		PreciseLPSolution precMin = PreciseLPCalc.optimizeMin(matrix, b, c);
-		System.out.println(String.format("%s \tmin: %s \ttime: %s", "precise: ", precMin.getObjectiveValue().toString(),
+		System.out.println(String.format("%s \tmin: %s \ttime: %s", "precise: ", formatter.format(precMin.getObjectiveValue().doubleValue()),
 				(System.currentTimeMillis()-starttime)));
-		System.out.println(String.format("%s nonneg: %s,\tslack: %s", "infeasibility: ", precMin.getPrimalNonnegInfeas().toString(), 
-				precMin.getPrimalSlackInfeas().toString()));
-		System.out.println(String.format("%s slack: %s", "dual infeas: ", precMin.getDualSlackInfeas().toString()));
+		System.out.println(String.format("%s nonneg: %s,\tslack: %s", "infeasibility: ", formatter.format(precMin.getPrimalNonnegInfeas().doubleValue()), 
+				formatter.format(precMin.getPrimalSlackInfeas().doubleValue())));
+		System.out.println(String.format("%s slack: %s", "dual infeas: ", formatter.format(precMin.getDualSlackInfeas().doubleValue())));
 		
 		starttime=System.currentTimeMillis();
 		LPSolution max = LinearProgrammingEq.optimizeMax(matrix, b, c);
@@ -96,11 +96,11 @@ abstract class AExperiments {
 
 		starttime=System.currentTimeMillis();
 		PreciseLPSolution precMax = PreciseLPCalc.optimizeMax(matrix, b, c);
-		System.out.println(String.format("%s \tmax: %s \ttime: %s", "precise: ", precMax.getObjectiveValue().toString(),
+		System.out.println(String.format("%s \tmax: %s \ttime: %s", "precise: ", formatter.format(precMax.getObjectiveValue().doubleValue()),
 				(System.currentTimeMillis()-starttime)));
-		System.out.println(String.format("%s nonneg: %s,\tslack: %s", "infeasibility: ", precMax.getPrimalNonnegInfeas().toString(), 
-				precMax.getPrimalSlackInfeas().toString()));
-		System.out.println(String.format("%s slack: %s", "dual infeas: ", precMax.getDualSlackInfeas().toString()));
+		System.out.println(String.format("%s nonneg: %s,\tslack: %s", "infeasibility: ", formatter.format(precMax.getPrimalNonnegInfeas().doubleValue()), 
+				formatter.format(precMax.getPrimalSlackInfeas().doubleValue())));
+		System.out.println(String.format("%s slack: %s", "dual infeas: ", formatter.format(precMax.getDualSlackInfeas().doubleValue())));
 
 
 		
