@@ -1,6 +1,6 @@
 package hu.nsmdmp.cvectors;
 
-import hu.nsmdmp.vectors.Vector;
+import hu.nsmdmp.vector.Vector;
 
 import org.apfloat.Apfloat;
 

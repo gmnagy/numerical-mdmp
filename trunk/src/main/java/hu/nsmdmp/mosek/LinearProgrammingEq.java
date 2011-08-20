@@ -1,8 +1,8 @@
 package hu.nsmdmp.mosek;
 
-import hu.nsmdmp.matrices.Matrix;
+import hu.nsmdmp.matrix.Matrix;
 import hu.nsmdmp.utils.Converters;
-import hu.nsmdmp.vectors.Vector;
+import hu.nsmdmp.vector.Vector;
 import mosek.Env;
 import mosek.MosekException;
 import mosek.Task;

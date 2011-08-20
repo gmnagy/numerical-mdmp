@@ -3,10 +3,10 @@ package hu.nsmdmp.mosek;
 import java.util.Arrays;
 
 import hu.nsmdmp.ApfloatUtils;
-import hu.nsmdmp.matrices.Matrix;
-import hu.nsmdmp.matrices.MatrixUtils;
+import hu.nsmdmp.matrix.Matrix;
+import hu.nsmdmp.matrix.MatrixUtils;
 import hu.nsmdmp.utils.Precision;
-import hu.nsmdmp.vectors.Vector;
+import hu.nsmdmp.vector.Vector;
 import mosek.MosekException;
 
 import org.apfloat.Apfloat;

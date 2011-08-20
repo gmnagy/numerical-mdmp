@@ -2,8 +2,8 @@ package hu.nsmdmp.example;
 
 import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.cvectors.CVectorFactory;
-import hu.nsmdmp.matrices.MatrixUtils;
-import hu.nsmdmp.vectors.Vector;
+import hu.nsmdmp.matrixfactory.Variation;
+import hu.nsmdmp.vector.Vector;
 import mosek.MosekException;
 
 import org.apfloat.Apfloat;
@@ -41,6 +41,6 @@ public class Experiments5 extends AExperiments {
 
 	@Override
 	protected Vector getCVector(Apfloat[][] vSet) {
-		return CVectorFactory.getExpCVector(MatrixUtils.createVariation(vSet));
+		return CVectorFactory.getExpCVector(Variation.createVariation(vSet));
 	}
 }

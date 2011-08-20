@@ -1,7 +1,7 @@
 package hu.nsmdmp.mosek;
 
 import hu.nsmdmp.ApfloatUtils;
-import hu.nsmdmp.matrices.Matrix;
+import hu.nsmdmp.matrix.Matrix;
 
 import org.apfloat.Apfloat;
 

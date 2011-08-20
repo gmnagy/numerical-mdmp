@@ -3,12 +3,9 @@ package hu.nsmdmp.example;
 import hu.nsmdmp.cvectors.CVectorFactory;
 import hu.nsmdmp.distributions.BivPoissDistrVector;
 import hu.nsmdmp.distributions.TruncBivPoissArray;
-import hu.nsmdmp.matrices.MatrixUtils;
+import hu.nsmdmp.matrixfactory.Variation;
 import hu.nsmdmp.utils.Precision;
-import hu.nsmdmp.vectors.Vector;
-
-import java.util.Arrays;
-
+import hu.nsmdmp.vector.Vector;
 import mosek.MosekException;
 
 import org.apfloat.Apfloat;
@@ -19,14 +16,14 @@ public class Experiments4 extends AExperiments {
 	@Test
 	@Override
 	public void run() throws MosekException {
-		long starttime=System.currentTimeMillis();
+		long starttime = System.currentTimeMillis();
 		double[][] vectorSet = new double[2][101];
 		for (double i = 0; i <= 100; i++) {
 			vectorSet[0][(int) i] = i;
 			vectorSet[1][(int) i] = i;
 		}
 
-		System.out.println("Experiments 4 Vectorset prepare time: "+ (System.currentTimeMillis()-starttime));
+		System.out.println("Experiments 4 Vectorset prepare time: " + (System.currentTimeMillis() - starttime));
 		run(vectorSet);
 	}
 
@@ -50,6 +47,6 @@ public class Experiments4 extends AExperiments {
 
 	@Override
 	protected Vector getCVector(Apfloat[][] vSet) {
-		return CVectorFactory.getSumProbEx4CVector(MatrixUtils.createVariation(vSet));
+		return CVectorFactory.getSumProbEx4CVector(Variation.createVariation(vSet));
 	}
 }

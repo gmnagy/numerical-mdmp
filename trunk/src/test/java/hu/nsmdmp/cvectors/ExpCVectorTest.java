@@ -1,8 +1,8 @@
 package hu.nsmdmp.cvectors;
 
-import hu.nsmdmp.matrices.MatrixUtils;
+import hu.nsmdmp.matrixfactory.Variation;
 import hu.nsmdmp.utils.Converters;
-import hu.nsmdmp.vectors.Vector;
+import hu.nsmdmp.vector.Vector;
 
 import org.apfloat.Apfloat;
 import org.junit.Assert;
@@ -16,7 +16,7 @@ public class ExpCVectorTest {
 	@Test
 	public void test() {
 		double[][] m = { { 1, 2, 3 }, { 0, 1, 2 } };
-		Apfloat[][] variation = MatrixUtils.createVariation(Converters.convert(m));
+		Apfloat[][] variation = Variation.createVariation(Converters.convert(m));
 
 		Vector cVector = CVectorFactory.getExpCVector(variation);
 

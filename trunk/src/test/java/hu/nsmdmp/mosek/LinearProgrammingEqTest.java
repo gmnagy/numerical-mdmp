@@ -1,8 +1,8 @@
 package hu.nsmdmp.mosek;
 
-import hu.nsmdmp.matrices.Matrix;
-import hu.nsmdmp.matrices.MatrixUtils;
-import hu.nsmdmp.vectors.Vector;
+import hu.nsmdmp.matrix.Matrix;
+import hu.nsmdmp.matrix.MatrixUtils;
+import hu.nsmdmp.vector.Vector;
 import mosek.MosekException;
 
 import org.junit.Assert;

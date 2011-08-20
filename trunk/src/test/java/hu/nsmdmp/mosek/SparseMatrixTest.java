@@ -1,7 +1,7 @@
 package hu.nsmdmp.mosek;
 
-import hu.nsmdmp.matrices.Matrix;
-import hu.nsmdmp.matrices.MatrixUtils;
+import hu.nsmdmp.matrix.Matrix;
+import hu.nsmdmp.matrix.MatrixUtils;
 
 import org.junit.Assert;
 import org.junit.Test;

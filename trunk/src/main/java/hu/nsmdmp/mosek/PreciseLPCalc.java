@@ -3,9 +3,9 @@ package hu.nsmdmp.mosek;
 import org.apfloat.Apfloat;
 
 import hu.nsmdmp.ApfloatUtils;
-import hu.nsmdmp.matrices.Matrix;
-import hu.nsmdmp.matrixmath.MatrixMath;
-import hu.nsmdmp.vectors.Vector;
+import hu.nsmdmp.matrix.Matrix;
+import hu.nsmdmp.matrix.operation.MatrixMath;
+import hu.nsmdmp.vector.Vector;
 import mosek.MosekException;
 
 public class PreciseLPCalc {

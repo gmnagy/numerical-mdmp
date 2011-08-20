@@ -1,8 +1,8 @@
 package hu.nsmdmp.cvectors;
 
-import hu.nsmdmp.matrices.MatrixUtils;
+import hu.nsmdmp.matrixfactory.Variation;
 import hu.nsmdmp.utils.Converters;
-import hu.nsmdmp.vectors.Vector;
+import hu.nsmdmp.vector.Vector;
 
 import org.apfloat.Apfloat;
 import org.junit.Assert;
@@ -13,7 +13,7 @@ public class StairsCVectorTest {
 	@Test
 	public void test() {
 		double[][] m = { { 0, 1, 2 }, { 0, 1, 2 }, { 0, 1, 2 } };
-		Apfloat[][] variation = MatrixUtils.createVariation(Converters.convert(m));
+		Apfloat[][] variation = Variation.createVariation(Converters.convert(m));
 
 		Vector cVector = CVectorFactory.getStairsCVector(variation);
 
@@ -31,7 +31,7 @@ public class StairsCVectorTest {
 	@Test
 	public void test2() {
 		double[][] m = { { 0, 1, 2, 3 }, { 1, 2, 3, 4 } };
-		Apfloat[][] variation = MatrixUtils.createVariation(Converters.convert(m));
+		Apfloat[][] variation = Variation.createVariation(Converters.convert(m));
 
 		Vector cVector = CVectorFactory.getStairsCVector(variation);
 
