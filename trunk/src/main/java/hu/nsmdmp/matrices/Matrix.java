@@ -177,6 +177,10 @@ public class Matrix {
 		return A[i];
 	}
 
+	public void setRow(final int i, final Apfloat[] row) {
+		A[i] = row;
+	}
+
 	/**
 	 * Get a single element.
 	 * 
