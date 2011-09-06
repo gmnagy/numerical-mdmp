@@ -36,4 +36,13 @@ public class LUDecompositionTest {
 			Assert.assertTrue("U: ", false);
 		}
 	}
+	
+	@Test
+	public void test2() {
+		Matrix A = new Matrix(new double[][] { { 0, -1, 2 }, { 4, 11, 2 }, { 0, 0, 0 } });
+		
+		LUDecomposition lu = new LUDecomposition(A);
+
+		System.out.println(lu.getU());
+	}
 }

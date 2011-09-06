@@ -16,7 +16,7 @@ public class GaussJordanElimination {
 	private Matrix aug;
 
 	// Gauss-Jordan elimination with partial pivoting
-	public GaussJordanElimination(final Matrix A, final Vector b) {
+	GaussJordanElimination(final Matrix A, final Vector b) {
 		N = b.getColumnDimension();
 
 		// build augmented matrix
@@ -29,7 +29,9 @@ public class GaussJordanElimination {
 
 		// only need if you want to find certificate of infeasibility (or compute inverse)
 		for (int i = 0; i < N; i++) {
-			aug.set(i, N + i, ApfloatUtils.ONE);
+			for (int j = N; j < N + N; j++) {
+				aug.set(i, j, (i + N == j) ? ApfloatUtils.ONE : ApfloatUtils.ZERO);
+			}
 		}
 
 		for (int i = 0; i < N; i++) {
@@ -105,14 +107,21 @@ public class GaussJordanElimination {
 		aug.set(p, q, ApfloatUtils.ONE);
 	}
 
-	public Vector primal() {
+	/**
+	 * Extract solution to Ax = b.
+	 * 
+	 * @return <code>null</code> if matrix is singular.
+	 */
+	Vector primal() {
 		Vector x = new Vector(N);
 
 		for (int i = 0; i < N; i++) {
 			if (aug.get(i, i).signum() != 0) {
 				x.set(i, aug.get(i, N + N).divide(aug.get(i, i)));
 			} else if (aug.get(i, N + N).signum() != 0) {
-				return null;
+				throw new RuntimeException("Matrix is singular.");
+			} else {
+				System.out.println("Infinitely many solutions by " + i + "!!");
 			}
 		}
 

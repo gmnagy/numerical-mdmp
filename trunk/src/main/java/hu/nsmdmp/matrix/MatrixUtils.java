@@ -22,6 +22,8 @@ public final class MatrixUtils {
 			sb.append("}\n");
 		}
 
+		sb.deleteCharAt(sb.length() - 1);
+
 		return sb.toString();
 	}
 
@@ -127,7 +129,7 @@ public final class MatrixUtils {
 
 //				if (e.compareTo(f) != 0) {
 				if (Math.abs(x.doubleValue() - y.doubleValue()) > e) {
-					System.out.println(String.format("[%d, %d] %s != %s", i, j, x, y));
+					System.err.println(String.format("[%d, %d] %s != %s", i, j, x, y));
 					return false;
 				}
 			}
@@ -148,7 +150,7 @@ public final class MatrixUtils {
 
 //			if (e.compareTo(f) != 0) {
 			if (Math.abs(x.doubleValue() - y.doubleValue()) > e) {
-				System.out.println(String.format("%s != %s", x, y));
+				System.err.println(String.format("%s != %s", x, y));
 
 				return false;
 			}
@@ -170,7 +172,7 @@ public final class MatrixUtils {
 
 			for (int j = 0; j < a[i].length; j++) {
 				if (Math.abs(a[i][j] - b[i][j]) > e) {
-					System.out.println(String.format("[%d, %d] %s != %s", i, j, a[i][j], b[i][j]));
+					System.err.println(String.format("[%d, %d] %s != %s", i, j, a[i][j], b[i][j]));
 					return false;
 				}
 			}
@@ -191,7 +193,7 @@ public final class MatrixUtils {
 
 			for (int j = 0; j < a[i].length; j++) {
 				if (a[i][j] != b[i][j]) {
-					System.out.println(String.format("[%d, %d] %s != %s", i, j, a[i][j], b[i][j]));
+					System.err.println(String.format("[%d, %d] %s != %s", i, j, a[i][j], b[i][j]));
 					return false;
 				}
 			}
@@ -208,7 +210,7 @@ public final class MatrixUtils {
 
 		for (int i = 0; i < a.length; i++) {
 			if (Math.abs(a[i] - b[i]) > e) {
-				System.out.println(String.format("%s != %s", a[i], b[i]));
+				System.err.println(String.format("%s != %s", a[i], b[i]));
 
 				return false;
 			}
