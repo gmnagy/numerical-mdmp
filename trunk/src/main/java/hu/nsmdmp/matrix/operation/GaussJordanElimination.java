@@ -112,19 +112,50 @@ public class GaussJordanElimination {
 	 * 
 	 * @return <code>null</code> if matrix is singular.
 	 */
-	Vector primal() {
+	private Vector primal() {
 		Vector x = new Vector(N);
 
 		for (int i = 0; i < N; i++) {
 			if (aug.get(i, i).signum() != 0) {
 				x.set(i, aug.get(i, N + N).divide(aug.get(i, i)));
 			} else if (aug.get(i, N + N).signum() != 0) {
-				throw new RuntimeException("Matrix is singular.");
-			} else {
-				System.out.println("Infinitely many solutions by " + i + "!!");
+				return null;
 			}
 		}
 
 		return x;
+	}
+
+	private Vector dual() {
+		Vector y = new Vector(N);
+
+		for (int i = 0; i < N; i++) {
+			if (aug.get(i, i).signum() == 0 && aug.get(i, N + N).signum() != 0) {
+				for (int j = 0; j < N; j++) {
+					y.set(j, aug.get(i, N + j));
+				}
+
+				return y;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Does the system have a solution?
+	 * 
+	 */
+	private boolean isFeasible() {
+		return primal() != null;
+	}
+
+	Vector getSolution() {
+		if (isFeasible()) {
+			return primal();
+		}
+
+		throw new RuntimeException("Matrix is singular.");
+//		return dual();
 	}
 }

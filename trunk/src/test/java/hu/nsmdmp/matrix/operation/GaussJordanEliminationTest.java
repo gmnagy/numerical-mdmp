@@ -19,7 +19,7 @@ public class GaussJordanEliminationTest {
 		Vector b = new Vector(new double[] { 4, 2, 36 });
 
 		GaussJordanElimination gaussian = new GaussJordanElimination(A, b);
-		Vector x = gaussian.primal();
+		Vector x = gaussian.getSolution();
 
 		Vector bb = MatrixMath.multiply(A, x);
 
@@ -41,7 +41,7 @@ public class GaussJordanEliminationTest {
 		Vector b = new Vector(new double[] { 4, -2, 9 });
 
 		GaussJordanElimination gaussian = new GaussJordanElimination(A, b);
-		Vector x = gaussian.primal();
+		Vector x = gaussian.getSolution();
 
 		Vector bb = MatrixMath.multiply(A, x);
 
@@ -53,24 +53,21 @@ public class GaussJordanEliminationTest {
 		}
 	}
 
-	/**
-	 * 5-by-5 singular: no solutions
-	 */
-	@Test
-	public void test3() {
-		Matrix A = new Matrix(new double[][] { { 2, -3, -1, 2, 3 }, { 4, -4, -1, 4, 11 }, { 2, -5, -2, 2, -1 }, { 0, 2, 1, 0, 4 }, { -4, 6, 0, 0, 7 } });
-		Vector b = new Vector(new double[] { 4, 4, 9, -6, 5 });
-
-		GaussJordanElimination gaussian = new GaussJordanElimination(A, b);
-
-		try {
-			gaussian.primal();
-		} catch (RuntimeException e) {
-			Assert.assertEquals("Matrix is singular.", e.getMessage());
-
-			return;
-		}
-	}
+//	/**
+//	 * 5-by-5 singluar: infinitely many solutions
+//	 */
+//	@Test
+//	public void test3() {
+//		Matrix A = new Matrix(new double[][] { { 2, -3, -1, 2, 3 }, { 4, -4, -1, 4, 11 }, { 2, -5, -2, 2, -1 }, { 0, 2, 1, 0, 4 }, { -4, 6, 0, 0, 7 } });
+//		Vector b = new Vector(new double[] { 4, 4, 9, -5, 5 });
+//
+//		GaussJordanElimination gaussian = new GaussJordanElimination(A, b);
+//		Vector x = gaussian.getSolution();
+//		System.out.println(x);
+//
+//		
+//		Vector bb = MatrixMath.multiply(A, x);
+//	}
 
 	/**
 	 * 3-by-3 singluar: infinitely many solutions
@@ -82,38 +79,13 @@ public class GaussJordanEliminationTest {
 		Vector b = new Vector(new double[] { -3, 1, 6 });
 
 		GaussJordanElimination gaussian = new GaussJordanElimination(A, b);
-		Vector x = gaussian.primal();
+		Vector x = gaussian.getSolution();
 		System.out.println(x);
 
 		// legyen 0, ahol vetelen sok megoldas van
 		x.set(2, ApfloatUtils.ZERO);
 
 		Vector bb = MatrixMath.multiply(A, x);
-
-		if (!b.equals(bb)) {
-			System.out.println(b);
-			System.err.println(bb);
-
-			Assert.assertTrue(false);
-		}
-
-		// legyen 1, ahol vetelen sok megoldas van
-		x.set(2, ApfloatUtils.ONE);
-		System.out.println(x);
-
-		bb = MatrixMath.multiply(A, x);
-
-		if (!b.equals(bb)) {
-			System.out.println(b);
-			System.err.println(bb);
-
-			Assert.assertTrue(false);
-		}
-
-		// legyen 2, ahol vetelen sok megoldas van
-		x.set(2, ApfloatUtils.TWO);
-
-		bb = MatrixMath.multiply(A, x);
 
 		if (!b.equals(bb)) {
 			System.out.println(b);
@@ -135,12 +107,15 @@ public class GaussJordanEliminationTest {
 		GaussJordanElimination gaussian = new GaussJordanElimination(A, b);
 
 		try {
-			gaussian.primal();
+			Vector x = gaussian.getSolution();
+			System.out.println(x);
 		} catch (RuntimeException e) {
 			Assert.assertEquals("Matrix is singular.", e.getMessage());
 
 			return;
 		}
+
+		Assert.assertTrue(false);
 	}
 
 }
