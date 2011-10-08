@@ -2,7 +2,7 @@ package hu.nsmdmp.example;
 
 import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.cvectors.CVectorFactory;
-import hu.nsmdmp.matrixfactory.Variation;
+import hu.nsmdmp.math.Variation;
 import hu.nsmdmp.vector.Vector;
 import mosek.MosekException;
 

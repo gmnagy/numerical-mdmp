@@ -1,16 +1,16 @@
-package hu.nsmdmp.utils;
+package hu.nsmdmp.math;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public final class Exponents {
+public final class TotalOrder {
 
 	/**
 	 * a1 + a2 + ... <= maxOrder.
 	 * 
 	 */
-	public static List<int[]> getExponents(final int maxOrder, final int s) {
+	public static List<int[]> getOrders(final int maxOrder, final int s) {
 		List<int[]> expList = new LinkedList<int[]>();
 
 		int[] expRow = new int[s];

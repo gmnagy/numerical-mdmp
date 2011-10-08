@@ -128,7 +128,6 @@ public final class MatrixMath {
 	 */
 	public static Matrix getTransformationMatrix(final Matrix A, final Matrix B) {
 		if (A.getColumnDimension() >= A.getRowDimension()) {
-			System.out.println("pocs");
 			return calcTransformationMatrix(A, B);
 		} else {
 			return calcTransformationMatrix(completeWithIdentity(A), completeWithIdentity(B));
@@ -145,8 +144,6 @@ public final class MatrixMath {
 			for (int j = 0; j < tA.getColumnDimension(); j++) {
 				b.set(j, B.get(i, j));
 			}
-
-			System.out.println("bb" + b);
 
 			GaussJordanElimination gaussian = new GaussJordanElimination(tA, b);
 			Vector t = gaussian.getSolution();

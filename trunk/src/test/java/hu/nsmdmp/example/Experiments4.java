@@ -3,7 +3,7 @@ package hu.nsmdmp.example;
 import hu.nsmdmp.cvectors.CVectorFactory;
 import hu.nsmdmp.distributions.BivPoissDistrVector;
 import hu.nsmdmp.distributions.TruncBivPoissArray;
-import hu.nsmdmp.matrixfactory.Variation;
+import hu.nsmdmp.math.Variation;
 import hu.nsmdmp.utils.Precision;
 import hu.nsmdmp.vector.Vector;
 import mosek.MosekException;

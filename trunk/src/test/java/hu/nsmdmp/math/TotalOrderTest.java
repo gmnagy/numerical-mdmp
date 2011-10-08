@@ -1,4 +1,6 @@
-package hu.nsmdmp.utils;
+package hu.nsmdmp.math;
+
+import hu.nsmdmp.math.TotalOrder;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -11,7 +13,7 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(value = Parameterized.class)
-public class ExponentsTest {
+public class TotalOrderTest {
 
 	private final int maxOrder;
 
@@ -19,7 +21,7 @@ public class ExponentsTest {
 
 	private final List<int[]> expected;
 
-	public ExponentsTest(final int maxOrder, final int size, final List<int[]> expected) {
+	public TotalOrderTest(final int maxOrder, final int size, final List<int[]> expected) {
 		this.maxOrder = maxOrder;
 		this.size = size;
 		this.expected = expected;
@@ -34,9 +36,9 @@ public class ExponentsTest {
 
 	@Test
 	public void test() {
-		List<int[]> exps = Exponents.getExponents(maxOrder, size);
+		List<int[]> exps = TotalOrder.getOrders(maxOrder, size);
 
-		Assert.assertTrue(Exponents.equals(exps, expected));
+		Assert.assertTrue(TotalOrder.equals(exps, expected));
 	}
 
 	/**

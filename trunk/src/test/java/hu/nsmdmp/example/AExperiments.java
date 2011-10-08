@@ -1,9 +1,9 @@
 package hu.nsmdmp.example;
 
+import hu.nsmdmp.math.Variation;
 import hu.nsmdmp.matrix.Matrix;
 import hu.nsmdmp.matrix.operation.MatrixMath;
 import hu.nsmdmp.matrixfactory.MatrixFactory;
-import hu.nsmdmp.matrixfactory.Variation;
 import hu.nsmdmp.mosek.LPSolution;
 import hu.nsmdmp.mosek.LinearProgrammingEq;
 import hu.nsmdmp.mosek.PreciseLPCalc;

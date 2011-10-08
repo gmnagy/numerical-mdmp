@@ -1,8 +1,9 @@
 package hu.nsmdmp.matrixfactory;
 
 import hu.nsmdmp.ApfloatUtils;
+import hu.nsmdmp.math.TotalOrder;
+import hu.nsmdmp.math.Variation;
 import hu.nsmdmp.matrix.Matrix;
-import hu.nsmdmp.utils.Exponents;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ abstract class AbstractPolynomialMatrix {
 	Matrix create(final Apfloat[][] vectorSet, final int maxOrder) {
 		int s = vectorSet.length;
 
-		List<int[]> exponents = Exponents.getExponents(maxOrder, s);
+		List<int[]> exponents = TotalOrder.getOrders(maxOrder, s);
 		int m = exponents.size();
 		int n = Variation.getVariationsNumber(vectorSet);
 		Matrix M = new Matrix(m, n);
@@ -66,9 +67,7 @@ abstract class AbstractPolynomialMatrix {
 		Apfloat b = ApfloatUtils.ONE;
 
 		for (int k = 0; k < s; k++) {
-			int exp = exponents[k];
-
-			b = b.multiply(getPolynomialValue(exp, variation[k]));
+			b = b.multiply(getPolynomialValue(exponents[k], variation[k]));
 		}
 
 		return b;

@@ -1,5 +1,8 @@
 package hu.nsmdmp.utils;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.apfloat.Apfloat;
 
 public class Converters {
@@ -47,6 +50,18 @@ public class Converters {
 
 		for (int i = 0; i < value.length; i++) {
 			a[i] = value[i].doubleValue();
+		}
+
+		return a;
+	}
+
+	public static Apfloat[][] convert(final List<Apfloat[]> value) {
+		Apfloat[][] a = new Apfloat[value.size()][];
+
+		int i = 0;
+		for (Apfloat[] v : value) {
+			a[i] = Arrays.copyOf(v, v.length);
+			i++;
 		}
 
 		return a;
