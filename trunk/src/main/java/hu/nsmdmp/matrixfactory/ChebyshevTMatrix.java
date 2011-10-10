@@ -74,7 +74,7 @@ class ChebyshevTMatrix extends AbstractPolynomialMatrix {
 		int i = 0;
 		for (double coef : polynom.getCoefficients()) {
 			Apfloat power = pow(value, i);
-			Apfloat m = power.multiply(new Apfloat(coef));
+			Apfloat m = power.multiply(ApfloatUtils.valueOf(coef));
 			r = r.add(m);
 
 			i++;

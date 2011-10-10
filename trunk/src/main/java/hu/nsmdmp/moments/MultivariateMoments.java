@@ -25,7 +25,7 @@ public class MultivariateMoments {
 	 *            dimensional
 	 * @return {a(1), ..., a(s)}-order cross-binomial moments
 	 */
-	public static Apfloat[] createBinomialMoments(final Apfloat[] probabilities, final int n, final int m, final int s) {
+	public static List<BinomialMoment> createBinomialMoments(final Apfloat[] probabilities, final int n, final int m, final int s) {
 		// provide: n(1) + ... + n(2) = n
 		int nj = n / s;
 
@@ -34,11 +34,11 @@ public class MultivariateMoments {
 		// {a(1), ..., a(s)}, where a(1) + ... + a(s) <= m 
 		List<int[]> alphasList = TotalOrder.getOrders(m, s);
 		Iterator<int[]> it = alphasList.iterator();
-		it.next(); // skip first: (0,0)
 
 		// the results
-		Apfloat[] binomialMoments = new Apfloat[alphasList.size()];
-		binomialMoments[0] = ApfloatUtils.ONE;
+		List<BinomialMoment> binomialMoments = new ArrayList<BinomialMoment>();
+		// skip first: (0,0, ... 0)
+		binomialMoments.add(new BinomialMoment(it.next(), ApfloatUtils.ONE));
 
 		int i = 1;
 		while (it.hasNext()) {
@@ -59,7 +59,7 @@ public class MultivariateMoments {
 				ithBinomMom = ithBinomMom.add(probMap.get(tag));
 			}
 
-			binomialMoments[i] = ithBinomMom;
+			binomialMoments.add(new BinomialMoment(alphas, ithBinomMom));
 			i++;
 		}
 
@@ -132,5 +132,18 @@ public class MultivariateMoments {
 		}
 
 		return variations;
+	}
+
+	public static Apfloat[] convertBinomMomToPowerMom(final List<BinomialMoment> binomialMoments) {
+		Apfloat[] powerMoments = new Apfloat[binomialMoments.size()];
+		powerMoments[0] = ApfloatUtils.ONE;
+
+		for (BinomialMoment binomialMoment : binomialMoments) {
+			for (int alpha : binomialMoment.alphas) {
+
+			}
+		}
+
+		return powerMoments;
 	}
 }

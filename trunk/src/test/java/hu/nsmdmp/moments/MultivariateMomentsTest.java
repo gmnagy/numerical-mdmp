@@ -1,10 +1,12 @@
 package hu.nsmdmp.moments;
 
-import hu.nsmdmp.matrix.MatrixUtils;
-import hu.nsmdmp.utils.Converters;
+import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.utils.IOFile;
+import hu.nsmdmp.utils.Utils;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apfloat.Apfloat;
 import org.junit.Assert;
@@ -20,12 +22,16 @@ public class MultivariateMomentsTest {
 	public void testCreateBinomialMoments1() throws IOException {
 		Apfloat[] probabilities = IOFile.read("prob.txt");
 
-		Apfloat[] binomMoms = MultivariateMoments.createBinomialMoments(probabilities, 4, 2, 1);
-		Apfloat[] expected = Converters.convert(new double[] { 1, 1.059, 1.271 });
+		List<BinomialMoment> binomMoms = MultivariateMoments.createBinomialMoments(probabilities, 4, 2, 1);
 
-		if (!MatrixUtils.equals(expected, binomMoms)) {
-			System.out.println(MatrixUtils.print(expected));
-			System.err.println(MatrixUtils.print(binomMoms));
+		List<BinomialMoment> expected = new ArrayList<BinomialMoment>();
+		expected.add(new BinomialMoment(new int[] { 0 }, ApfloatUtils.ONE));
+		expected.add(new BinomialMoment(new int[] { 1 }, ApfloatUtils.valueOf(1.059)));
+		expected.add(new BinomialMoment(new int[] { 2 }, ApfloatUtils.valueOf(1.271)));
+
+		if (!Utils.equals(expected, binomMoms)) {
+			System.out.println(expected);
+			System.err.println(binomMoms);
 
 			Assert.assertTrue(false);
 		}
@@ -39,12 +45,19 @@ public class MultivariateMomentsTest {
 	public void testCreateBinomialMoments2() throws IOException {
 		Apfloat[] probabilities = IOFile.read("prob.txt");
 
-		Apfloat[] binomMoms = MultivariateMoments.createBinomialMoments(probabilities, 4, 2, 2);
-		Apfloat[] expected = Converters.convert(new double[] { 1, 0.597, 0.224, 0.462, 0.897, 0.15 });
+		List<BinomialMoment> binomMoms = MultivariateMoments.createBinomialMoments(probabilities, 4, 2, 2);
 
-		if (!MatrixUtils.equals(expected, binomMoms)) {
-			System.out.println(MatrixUtils.print(expected));
-			System.err.println(MatrixUtils.print(binomMoms));
+		List<BinomialMoment> expected = new ArrayList<BinomialMoment>();
+		expected.add(new BinomialMoment(new int[] { 0, 0 }, ApfloatUtils.ONE));
+		expected.add(new BinomialMoment(new int[] { 1, 0 }, ApfloatUtils.valueOf(0.597)));
+		expected.add(new BinomialMoment(new int[] { 2, 0 }, ApfloatUtils.valueOf(0.224)));
+		expected.add(new BinomialMoment(new int[] { 0, 1 }, ApfloatUtils.valueOf(0.462)));
+		expected.add(new BinomialMoment(new int[] { 1, 1 }, ApfloatUtils.valueOf(0.897)));
+		expected.add(new BinomialMoment(new int[] { 0, 2 }, ApfloatUtils.valueOf(0.15)));
+
+		if (!Utils.equals(expected, binomMoms)) {
+			System.out.println(expected);
+			System.err.println(binomMoms);
 
 			Assert.assertTrue(false);
 		}
@@ -58,12 +71,23 @@ public class MultivariateMomentsTest {
 	public void testCreateBinomialMoments3() throws IOException {
 		Apfloat[] probabilities = IOFile.read("prob.txt");
 
-		Apfloat[] binomMoms = MultivariateMoments.createBinomialMoments(probabilities, 6, 3, 2);
-		Apfloat[] expected = Converters.convert(new double[] { 1, 0.754, 0.62, 0.157, 0.774, 1.922, 0.986, 0.457, 0.849, 0.09 });
+		List<BinomialMoment> binomMoms = MultivariateMoments.createBinomialMoments(probabilities, 6, 3, 2);
 
-		if (!MatrixUtils.equals(expected, binomMoms)) {
-			System.out.println(MatrixUtils.print(expected));
-			System.err.println(MatrixUtils.print(binomMoms));
+		List<BinomialMoment> expected = new ArrayList<BinomialMoment>();
+		expected.add(new BinomialMoment(new int[] { 0, 0 }, ApfloatUtils.ONE));
+		expected.add(new BinomialMoment(new int[] { 1, 0 }, ApfloatUtils.valueOf(0.754)));
+		expected.add(new BinomialMoment(new int[] { 2, 0 }, ApfloatUtils.valueOf(0.62)));
+		expected.add(new BinomialMoment(new int[] { 3, 0 }, ApfloatUtils.valueOf(0.157)));
+		expected.add(new BinomialMoment(new int[] { 0, 1 }, ApfloatUtils.valueOf(0.774)));
+		expected.add(new BinomialMoment(new int[] { 1, 1 }, ApfloatUtils.valueOf(1.922)));
+		expected.add(new BinomialMoment(new int[] { 2, 1 }, ApfloatUtils.valueOf(0.986)));
+		expected.add(new BinomialMoment(new int[] { 0, 2 }, ApfloatUtils.valueOf(0.457)));
+		expected.add(new BinomialMoment(new int[] { 1, 2 }, ApfloatUtils.valueOf(0.849)));
+		expected.add(new BinomialMoment(new int[] { 0, 3 }, ApfloatUtils.valueOf(0.09)));
+
+		if (!Utils.equals(expected, binomMoms)) {
+			System.out.println(expected);
+			System.err.println(binomMoms);
 
 			Assert.assertTrue(false);
 		}

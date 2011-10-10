@@ -1,8 +1,8 @@
 package hu.nsmdmp.math;
 
 import hu.nsmdmp.math.Variation;
-import hu.nsmdmp.matrix.MatrixUtils;
 import hu.nsmdmp.utils.Converters;
+import hu.nsmdmp.utils.Utils;
 
 import java.util.List;
 
@@ -26,9 +26,9 @@ public class VariationTest {
 		Apfloat[][] variation = Converters.convert(v);
 		double[][] expected = { { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 1, 1 }, { 2, 1 }, { 3, 1 }, { 4, 1 }, { 1, 2 }, { 2, 2 }, { 3, 2 }, { 4, 2 }, { 1, 3 }, { 2, 3 }, { 3, 3 }, { 4, 3 } };
 
-		if (!MatrixUtils.equals(Converters.convert(expected), variation)) {
-			System.out.println(MatrixUtils.print(expected));
-			System.err.println(MatrixUtils.print(variation));
+		if (!Utils.equals(Converters.convert(expected), variation)) {
+			System.out.println(Utils.print(expected));
+			System.err.println(Utils.print(variation));
 
 			Assert.assertTrue(false);
 		}
@@ -43,9 +43,9 @@ public class VariationTest {
 		double[][] expected = { { -4, 0 }, { -3, 0 }, { -2, 0 }, { -1, 0 }, { -4, 1 }, { -3, 1 }, { -2, 1 }, { -1, 1 }, { -4, 2 }, { -3, 2 }, { -2, 2 }, { -1, 2 }, { -4, 3 }, { -3, 3 }, { -2, 3 },
 				{ -1, 3 } };
 
-		if (!MatrixUtils.equals(Converters.convert(expected), variation)) {
-			System.out.println(MatrixUtils.print(expected));
-			System.err.println(MatrixUtils.print(variation));
+		if (!Utils.equals(Converters.convert(expected), variation)) {
+			System.out.println(Utils.print(expected));
+			System.err.println(Utils.print(variation));
 
 			Assert.assertTrue(false);
 		}
@@ -60,9 +60,9 @@ public class VariationTest {
 		double[][] expected = { { 1, 1, 5, 6 }, { 2, 1, 5, 6 }, { 3, 1, 5, 6 }, { 1, 2, 5, 6 }, { 2, 2, 5, 6 }, { 3, 2, 5, 6 }, { 1, 1, 5, 7 }, { 2, 1, 5, 7 }, { 3, 1, 5, 7 }, { 1, 2, 5, 7 },
 				{ 2, 2, 5, 7 }, { 3, 2, 5, 7 } };
 
-		if (!MatrixUtils.equals(Converters.convert(expected), variation)) {
-			System.out.println(MatrixUtils.print(expected));
-			System.err.println(MatrixUtils.print(variation));
+		if (!Utils.equals(Converters.convert(expected), variation)) {
+			System.out.println(Utils.print(expected));
+			System.err.println(Utils.print(variation));
 
 			Assert.assertTrue(false);
 		}

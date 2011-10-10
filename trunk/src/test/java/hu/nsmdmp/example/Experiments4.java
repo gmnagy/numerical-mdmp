@@ -1,10 +1,10 @@
 package hu.nsmdmp.example;
 
+import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.cvectors.CVectorFactory;
 import hu.nsmdmp.distributions.BivPoissDistrVector;
 import hu.nsmdmp.distributions.TruncBivPoissArray;
 import hu.nsmdmp.math.Variation;
-import hu.nsmdmp.utils.Precision;
 import hu.nsmdmp.vector.Vector;
 import mosek.MosekException;
 
@@ -34,7 +34,7 @@ public class Experiments4 extends AExperiments {
 		double[] bivPoissDistrVector = BivPoissDistrVector.getBivPoissDistrVector(TruncBivPoissArray.getTruncBivPoissArray(1, 2, 3, 100, 100));
 		//System.out.println(Arrays.toString(bivPoissDistrVector));
 		for (int i = 0; i < n; i++) {
-			D.set(i, new Apfloat(bivPoissDistrVector[i], Precision.SCALE));
+			D.set(i, ApfloatUtils.valueOf(bivPoissDistrVector[i]));
 		}
 
 		return D;

@@ -1,7 +1,7 @@
 package hu.nsmdmp.mosek;
 
 import hu.nsmdmp.matrix.Matrix;
-import hu.nsmdmp.matrix.MatrixUtils;
+import hu.nsmdmp.utils.Utils;
 import hu.nsmdmp.vector.Vector;
 import mosek.MosekException;
 
@@ -25,9 +25,9 @@ public class LinearProgrammingEqTest {
 
 		double expectedMin[] = { 0.5, 0, 0, 0.5 };
 
-		if (!MatrixUtils.equals(expectedMin, rMin)) {
-			System.out.println(MatrixUtils.print(expectedMin));
-			System.out.println(MatrixUtils.print(rMin));
+		if (!Utils.equals(expectedMin, rMin)) {
+			System.out.println(Utils.print(expectedMin));
+			System.out.println(Utils.print(rMin));
 
 			Assert.assertTrue(false);
 		}
@@ -37,9 +37,9 @@ public class LinearProgrammingEqTest {
 
 		double expectedMax[] = { 0, 0.5, 0.5, 0 };
 
-		if (!MatrixUtils.equals(expectedMax, rMax)) {
-			System.out.println(MatrixUtils.print(expectedMax));
-			System.out.println(MatrixUtils.print(rMax));
+		if (!Utils.equals(expectedMax, rMax)) {
+			System.out.println(Utils.print(expectedMax));
+			System.out.println(Utils.print(rMax));
 
 			Assert.assertTrue(false);
 		}

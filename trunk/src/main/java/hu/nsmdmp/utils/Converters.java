@@ -1,5 +1,7 @@
 package hu.nsmdmp.utils;
 
+import hu.nsmdmp.ApfloatUtils;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,7 +16,7 @@ public class Converters {
 			a[i] = new Apfloat[value[i].length];
 
 			for (int j = 0; j < value[i].length; j++) {
-				a[i][j] = new Apfloat(value[i][j], Precision.SCALE);
+				a[i][j] = ApfloatUtils.valueOf(value[i][j]);
 			}
 		}
 
@@ -39,7 +41,7 @@ public class Converters {
 		Apfloat[] a = new Apfloat[value.length];
 
 		for (int i = 0; i < value.length; i++) {
-			a[i] = new Apfloat(value[i], Precision.SCALE);
+			a[i] = ApfloatUtils.valueOf(value[i]);
 		}
 
 		return a;

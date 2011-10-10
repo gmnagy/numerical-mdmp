@@ -1,7 +1,7 @@
 package hu.nsmdmp.vector;
 
-import hu.nsmdmp.matrix.MatrixUtils;
-import hu.nsmdmp.utils.Precision;
+import hu.nsmdmp.ApfloatUtils;
+import hu.nsmdmp.utils.Utils;
 
 import org.apfloat.Apfloat;
 
@@ -56,7 +56,7 @@ public class Vector implements IVector {
 		this.V = new Apfloat[n];
 
 		for (int i = 0; i < n; i++) {
-			this.V[i] = new Apfloat(V[i], Precision.SCALE);
+			this.V[i] = ApfloatUtils.valueOf(V[i]);
 		}
 	}
 
@@ -133,11 +133,11 @@ public class Vector implements IVector {
 			return false;
 		}
 
-		return MatrixUtils.equals(getArray(), ((Vector) obj).getArray());
+		return Utils.equals(getArray(), ((Vector) obj).getArray());
 	}
 
 	@Override
 	public String toString() {
-		return MatrixUtils.print(V);
+		return Utils.print(V);
 	}
 }

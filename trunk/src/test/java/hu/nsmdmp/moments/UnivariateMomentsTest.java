@@ -1,8 +1,8 @@
 package hu.nsmdmp.moments;
 
-import hu.nsmdmp.matrix.MatrixUtils;
 import hu.nsmdmp.utils.Converters;
 import hu.nsmdmp.utils.IOFile;
+import hu.nsmdmp.utils.Utils;
 
 import java.io.IOException;
 
@@ -19,9 +19,9 @@ public class UnivariateMomentsTest {
 		Apfloat[] binomMoms = UnivariateMoments.createBinomialMoments(probabilities, 6, 3);
 		Apfloat[] expected = Converters.convert(new double[] { 1, 1.528, 2.999, 2.082 });
 
-		if (!MatrixUtils.equals(expected, binomMoms)) {
-			System.out.println(MatrixUtils.print(expected));
-			System.err.println(MatrixUtils.print(binomMoms));
+		if (!Utils.equals(expected, binomMoms)) {
+			System.out.println(Utils.print(expected));
+			System.err.println(Utils.print(binomMoms));
 
 			Assert.assertTrue(false);
 		}
@@ -36,9 +36,9 @@ public class UnivariateMomentsTest {
 
 		Apfloat[] expected = Converters.convert(new double[] { 1, 1.528, 7.526, 32.014 });
 
-		if (!MatrixUtils.equals(expected, powerMoms)) {
-			System.out.println(MatrixUtils.print(expected));
-			System.err.println(MatrixUtils.print(powerMoms));
+		if (!Utils.equals(expected, powerMoms)) {
+			System.out.println(Utils.print(expected));
+			System.err.println(Utils.print(powerMoms));
 
 			Assert.assertTrue(false);
 		}

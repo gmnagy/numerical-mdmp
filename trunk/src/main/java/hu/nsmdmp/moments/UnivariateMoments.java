@@ -40,7 +40,7 @@ public class UnivariateMoments {
 		powerMoments[1] = binomMoms[1];
 
 		for (int i = 2; i < binomMoms.length; i++) {
-			Apfloat ithPowerMom = binomMoms[i].multiply(new Apfloat(Math.factorial(i), Precision.SCALE));
+			Apfloat ithPowerMom = binomMoms[i].multiply(ApfloatUtils.valueOf(Math.factorial(i)));
 
 			for (int j = 1; j < i; j++) {
 				Apfloat jthPowerMom = powerMoments[j].multiply(new Apfloat(-1 * Math.stirling(i, j), Precision.SCALE));

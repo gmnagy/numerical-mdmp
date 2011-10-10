@@ -1,11 +1,13 @@
-package hu.nsmdmp.matrix;
+package hu.nsmdmp.utils;
+
+import hu.nsmdmp.matrix.Matrix;
+
+import java.util.Collection;
+import java.util.Iterator;
 
 import org.apfloat.Apfloat;
-import org.apfloat.spi.RadixConstants;
 
-public final class MatrixUtils {
-
-	private static final double e = 0.00000000000001;
+public final class Utils {
 
 	public static String print(final Apfloat[][] m) {
 		StringBuilder sb = new StringBuilder();
@@ -124,12 +126,9 @@ public final class MatrixUtils {
 			}
 
 			for (int j = 0; j < a[i].length; j++) {
-				Apfloat x = new Apfloat(a[i][j].doubleValue(), RadixConstants.DOUBLE_PRECISION[10]);
-				Apfloat y = new Apfloat(b[i][j].doubleValue(), RadixConstants.DOUBLE_PRECISION[10]);
-
-//				if (e.compareTo(f) != 0) {
-				if (Math.abs(x.doubleValue() - y.doubleValue()) > e) {
-					System.err.println(String.format("[%d, %d] %s != %s", i, j, x, y));
+//				System.out.println(String.format("[%d, %d] %s != %s", i, j, a[i][j], b[i][j]));
+				if (!a[i][j].equals(b[i][j])) {
+					System.err.println(String.format("[%d, %d] %s != %s", i, j, a[i][j], b[i][j]));
 					return false;
 				}
 			}
@@ -145,12 +144,8 @@ public final class MatrixUtils {
 		}
 
 		for (int i = 0; i < a.length; i++) {
-			Apfloat x = new Apfloat(a[i].doubleValue(), RadixConstants.DOUBLE_PRECISION[10]);
-			Apfloat y = new Apfloat(b[i].doubleValue(), RadixConstants.DOUBLE_PRECISION[10]);
-
-//			if (e.compareTo(f) != 0) {
-			if (Math.abs(x.doubleValue() - y.doubleValue()) > e) {
-				System.err.println(String.format("%s != %s", x, y));
+			if (!a[i].equals(b[i])) {
+				System.err.println(String.format("%s != %s", a[i], b[i]));
 
 				return false;
 			}
@@ -171,7 +166,7 @@ public final class MatrixUtils {
 			}
 
 			for (int j = 0; j < a[i].length; j++) {
-				if (Math.abs(a[i][j] - b[i][j]) > e) {
+				if (a[i][j] != b[i][j]) {
 					System.err.println(String.format("[%d, %d] %s != %s", i, j, a[i][j], b[i][j]));
 					return false;
 				}
@@ -209,7 +204,7 @@ public final class MatrixUtils {
 		}
 
 		for (int i = 0; i < a.length; i++) {
-			if (Math.abs(a[i] - b[i]) > e) {
+			if (a[i] != b[i]) {
 				System.err.println(String.format("%s != %s", a[i], b[i]));
 
 				return false;
@@ -221,5 +216,38 @@ public final class MatrixUtils {
 
 	public static boolean equals(final Matrix A, final Matrix B) {
 		return equals(A.getArray(), B.getArray());
+	}
+
+	public static <T> boolean equals(final Collection<T> a, final Collection<T> b) {
+		if (a.size() != b.size()) {
+			return false;
+		}
+
+		Iterator<T> ita = a.iterator();
+		Iterator<T> itb = b.iterator();
+
+		while (ita.hasNext()) {
+			if (!ita.next().equals(itb.next())) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Convert an array of strings to one string. Put the 'separator' string between each element.
+	 * 
+	 */
+	public static String arrayToString(int[] a, String separator) {
+		StringBuffer result = new StringBuffer();
+		if (a.length > 0) {
+			result.append(a[0]);
+			for (int i = 1; i < a.length; i++) {
+				result.append(separator);
+				result.append(a[i]);
+			}
+		}
+		return result.toString();
 	}
 }

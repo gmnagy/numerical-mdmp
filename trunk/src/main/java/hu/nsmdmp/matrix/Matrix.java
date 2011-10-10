@@ -4,7 +4,7 @@ import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.matrix.operation.LUDecomposition;
 import hu.nsmdmp.matrix.operation.MatrixMath;
 import hu.nsmdmp.matrix.operation.QRDecomposition;
-import hu.nsmdmp.utils.Precision;
+import hu.nsmdmp.utils.Utils;
 
 import org.apfloat.Apfloat;
 import org.apfloat.ApfloatMath;
@@ -82,7 +82,7 @@ public class Matrix {
 			}
 
 			for (int j = 0; j < n; j++) {
-				this.A[i][j] = new Apfloat(A[i][j], Precision.SCALE);
+				this.A[i][j] = ApfloatUtils.valueOf(A[i][j]);
 			}
 		}
 	}
@@ -349,11 +349,11 @@ public class Matrix {
 			return false;
 		}
 
-		return MatrixUtils.equals(getArray(), ((Matrix) obj).getArray());
+		return Utils.equals(getArray(), ((Matrix) obj).getArray());
 	}
 
 	@Override
 	public String toString() {
-		return MatrixUtils.print(A);
+		return Utils.print(A);
 	}
 }

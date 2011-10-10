@@ -18,10 +18,6 @@ public class SumProbEx4CVector extends AbstractCVector {
 		Apfloat z1 = variation[0];
 		Apfloat z2 = variation[1];
 
-		// (z1+z2)/50
-		//Apfloat a = z1.add(z2).divide(new Apfloat(50d, Precision.SCALE));
-		// (z1*z2)/10000
-		//Apfloat b = z1.multiply(z2).divide(new Apfloat(10000d, Precision.SCALE));
 		if (z1.add(z2).doubleValue() < 6)
 			return ApfloatUtils.ZERO;
 		else
