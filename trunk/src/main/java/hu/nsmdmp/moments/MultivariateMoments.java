@@ -2,12 +2,18 @@ package hu.nsmdmp.moments;
 
 import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.math.CombinationGenerator;
+import hu.nsmdmp.math.Math;
 import hu.nsmdmp.math.TotalOrder;
 import hu.nsmdmp.math.Variation;
+import hu.nsmdmp.utils.Converters;
+import hu.nsmdmp.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +31,11 @@ public class MultivariateMoments {
 	 *            dimensional
 	 * @return {a(1), ..., a(s)}-order cross-binomial moments
 	 */
-	public static List<BinomialMoment> createBinomialMoments(final Apfloat[] probabilities, final int n, final int m, final int s) {
+	public static List<Moment> createBinomialMoments(final Apfloat[] probabilities, final int n, final int m, final int s) {
+		if (probabilities.length == 0) {
+			return Collections.emptyList();
+		}
+
 		// provide: n(1) + ... + n(2) = n
 		int nj = n / s;
 
@@ -36,15 +46,15 @@ public class MultivariateMoments {
 		Iterator<int[]> it = alphasList.iterator();
 
 		// the results
-		List<BinomialMoment> binomialMoments = new ArrayList<BinomialMoment>();
+		List<Moment> binomialMoments = new ArrayList<Moment>();
 		// skip first: (0,0, ... 0)
-		binomialMoments.add(new BinomialMoment(it.next(), ApfloatUtils.ONE));
+		binomialMoments.add(new Moment(it.next(), ApfloatUtils.ONE));
 
 		int i = 1;
 		while (it.hasNext()) {
 			int[] alphas = it.next();
 
-			List<List<String>> alphaCombinations = new ArrayList<List<String>>();
+			List<String[]> alphaCombinations = new ArrayList<String[]>();
 			for (int j = 0; j < alphas.length; j++) {
 				if (alphas[j] == 0) {
 					continue;
@@ -55,11 +65,11 @@ public class MultivariateMoments {
 
 			Apfloat ithBinomMom = ApfloatUtils.ZERO;
 
-			for (String tag : createVariations(alphaCombinations)) {
-				ithBinomMom = ithBinomMom.add(probMap.get(tag));
+			for (String[] tag : Variation.createVariation(alphaCombinations)) {
+				ithBinomMom = ithBinomMom.add(probMap.get(Converters.arrayToString(tag, "")));
 			}
 
-			binomialMoments.add(new BinomialMoment(alphas, ithBinomMom));
+			binomialMoments.add(new Moment(alphas, ithBinomMom));
 			i++;
 		}
 
@@ -92,10 +102,12 @@ public class MultivariateMoments {
 	 * Generate all k-combination of a n size set.
 	 * 
 	 */
-	private static List<String> getCombinations(final int n, final int k, final int offset) {
-		List<String> tags = new ArrayList<String>();
+	private static String[] getCombinations(final int n, final int k, final int offset) {
 
 		CombinationGenerator g = new CombinationGenerator(n, k);
+		String[] tags = new String[(int) g.getTotal()];
+
+		int j = 0;
 		while (g.hasNext()) {
 			StringBuilder sb = new StringBuilder();
 
@@ -103,47 +115,84 @@ public class MultivariateMoments {
 				sb.append((i + 1 + (n * offset)));
 			}
 
-			tags.add(sb.toString());
+			tags[j] = sb.toString();
+			j++;
 		}
 
 		return tags;
 	}
 
-	/**
-	 * Get variation of <code>vectorSet</code>.
-	 * 
-	 */
-	private static List<String> createVariations(List<List<String>> vectorSet) {
-
-		String[][] array = new String[vectorSet.size()][];
-		int i = 0;
-		for (List<String> v : vectorSet) {
-			array[i] = v.toArray(new String[] {});
-			i++;
+	public static Collection<Moment> convertBinomMomToPowerMom(final List<Moment> binomialMoments) {
+		if (binomialMoments.isEmpty()) {
+			return Collections.emptyList();
 		}
 
-		List<String> variations = new ArrayList<String>();
-		for (String[] variation : Variation.createVariation(array)) {
-			StringBuilder sb = new StringBuilder();
-			for (String v : variation) {
-				sb.append(v);
+		Iterator<Moment> binMomIt = binomialMoments.iterator();
+
+		Map<String, Moment> powerMoments = new LinkedHashMap<String, Moment>();
+		// skip first: alphas = (0,0, ... 0)
+		Moment first = new Moment(binMomIt.next().alphas, ApfloatUtils.ONE);
+		powerMoments.put(Converters.arrayToString(first.alphas, ""), first);
+
+		while (binMomIt.hasNext()) {
+			Moment binomialMoment = binMomIt.next();
+
+			// monomials of alpha-combinations polinom
+			// S(21) => { [1/2*x^2, 1/2*x], [y] }
+			List<StirlingNumber[]> polinomOfAlphas = new ArrayList<StirlingNumber[]>();
+
+			for (int alpha : binomialMoment.alphas) {
+				polinomOfAlphas.add(getMonomials(alpha));
 			}
-			variations.add(sb.toString());
+
+			StirlingNumber searchedSN = null;
+			Apfloat powerMom = binomialMoment.moment;
+
+			// multiply monomial members
+			// { [1/2*x^2, 1/2*x], [y] } => { 1/2*x^2*y, 1/2*x*y }
+			for (StirlingNumber[] monomialMembers : Variation.createVariation(polinomOfAlphas)) {
+				StirlingNumber monomial = multiplyMonomialMembers(monomialMembers);
+
+				if (Utils.equals(monomial.exponents, binomialMoment.alphas)) {
+					searchedSN = monomial;
+				} else {
+					powerMom = powerMom.subtract(powerMoments.get(monomial.getConcatenateExponents()).moment);
+				}
+			}
+
+			powerMom = powerMom.divide(searchedSN.number);
+			powerMoments.put(searchedSN.getConcatenateExponents(), new Moment(searchedSN.exponents, powerMom));
 		}
 
-		return variations;
+		return powerMoments.values();
 	}
 
-	public static Apfloat[] convertBinomMomToPowerMom(final List<BinomialMoment> binomialMoments) {
-		Apfloat[] powerMoments = new Apfloat[binomialMoments.size()];
-		powerMoments[0] = ApfloatUtils.ONE;
-
-		for (BinomialMoment binomialMoment : binomialMoments) {
-			for (int alpha : binomialMoment.alphas) {
-
-			}
+	/**
+	 * Get monomials of alpha-combinations polinom (Pl: x(x-1)(x-2)/3!).
+	 * 
+	 */
+	private static StirlingNumber[] getMonomials(final int alpha) {
+		StirlingNumber[] snArray = new StirlingNumber[alpha];
+		for (int i = 1; i <= alpha; i++) {
+			long sn = Math.stirling(alpha, i);
+			long f = Math.factorial(alpha);
+			Apfloat coefficient = ApfloatUtils.valueOf(sn).divide(ApfloatUtils.valueOf(f));
+			snArray[i - 1] = new StirlingNumber(coefficient, i);
 		}
 
-		return powerMoments;
+		return snArray;
+	}
+
+	private static StirlingNumber multiplyMonomialMembers(final StirlingNumber[] monomialMembers) {
+		if (monomialMembers.length == 0) {
+			return null;
+		}
+
+		StirlingNumber monomial = monomialMembers[0];
+		for (int i = 1; i < monomialMembers.length; i++) {
+			monomial = monomial.multiply(monomialMembers[i]);
+		}
+
+		return monomial;
 	}
 }

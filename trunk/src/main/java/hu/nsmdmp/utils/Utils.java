@@ -214,6 +214,23 @@ public final class Utils {
 		return true;
 	}
 
+	public static boolean equals(final int[] a, final int[] b) {
+
+		if (a.length != b.length) {
+			return false;
+		}
+
+		for (int i = 0; i < a.length; i++) {
+			if (a[i] != b[i]) {
+				System.err.println(String.format("%s != %s", a[i], b[i]));
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	public static boolean equals(final Matrix A, final Matrix B) {
 		return equals(A.getArray(), B.getArray());
 	}
@@ -233,21 +250,5 @@ public final class Utils {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Convert an array of strings to one string. Put the 'separator' string between each element.
-	 * 
-	 */
-	public static String arrayToString(int[] a, String separator) {
-		StringBuffer result = new StringBuffer();
-		if (a.length > 0) {
-			result.append(a[0]);
-			for (int i = 1; i < a.length; i++) {
-				result.append(separator);
-				result.append(a[i]);
-			}
-		}
-		return result.toString();
 	}
 }

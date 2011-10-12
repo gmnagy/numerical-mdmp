@@ -2,6 +2,7 @@ package hu.nsmdmp.utils;
 
 import hu.nsmdmp.ApfloatUtils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -67,5 +68,42 @@ public class Converters {
 		}
 
 		return a;
+	}
+
+	public static <T> List<T[]> convert(final T[][] value) {
+		List<T[]> list = new ArrayList<T[]>();
+		for (T[] v : value) {
+			list.add(v);
+		}
+
+		return list;
+	}
+
+	/**
+	 * Convert an array of strings to one string. Put the 'separator' string between each element.
+	 * 
+	 */
+	public static String arrayToString(int[] a, String separator) {
+		StringBuffer result = new StringBuffer();
+		if (a.length > 0) {
+			result.append(a[0]);
+			for (int i = 1; i < a.length; i++) {
+				result.append(separator);
+				result.append(a[i]);
+			}
+		}
+		return result.toString();
+	}
+
+	public static <T> String arrayToString(T[] a, String separator) {
+		StringBuffer result = new StringBuffer();
+		if (a.length > 0) {
+			result.append(a[0]);
+			for (int i = 1; i < a.length; i++) {
+				result.append(separator);
+				result.append(a[i]);
+			}
+		}
+		return result.toString();
 	}
 }
