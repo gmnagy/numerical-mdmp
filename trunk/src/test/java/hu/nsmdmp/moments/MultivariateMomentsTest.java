@@ -94,7 +94,7 @@ public class MultivariateMomentsTest {
 	}
 
 	/**
-	 * n=6. m=3. Dimensional = 2.
+	 * n=6. m=3. Dimensional = 2. 
 	 * 
 	 */
 	@Test
