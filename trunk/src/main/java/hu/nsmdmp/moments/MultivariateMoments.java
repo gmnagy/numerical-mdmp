@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apfloat.Apfloat;
+import org.junit.Test;
 
 public class MultivariateMoments {
 
@@ -50,7 +51,6 @@ public class MultivariateMoments {
 		// skip first: (0,0, ... 0)
 		binomialMoments.add(new Moment(it.next(), ApfloatUtils.ONE));
 
-		int i = 1;
 		while (it.hasNext()) {
 			int[] alphas = it.next();
 
@@ -70,7 +70,6 @@ public class MultivariateMoments {
 			}
 
 			binomialMoments.add(new Moment(alphas, ithBinomMom));
-			i++;
 		}
 
 		return binomialMoments;
@@ -136,6 +135,7 @@ public class MultivariateMoments {
 
 		while (binMomIt.hasNext()) {
 			Moment binomialMoment = binMomIt.next();
+//			System.out.println(binomialMoment);
 
 			// monomials of alpha-combinations polinom
 			// S(21) => { [1/2*x^2, 1/2*x], [y] }
@@ -149,14 +149,16 @@ public class MultivariateMoments {
 			Apfloat powerMom = binomialMoment.moment;
 
 			// multiply monomial members
-			// { [1/2*x^2, 1/2*x], [y] } => { 1/2*x^2*y, 1/2*x*y }
+			// { [1/2*x^2, 1/2*x], [y] } => { 1/2*x^2*y, 1/2*x*y } => { 1/2*u(2,1), 1/2*u(1,1) }
 			for (StirlingNumber[] monomialMembers : Variation.createVariation(polinomOfAlphas)) {
 				StirlingNumber monomial = multiplyMonomialMembers(monomialMembers);
 
 				if (Utils.equals(monomial.exponents, binomialMoment.alphas)) {
 					searchedSN = monomial;
 				} else {
-					powerMom = powerMom.subtract(powerMoments.get(monomial.getConcatenateExponents()).moment);
+					// x = 1/2*u(1,1)
+					Apfloat x = powerMoments.get(monomial.getConcatenateExponents()).moment.multiply(monomial.number);
+					powerMom = powerMom.subtract(x);
 				}
 			}
 
@@ -172,7 +174,16 @@ public class MultivariateMoments {
 	 * 
 	 */
 	private static StirlingNumber[] getMonomials(final int alpha) {
-		StirlingNumber[] snArray = new StirlingNumber[alpha];
+		StirlingNumber[] snArray;
+
+		if (alpha == 0) {
+			snArray = new StirlingNumber[1];
+			snArray[0] = new StirlingNumber(ApfloatUtils.ONE, 0);
+			return snArray;
+		}
+
+		snArray = new StirlingNumber[alpha];
+
 		for (int i = 1; i <= alpha; i++) {
 			long sn = Math.stirling(alpha, i);
 			long f = Math.factorial(alpha);
@@ -181,6 +192,13 @@ public class MultivariateMoments {
 		}
 
 		return snArray;
+	}
+
+	@Test
+	public void test() {
+		for (StirlingNumber sn : getMonomials(2)) {
+			System.out.println(sn);
+		}
 	}
 
 	private static StirlingNumber multiplyMonomialMembers(final StirlingNumber[] monomialMembers) {

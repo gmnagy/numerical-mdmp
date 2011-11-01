@@ -222,7 +222,7 @@ public final class Utils {
 
 		for (int i = 0; i < a.length; i++) {
 			if (a[i] != b[i]) {
-				System.err.println(String.format("%s != %s", a[i], b[i]));
+//				System.err.println(String.format("%s != %s", a[i], b[i]));
 
 				return false;
 			}

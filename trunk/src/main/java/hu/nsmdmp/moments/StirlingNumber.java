@@ -31,9 +31,11 @@ class StirlingNumber {
 		int i = 0;
 		for (int e : exponents) {
 			exp[i] = e;
+			i++;
 		}
 		for (int e : sn.exponents) {
 			exp[i] = e;
+			i++;
 		}
 
 		return new StirlingNumber(number.multiply(sn.number), exp);
