@@ -1,12 +1,13 @@
 package hu.nsmdmp.matrixfactory;
 
+import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.matrix.Matrix;
-import hu.nsmdmp.matrixfactory.MatrixFactory;
 import hu.nsmdmp.utils.Converters;
 
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.apfloat.Apfloat;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,13 +17,20 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(value = Parameterized.class)
 public class ChebyshevTMatrixTest {
 
+	private static final Apfloat ZERO = ApfloatUtils.ZERO;
+	private static final Apfloat ONE = ApfloatUtils.ONE;
+	private static final Apfloat TWO = ApfloatUtils.valueOf(2);
+	private static final Apfloat THREE = ApfloatUtils.valueOf(3);
+	private static final Apfloat SEVEN = ApfloatUtils.valueOf(7);
+	private static final Apfloat NINE = ApfloatUtils.valueOf(9);
+
 	private final int moment;
 
 	private final double[][] vectorSet;
 
-	private final double[][] expectedMatrix;
+	private final Apfloat[][] expectedMatrix;
 
-	public ChebyshevTMatrixTest(int moment, double[][] vectorSet, double[][] expectedMatrix) {
+	public ChebyshevTMatrixTest(int moment, double[][] vectorSet, Apfloat[][] expectedMatrix) {
 		this.moment = moment;
 		this.vectorSet = vectorSet;
 		this.expectedMatrix = expectedMatrix;
@@ -59,11 +67,13 @@ public class ChebyshevTMatrixTest {
 	/**
 	 * input1
 	 */
-	private static double[][] output1() {
-		return new double[][] {
-				{ 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 }, //
-				{ -1.0, -(1.0 / 3), 1.0 / 3, 1.0, -1.0, -(1.0 / 3), 1.0 / 3, 1.0, -1.0, -(1.0 / 3), 1.0 / 3, 1.0, -1.0, -(1.0 / 3), 1.0 / 3, 1.0 },
-				{ -1.0, -1.0, -1.0, -1.0, -(1.0 / 3), -(1.0 / 3), -(1.0 / 3), -(1.0 / 3), 1.0 / 3, 1.0 / 3, 1.0 / 3, 1.0 / 3, 1.0, 1.0, 1.0, 1.0 } };
+	private static Apfloat[][] output1() {
+		return new Apfloat[][] {
+				{ ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE }, //
+				{ ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE), ONE, ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE), ONE, ONE.negate(), ONE.divide(THREE).negate(),
+						ONE.divide(THREE), ONE, ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE), ONE },
+				{ ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE).negate(), ONE.divide(THREE).negate(), ONE.divide(THREE).negate(),
+						ONE.divide(THREE), ONE.divide(THREE), ONE.divide(THREE), ONE.divide(THREE), ONE, ONE, ONE, ONE } };
 	}
 
 	/**
@@ -76,13 +86,19 @@ public class ChebyshevTMatrixTest {
 	/**
 	 * input2
 	 */
-	private static double[][] output2() {
-		return new double[][] { { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 },
-				{ -1.0, -(1.0 / 3.0), 1.0 / 3.0, 1.0, -1.0, -(1.0 / 3.0), 1.0 / 3.0, 1.0, -1.0, -(1.0 / 3.0), 1.0 / 3.0, 1.0, -1.0, -(1.0 / 3.0), 1.0 / 3.0, 1.0 },
-				{ 1.0, -(7.0 / 9.0), -(7.0 / 9.0), 1.0, 1.0, -(7.0 / 9.0), -(7.0 / 9.0), 1.0, 1.0, -(7.0 / 9.0), -(7.0 / 9.0), 1.0, 1.0, -(7.0 / 9.0), -(7.0 / 9.0), 1.0 },
-				{ -1.0, -1.0, -1.0, -1.0, -(1.0 / 3.0), -(1.0 / 3.0), -(1.0 / 3.0), -(1.0 / 3.0), 1.0 / 3.0, 1.0 / 3.0, 1.0 / 3.0, 1.0 / 3.0, 1.0, 1.0, 1.0, 1.0 },
-				{ 1.0, 1.0 / 3.0, -(1.0 / 3.0), -1.0, 1.0 / 3.0, 1.0 / 9.0, -(1.0 / 9.0), -(1.0 / 3.0), -(1.0 / 3.0), -(1.0 / 9.0), 1.0 / 9.0, 1.0 / 3.0, -1.0, -(1.0 / 3.0), 1.0 / 3.0, 1.0 },
-				{ 1.0, 1.0, 1.0, 1.0, -(7.0 / 9.0), -(7.0 / 9.0), -(7.0 / 9.0), -(7.0 / 9.0), -(7.0 / 9.0), -(7.0 / 9.0), -(7.0 / 9.0), -(7.0 / 9.0), 1.0, 1.0, 1.0, 1.0 } };
+	private static Apfloat[][] output2() {
+		return new Apfloat[][] {
+				{ ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE },
+				{ ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE), ONE, ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE), ONE, ONE.negate(), ONE.divide(THREE).negate(),
+						ONE.divide(THREE), ONE, ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE), ONE },
+				{ ONE, SEVEN.divide(NINE).negate(), SEVEN.divide(NINE).negate(), ONE, ONE, SEVEN.divide(NINE).negate(), SEVEN.divide(NINE).negate(), ONE, ONE, SEVEN.divide(NINE).negate(),
+						SEVEN.divide(NINE).negate(), ONE, ONE, SEVEN.divide(NINE).negate(), SEVEN.divide(NINE).negate(), ONE },
+				{ ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE).negate(), ONE.divide(THREE).negate(), ONE.divide(THREE).negate(),
+						ONE.divide(THREE), ONE.divide(THREE), ONE.divide(THREE), ONE.divide(THREE), ONE, ONE, ONE, ONE },
+				{ ONE, ONE.divide(THREE), ONE.divide(THREE).negate(), ONE.negate(), ONE.divide(THREE), ONE.divide(NINE), ONE.divide(NINE).negate(), ONE.divide(THREE).negate(),
+						ONE.divide(THREE).negate(), ONE.divide(NINE).negate(), ONE.divide(NINE), ONE.divide(THREE), ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE), ONE },
+				{ ONE, ONE, ONE, ONE, SEVEN.divide(NINE).negate(), SEVEN.divide(NINE).negate(), SEVEN.divide(NINE).negate(), SEVEN.divide(NINE).negate(), SEVEN.divide(NINE).negate(),
+						SEVEN.divide(NINE).negate(), SEVEN.divide(NINE).negate(), SEVEN.divide(NINE).negate(), ONE, ONE, ONE, ONE } };
 	}
 
 	/**
@@ -95,26 +111,42 @@ public class ChebyshevTMatrixTest {
 	/**
 	 * input3
 	 */
-	private static double[][] output3() {
-		return new double[][] {
-				{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-						1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-						1, 1, 1, 1, 1, 1, 1 },
-				{ -1, -(1.0 / 2.0), 0, 1.0 / 2.0, 1, -1, -(1.0 / 2.0), 0, 1.0 / 2.0, 1, -1, -(1.0 / 2.0), 0, 1.0 / 2.0, 1, -1, -(1.0 / 2.0), 0, 1.0 / 2.0, 1, -1, -(1.0 / 2.0), 0, 1.0 / 2.0, 1, -1,
-						-(1.0 / 2.0), 0, 1.0 / 2.0, 1, -1, -(1.0 / 2.0), 0, 1.0 / 2.0, 1, -1, -(1.0 / 2.0), 0, 1.0 / 2.0, 1, -1, -(1.0 / 2.0), 0, 1.0 / 2.0, 1, -1, -(1.0 / 2.0), 0, 1.0 / 2.0, 1, -1,
-						-(1.0 / 2.0), 0, 1.0 / 2.0, 1, -1, -(1.0 / 2.0), 0, 1.0 / 2.0, 1, -1, -(1.0 / 2.0), 0, 1.0 / 2.0, 1, -1, -(1.0 / 2.0), 0, 1.0 / 2.0, 1, -1, -(1.0 / 2.0), 0, 1.0 / 2.0, 1, -1,
-						-(1.0 / 2.0), 0, 1.0 / 2.0, 1, -1, -(1.0 / 2.0), 0, 1.0 / 2.0, 1, -1, -(1.0 / 2.0), 0, 1.0 / 2.0, 1, -1, -(1.0 / 2.0), 0, 1.0 / 2.0, 1, -1, -(1.0 / 2.0), 0, 1.0 / 2.0, 1, -1,
-						-(1.0 / 2.0), 0, 1.0 / 2.0, 1, -1, -(1.0 / 2.0), 0, 1.0 / 2.0, 1, -1, -(1.0 / 2.0), 0, 1.0 / 2.0, 1, -1, -(1.0 / 2.0), 0, 1.0 / 2.0, 1, -1, -(1.0 / 2.0), 0, 1.0 / 2.0, 1 },
-				{ -1, -1, -1, -1, -1, -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), 0, 0, 0, 0, 0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1, 1, 1, 1, 1, -1,
-						-1, -1, -1, -1, -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), 0, 0, 0, 0, 0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1, 1, 1, 1, 1, -1,
-						-1, -1, -1, -1, -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), 0, 0, 0, 0, 0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1, 1, 1, 1, 1, -1,
-						-1, -1, -1, -1, -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), 0, 0, 0, 0, 0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1, 1, 1, 1, 1, -1,
-						-1, -1, -1, -1, -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), 0, 0, 0, 0, 0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1, 1, 1, 1, 1 },
-				{ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0),
-						-(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0),
-						-(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), -(1.0 / 2.0), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-						0, 0, 0, 0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0,
-						1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1.0 / 2.0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-						1, 1, 1, 1, 1, 1, 1 } };
+	private static Apfloat[][] output3() {
+		return new Apfloat[][] {
+				{ ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE,
+						ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE,
+						ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE,
+						ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE },
+				{ ONE.negate(), ONE.divide(TWO).negate(), ZERO, ONE.divide(TWO), ONE, ONE.negate(), ONE.divide(TWO).negate(), ZERO, ONE.divide(TWO), ONE, ONE.negate(), ONE.divide(TWO).negate(), ZERO,
+						ONE.divide(TWO), ONE, ONE.negate(), ONE.divide(TWO).negate(), ZERO, ONE.divide(TWO), ONE, ONE.negate(), ONE.divide(TWO).negate(), ZERO, ONE.divide(TWO), ONE, ONE.negate(),
+						ONE.divide(TWO).negate(), ZERO, ONE.divide(TWO), ONE, ONE.negate(), ONE.divide(TWO).negate(), ZERO, ONE.divide(TWO), ONE, ONE.negate(), ONE.divide(TWO).negate(), ZERO,
+						ONE.divide(TWO), ONE, ONE.negate(), ONE.divide(TWO).negate(), ZERO, ONE.divide(TWO), ONE, ONE.negate(), ONE.divide(TWO).negate(), ZERO, ONE.divide(TWO), ONE, ONE.negate(),
+						ONE.divide(TWO).negate(), ZERO, ONE.divide(TWO), ONE, ONE.negate(), ONE.divide(TWO).negate(), ZERO, ONE.divide(TWO), ONE, ONE.negate(), ONE.divide(TWO).negate(), ZERO,
+						ONE.divide(TWO), ONE, ONE.negate(), ONE.divide(TWO).negate(), ZERO, ONE.divide(TWO), ONE, ONE.negate(), ONE.divide(TWO).negate(), ZERO, ONE.divide(TWO), ONE, ONE.negate(),
+						ONE.divide(TWO).negate(), ZERO, ONE.divide(TWO), ONE, ONE.negate(), ONE.divide(TWO).negate(), ZERO, ONE.divide(TWO), ONE, ONE.negate(), ONE.divide(TWO).negate(), ZERO,
+						ONE.divide(TWO), ONE, ONE.negate(), ONE.divide(TWO).negate(), ZERO, ONE.divide(TWO), ONE, ONE.negate(), ONE.divide(TWO).negate(), ZERO, ONE.divide(TWO), ONE, ONE.negate(),
+						ONE.divide(TWO).negate(), ZERO, ONE.divide(TWO), ONE, ONE.negate(), ONE.divide(TWO).negate(), ZERO, ONE.divide(TWO), ONE, ONE.negate(), ONE.divide(TWO).negate(), ZERO,
+						ONE.divide(TWO), ONE, ONE.negate(), ONE.divide(TWO).negate(), ZERO, ONE.divide(TWO), ONE, ONE.negate(), ONE.divide(TWO).negate(), ZERO, ONE.divide(TWO), ONE },
+				{ ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(),
+						ONE.divide(TWO).negate(), ZERO, ZERO, ZERO, ZERO, ZERO, ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE, ONE, ONE, ONE, ONE,
+						ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(),
+						ONE.divide(TWO).negate(), ZERO, ZERO, ZERO, ZERO, ZERO, ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE, ONE, ONE, ONE, ONE,
+						ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(),
+						ONE.divide(TWO).negate(), ZERO, ZERO, ZERO, ZERO, ZERO, ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE, ONE, ONE, ONE, ONE,
+						ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(),
+						ONE.divide(TWO).negate(), ZERO, ZERO, ZERO, ZERO, ZERO, ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE, ONE, ONE, ONE, ONE,
+						ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(),
+						ONE.divide(TWO).negate(), ZERO, ZERO, ZERO, ZERO, ZERO, ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE, ONE, ONE, ONE, ONE },
+				{ ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(),
+						ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(),
+						ONE.divide(TWO).negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(),
+						ONE.divide(TWO).negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(),
+						ONE.divide(TWO).negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(),
+						ONE.divide(TWO).negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(), ONE.divide(TWO).negate(),
+						ONE.divide(TWO).negate(), ZERO, ZERO, ZERO, ZERO, ZERO, ZERO, ZERO, ZERO, ZERO, ZERO, ZERO, ZERO, ZERO, ZERO, ZERO, ZERO, ZERO, ZERO, ZERO, ZERO, ZERO, ZERO, ZERO, ZERO, ZERO,
+						ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO),
+						ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO),
+						ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE.divide(TWO), ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE,
+						ONE, ONE, ONE, ONE, ONE, ONE, ONE } };
 	}
 }

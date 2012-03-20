@@ -120,50 +120,17 @@ public final class MatrixMath {
 		return Multiplication.multiply(A, B);
 	}
 
-	/**
-	 * Solve A * X = B
-	 * 
-	 * @param B
-	 *            right hand side
-	 */
-	public static Matrix getTransformationMatrix(final Matrix A, final Matrix B) {
-		if (A.getColumnDimension() >= A.getRowDimension()) {
-			return calcTransformationMatrix(A, B);
-		} else {
-			return calcTransformationMatrix(completeWithIdentity(A), completeWithIdentity(B));
-		}
-	}
-
-	private static Matrix calcTransformationMatrix(final Matrix A, final Matrix B) {
-		Matrix T = new Matrix(B.getRowDimension(), A.getRowDimension());
-
-		Matrix tA = A.transpose();
-
-		for (int i = 0; i < B.getRowDimension(); i++) {
-			Vector b = new Vector(tA.getColumnDimension());
-			for (int j = 0; j < tA.getColumnDimension(); j++) {
-				b.set(j, B.get(i, j));
-			}
-
-			GaussJordanElimination gaussian = new GaussJordanElimination(tA, b);
-			Vector t = gaussian.getSolution();
-			T.setRow(i, t.getArray());
-		}
-
-		return T;
-	}
-
-	public static Matrix completeWithIdentity(final Matrix A) {
-		Matrix M = identity(A.getRowDimension(), A.getRowDimension());
-
-		for (int i = 0; i < A.getRowDimension(); i++) {
-			for (int j = 0; j < A.getColumnDimension(); j++) {
-				M.set(i, j, A.get(i, j));
-			}
-		}
-
-		return M;
-	}
+//	public static Matrix completeWithIdentity(final Matrix A) {
+//		Matrix M = identity(A.getRowDimension(), A.getRowDimension());
+//
+//		for (int i = 0; i < A.getRowDimension(); i++) {
+//			for (int j = 0; j < A.getColumnDimension(); j++) {
+//				M.set(i, j, A.get(i, j));
+//			}
+//		}
+//
+//		return M;
+//	}
 
 //	/**
 //	 * Solve A * X = B

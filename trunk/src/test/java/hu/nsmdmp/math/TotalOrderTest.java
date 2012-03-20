@@ -1,7 +1,5 @@
 package hu.nsmdmp.math;
 
-import hu.nsmdmp.math.TotalOrder;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -29,7 +27,7 @@ public class TotalOrderTest {
 
 	@Parameters
 	public static Collection<Object[]> data() {
-		Object[][] data = new Object[][] { { 2, 2, result1() }, { 2, 3, result2() }, { 5, 3, result3() }, { 1, 2, result4() } };
+		Object[][] data = new Object[][] { { 2, 2, result1() }, { 2, 3, result2() }, { 5, 3, result3() }, { 1, 2, result4() }, { 2, 1, result5() } };
 
 		return Arrays.asList(data);
 	}
@@ -37,6 +35,10 @@ public class TotalOrderTest {
 	@Test
 	public void test() {
 		List<int[]> exps = TotalOrder.getOrders(maxOrder, size);
+
+//		for (int[] e : exps) {
+//			System.out.println(Utils.print(e));
+//		}
 
 		Assert.assertTrue(TotalOrder.equals(exps, expected));
 	}
@@ -77,6 +79,15 @@ public class TotalOrderTest {
 	 */
 	private static List<int[]> result4() {
 		int[][] e = { { 0, 0 }, { 1, 0 }, { 0, 1 } };
+
+		return Arrays.asList(e);
+	}
+
+	/**
+	 * maxOrder = 2, size = 1
+	 */
+	private static List<int[]> result5() {
+		int[][] e = { { 0 }, { 1 }, { 2 } };
 
 		return Arrays.asList(e);
 	}

@@ -1,60 +1,90 @@
 package hu.nsmdmp.math;
 
-import hu.nsmdmp.utils.Converters;
-
+import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public final class Variation {
 
-	public static <T> T[] getVariation(final int j, final List<T[]> vectorSet) {
+	@SuppressWarnings("unchecked")
+	private static <T> T[] getIthVariation(final int i, final List<T[]> vectorSet) {
 		int s = vectorSet.size();
-		T[] variation = Arrays.copyOf(vectorSet.get(0), s);
+		Class<?> t = vectorSet.get(0).getClass();
+		T[] variation = (T[]) Array.newInstance(t.getComponentType(), s);
 
 		int a = 1;
-		int i = 0;
+		int j = 0;
 		for (T[] vector : vectorSet) {
-			int x = (j / a) % vector.length;
-			variation[i] = vector[x];
+			int l = vector.length;
+			int x = (i / a) % l;
 
-			a *= vector.length;
-			i++;
+			variation[j] = vector[x];
+			a *= l;
+			j++;
 		}
 
 		return variation;
 	}
 
-	public static <T> T[] getVariation(final int j, final T[][] vectorSet) {
-		return getVariation(j, Converters.convert(vectorSet));
-	}
+	@SuppressWarnings("unchecked")
+	private static <T> T[] getIthVariation(final int i, final T[][] vectorSet) {
+		int s = vectorSet.length;
+		Class<?> t = vectorSet[0].getClass();
+		T[] variation = (T[]) Array.newInstance(t.getComponentType(), s);
 
-	public static <T> int getVariationsNumber(final List<T[]> vectorSet) {
-		int n = 1;
-		for (T[] row : vectorSet) {
-			n *= row.length;
+		int a = 1;
+		int j = 0;
+		for (T[] vector : vectorSet) {
+			int l = vector.length;
+			int x = (i / a) % l;
+
+			variation[j] = vector[x];
+			a *= l;
+			j++;
 		}
 
-		return n;
+		return variation;
 	}
 
-	public static <T> int getVariationsNumber(final T[][] vectorSet) {
-		return getVariationsNumber(Converters.convert(vectorSet));
+	public static <T> int getPieceVariation(final List<T[]> vectorSet) {
+		int piece = 1;
+		for (T[] t : vectorSet) {
+			piece *= t.length;
+		}
+
+		return piece;
+	}
+
+	public static <T> int getPieceVariation(final T[][] vectorSet) {
+		int piece = 1;
+		for (T[] t : vectorSet) {
+			piece *= t.length;
+		}
+
+		return piece;
 	}
 
 	public static <T> List<T[]> createVariation(final List<T[]> vectorSet) {
-		int n = getVariationsNumber(vectorSet);
+		int piece = getPieceVariation(vectorSet);
 
 		List<T[]> variations = new ArrayList<T[]>();
 
-		for (int j = 0; j < n; j++) {
-			variations.add(getVariation(j, vectorSet));
+		for (int i = 0; i < piece; i++) {
+			variations.add(getIthVariation(i, vectorSet));
 		}
 
 		return variations;
 	}
 
 	public static <T> List<T[]> createVariation(final T[][] vectorSet) {
-		return createVariation(Converters.convert(vectorSet));
+		int piece = getPieceVariation(vectorSet);
+
+		List<T[]> variations = new ArrayList<T[]>();
+
+		for (int i = 0; i < piece; i++) {
+			variations.add(getIthVariation(i, vectorSet));
+		}
+
+		return variations;
 	}
 }

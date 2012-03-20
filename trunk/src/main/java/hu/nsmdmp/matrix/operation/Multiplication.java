@@ -2,6 +2,7 @@ package hu.nsmdmp.matrix.operation;
 
 import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.matrix.Matrix;
+import hu.nsmdmp.utils.Precision;
 import hu.nsmdmp.vector.Vector;
 
 import org.apfloat.Apfloat;
@@ -37,7 +38,7 @@ public final class Multiplication {
 				x = x.add(a);
 			}
 
-			result.set(i, x);
+			result.set(i, x.precision(Precision.SCALE));
 		}
 
 		return result;
@@ -55,7 +56,7 @@ public final class Multiplication {
 	 * @exception IllegalArgumentException
 	 *                Matrix inner dimensions must agree.
 	 */
-	public static Matrix multiply(final Matrix A, final Matrix B) {
+	static Matrix multiply(final Matrix A, final Matrix B) {
 		if (B.getRowDimension() != A.getColumnDimension()) {
 			throw new IllegalArgumentException("Matrix inner dimensions must agree.");
 		}
@@ -77,9 +78,10 @@ public final class Multiplication {
 					s = s.add(Arowi[k].multiply(Bcolj[k]));
 				}
 
-				C[i][j] = s;
+				C[i][j] = s.precision(Precision.SCALE);
 			}
 		}
+
 		return X;
 	}
 }

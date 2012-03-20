@@ -2,6 +2,7 @@ package hu.nsmdmp.matrix.operation;
 
 import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.matrix.Matrix;
+import hu.nsmdmp.utils.Precision;
 
 import org.apfloat.Apfloat;
 import org.apfloat.ApfloatMath;
@@ -113,7 +114,7 @@ public final class LUDecomposition {
 			// if (j < m & LU[j][j] != 0.0) {
 			if (j < m & LU[j][j].signum() != 0) {
 				for (int i = j + 1; i < m; i++) {
-					LU[i][j] = LU[i][j].divide(LU[j][j]);
+					LU[i][j] = LU[i][j].divide(LU[j][j]).precision(Precision.SCALE);
 				}
 			}
 		}
@@ -255,7 +256,7 @@ public final class LUDecomposition {
 		for (int k = 0; k < n; k++) {
 			for (int i = k + 1; i < n; i++) {
 				for (int j = 0; j < nx; j++) {
-					X[i][j] = X[i][j].subtract(X[k][j].multiply(LU[i][k]));
+					X[i][j] = X[i][j].subtract(X[k][j].multiply(LU[i][k])).precision(Precision.SCALE);
 				}
 			}
 		}
@@ -263,11 +264,11 @@ public final class LUDecomposition {
 		// Solve U*X = Y;
 		for (int k = n - 1; k >= 0; k--) {
 			for (int j = 0; j < nx; j++) {
-				X[k][j] = X[k][j].divide(LU[k][k]);
+				X[k][j] = X[k][j].divide(LU[k][k]).precision(Precision.SCALE);
 			}
 			for (int i = 0; i < k; i++) {
 				for (int j = 0; j < nx; j++) {
-					X[i][j] = X[i][j].subtract(X[k][j].multiply(LU[i][k]));
+					X[i][j] = X[i][j].subtract(X[k][j].multiply(LU[i][k])).precision(Precision.SCALE);
 				}
 			}
 		}

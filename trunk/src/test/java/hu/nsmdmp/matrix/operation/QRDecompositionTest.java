@@ -1,8 +1,9 @@
 package hu.nsmdmp.matrix.operation;
 
+import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.matrix.Matrix;
-import hu.nsmdmp.matrix.operation.QRDecomposition;
 
+import org.apfloat.Apfloat;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -27,7 +28,11 @@ public class QRDecompositionTest {
 			Assert.assertTrue("R: ", false);
 		}
 
-		double[][] q = { { -6.0 / 7.0, 69.0 / 175.0, -58.0 / 175.0 }, { -3.0 / 7.0, -158.0 / 175.0, 6.0 / 175.0 }, { 2.0 / 7.0, -6.0 / 35.0, -33.0 / 35.0 } };
+		// { { -6.0 / 7.0, 69.0 / 175.0, -58.0 / 175.0 }, { -3.0 / 7.0, -158.0 / 175.0, 6.0 / 175.0 }, { 2.0 / 7.0, -6.0 / 35.0, -33.0 / 35.0 } }
+		Apfloat[][] q = {
+				{ ApfloatUtils.valueOf(-6).divide(ApfloatUtils.valueOf(7)), ApfloatUtils.valueOf(69).divide(ApfloatUtils.valueOf(175)), ApfloatUtils.valueOf(-58).divide(ApfloatUtils.valueOf(175)) }, //
+				{ ApfloatUtils.valueOf(-3).divide(ApfloatUtils.valueOf(7)), ApfloatUtils.valueOf(-158).divide(ApfloatUtils.valueOf(175)), ApfloatUtils.valueOf(6).divide(ApfloatUtils.valueOf(175)) }, //
+				{ ApfloatUtils.valueOf(2).divide(ApfloatUtils.valueOf(7)), ApfloatUtils.valueOf(-6).divide(ApfloatUtils.valueOf(35)), ApfloatUtils.valueOf(-33).divide(ApfloatUtils.valueOf(35)) } };
 		Matrix Q = new Matrix(q);
 		if (!Q.equals(qr.getQ())) {
 			System.out.println(Q);

@@ -2,6 +2,7 @@ package hu.nsmdmp.matrix.operation;
 
 import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.matrix.Matrix;
+import hu.nsmdmp.utils.Precision;
 
 import org.apfloat.Apfloat;
 import org.apfloat.ApfloatMath;
@@ -71,22 +72,22 @@ public final class QRDecomposition {
 				}
 
 				for (int i = k; i < m; i++) {
-					QR[i][k] = QR[i][k].divide(nrm);
+					QR[i][k] = QR[i][k].divide(nrm).precision(Precision.SCALE);
 				}
 
-				QR[k][k] = QR[k][k].add(ApfloatUtils.ONE);
+				QR[k][k] = QR[k][k].add(ApfloatUtils.ONE).precision(Precision.SCALE);
 
 				// Apply transformation to remaining columns.
 				for (int j = k + 1; j < n; j++) {
 					Apfloat s = ApfloatUtils.ZERO;
 					for (int i = k; i < m; i++) {
-						s = s.add(QR[i][k].multiply(QR[i][j]));
+						s = s.add(QR[i][k].multiply(QR[i][j])).precision(Precision.SCALE);
 					}
 
-					s = s.negate().divide(QR[k][k]);
+					s = s.negate().divide(QR[k][k]).precision(Precision.SCALE);
 
 					for (int i = k; i < m; i++) {
-						QR[i][j] = QR[i][j].add(s.multiply(QR[i][k]));
+						QR[i][j] = QR[i][j].add(s.multiply(QR[i][k])).precision(Precision.SCALE);
 					}
 				}
 			}
@@ -99,13 +100,13 @@ public final class QRDecomposition {
 		Apfloat r;
 
 		if (ApfloatMath.abs(a).compareTo(ApfloatMath.abs(b)) > 0) {
-			r = b.divide(a);
-			Apfloat x = r.multiply(r).add(ApfloatUtils.ONE);
-			r = ApfloatMath.abs(a).multiply(ApfloatMath.sqrt(x));
+			r = b.divide(a).precision(Precision.SCALE);
+			Apfloat x = r.multiply(r).add(ApfloatUtils.ONE).precision(Precision.SCALE);
+			r = ApfloatMath.abs(a).multiply(ApfloatMath.sqrt(x)).precision(Precision.SCALE);
 		} else if (b.signum() != 0) {
-			r = a.divide(b);
-			Apfloat x = r.multiply(r).add(ApfloatUtils.ONE);
-			r = ApfloatMath.abs(b).multiply(ApfloatMath.sqrt(x));
+			r = a.divide(b).precision(Precision.SCALE);
+			Apfloat x = r.multiply(r).add(ApfloatUtils.ONE).precision(Precision.SCALE);
+			r = ApfloatMath.abs(b).multiply(ApfloatMath.sqrt(x)).precision(Precision.SCALE);
 		} else {
 			r = ApfloatUtils.ZERO;
 		}
@@ -158,13 +159,13 @@ public final class QRDecomposition {
 					Apfloat s = ApfloatUtils.ZERO;
 
 					for (int i = k; i < m; i++) {
-						s = s.add(QR[i][k].multiply(Q[i][j]));
+						s = s.add(QR[i][k].multiply(Q[i][j])).precision(Precision.SCALE);
 					}
 
-					s = s.negate().divide(QR[k][k]);
+					s = s.negate().divide(QR[k][k]).precision(Precision.SCALE);
 
 					for (int i = k; i < m; i++) {
-						Q[i][j] = Q[i][j].add(s.multiply(QR[i][k]));
+						Q[i][j] = Q[i][j].add(s.multiply(QR[i][k])).precision(Precision.SCALE);
 					}
 				}
 			}
@@ -216,13 +217,13 @@ public final class QRDecomposition {
 			for (int j = 0; j < nx; j++) {
 				Apfloat s = ApfloatUtils.ZERO;
 				for (int i = k; i < m; i++) {
-					s = s.add(QR[i][k].multiply(X[i][j]));
+					s = s.add(QR[i][k].multiply(X[i][j])).precision(Precision.SCALE);
 				}
 
-				s = s.negate().divide(QR[k][k]);
+				s = s.negate().divide(QR[k][k]).precision(Precision.SCALE);
 
 				for (int i = k; i < m; i++) {
-					X[i][j] = X[i][j].add(s.multiply(QR[i][k]));
+					X[i][j] = X[i][j].add(s.multiply(QR[i][k])).precision(Precision.SCALE);
 				}
 			}
 		}
@@ -230,12 +231,12 @@ public final class QRDecomposition {
 		// Solve R*X = Y;
 		for (int k = n - 1; k >= 0; k--) {
 			for (int j = 0; j < nx; j++) {
-				X[k][j] = X[k][j].divide(Rdiag[k]);
+				X[k][j] = X[k][j].divide(Rdiag[k]).precision(Precision.SCALE);
 			}
 
 			for (int i = 0; i < k; i++) {
 				for (int j = 0; j < nx; j++) {
-					X[i][j] = X[i][j].subtract(X[k][j].multiply(QR[i][k]));
+					X[i][j] = X[i][j].subtract(X[k][j].multiply(QR[i][k])).precision(Precision.SCALE);
 				}
 			}
 		}

@@ -1,12 +1,13 @@
 package hu.nsmdmp.matrixfactory;
 
+import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.matrix.Matrix;
-import hu.nsmdmp.matrixfactory.MatrixFactory;
 import hu.nsmdmp.utils.Converters;
 
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.apfloat.Apfloat;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,13 +17,17 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(value = Parameterized.class)
 public class MonomialMatrixTest {
 
+	private static final Apfloat ONE = ApfloatUtils.ONE;
+	private static final Apfloat THREE = ApfloatUtils.valueOf(3);
+	private static final Apfloat NINE = ApfloatUtils.valueOf(9);
+
 	private final int moment;
 
 	private final double[][] vectorSet;
 
-	private final double[][] expectedMatrix;
+	private final Apfloat[][] expectedMatrix;
 
-	public MonomialMatrixTest(int moment, double[][] vectorSet, double[][] expectedMatrix) {
+	public MonomialMatrixTest(int moment, double[][] vectorSet, Apfloat[][] expectedMatrix) {
 		this.moment = moment;
 		this.vectorSet = vectorSet;
 		this.expectedMatrix = expectedMatrix;
@@ -59,10 +64,13 @@ public class MonomialMatrixTest {
 	/**
 	 * input1
 	 */
-	private static double[][] output1() {
-		return new double[][] { { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 }, //
-				{ -1.0, -(1.0 / 3), 1.0 / 3, 1.0, -1.0, -(1.0 / 3), 1.0 / 3, 1.0, -1.0, -(1.0 / 3), 1.0 / 3, 1.0, -1.0, -(1.0 / 3), 1.0 / 3, 1.0 }, //
-				{ -1.0, -1.0, -1.0, -1.0, -(1.0 / 3), -(1.0 / 3), -(1.0 / 3), -(1.0 / 3), 1.0 / 3, 1.0 / 3, 1.0 / 3, 1.0 / 3, 1.0, 1.0, 1.0, 1.0 } };
+	private static Apfloat[][] output1() {
+		return new Apfloat[][] {
+				{ ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE }, //
+				{ ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE), ONE, ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE), ONE, ONE.negate(), ONE.divide(THREE).negate(),
+						ONE.divide(THREE), ONE, ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE), ONE }, //
+				{ ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE).negate(), ONE.divide(THREE).negate(), ONE.divide(THREE).negate(),
+						ONE.divide(THREE), ONE.divide(THREE), ONE.divide(THREE), ONE.divide(THREE), ONE, ONE, ONE, ONE } };
 	}
 
 	/**
@@ -75,13 +83,19 @@ public class MonomialMatrixTest {
 	/**
 	 * input2
 	 */
-	private static double[][] output2() {
-		return new double[][] { { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 }, //
-				{ -1.0, -(1.0 / 3.0), 1.0 / 3.0, 1.0, -1.0, -(1.0 / 3.0), 1.0 / 3.0, 1.0, -1.0, -(1.0 / 3.0), 1.0 / 3.0, 1.0, -1.0, -(1.0 / 3.0), 1.0 / 3.0, 1.0 }, //
-				{ 1.0, 1.0 / 9.0, 1.0 / 9.0, 1.0, 1.0, 1.0 / 9.0, 1.0 / 9.0, 1.0, 1.0, 1.0 / 9.0, 1.0 / 9.0, 1.0, 1.0, 1.0 / 9.0, 1.0 / 9.0, 1.0 }, //
-				{ -1.0, -1.0, -1.0, -1.0, -(1.0 / 3.0), -(1.0 / 3.0), -(1.0 / 3.0), -(1.0 / 3.0), 1.0 / 3.0, 1.0 / 3.0, 1.0 / 3.0, 1.0 / 3.0, 1.0, 1.0, 1.0, 1.0 }, //
-				{ 1.0, 1.0 / 3.0, -(1.0 / 3.0), -1.0, 1.0 / 3.0, 1.0 / 9.0, -(1.0 / 9.0), -(1.0 / 3.0), -(1.0 / 3.0), -(1.0 / 9.0), 1.0 / 9.0, 1.0 / 3.0, -1.0, -(1.0 / 3.0), 1.0 / 3.0, 1.0 }, //
-				{ 1.0, 1.0, 1.0, 1.0, 1.0 / 9.0, 1.0 / 9.0, 1.0 / 9.0, 1.0 / 9.0, 1.0 / 9.0, 1.0 / 9.0, 1.0 / 9.0, 1.0 / 9.0, 1.0, 1.0, 1.0, 1.0 } };
+	private static Apfloat[][] output2() {
+		return new Apfloat[][] {
+				{ ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE }, //
+				{ ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE), ONE, ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE), ONE, ONE.negate(), ONE.divide(THREE).negate(),
+						ONE.divide(THREE), ONE, ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE), ONE }, //
+				{ ONE, ONE.divide(NINE), ONE.divide(NINE), ONE, ONE, ONE.divide(NINE), ONE.divide(NINE), ONE, ONE, ONE.divide(NINE), ONE.divide(NINE), ONE, ONE, ONE.divide(NINE), ONE.divide(NINE),
+						ONE }, //
+				{ ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE).negate(), ONE.divide(THREE).negate(), ONE.divide(THREE).negate(),
+						ONE.divide(THREE), ONE.divide(THREE), ONE.divide(THREE), ONE.divide(THREE), ONE, ONE, ONE, ONE }, //
+				{ ONE, ONE.divide(THREE), ONE.divide(THREE).negate(), ONE.negate(), ONE.divide(THREE), ONE.divide(NINE), ONE.divide(NINE).negate(), ONE.divide(THREE).negate(),
+						ONE.divide(THREE).negate(), ONE.divide(NINE).negate(), ONE.divide(NINE), ONE.divide(THREE), ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE), ONE }, //
+				{ ONE, ONE, ONE, ONE, ONE.divide(NINE), ONE.divide(NINE), ONE.divide(NINE), ONE.divide(NINE), ONE.divide(NINE), ONE.divide(NINE), ONE.divide(NINE), ONE.divide(NINE), ONE, ONE, ONE,
+						ONE } };
 	}
 
 	/**
@@ -94,10 +108,13 @@ public class MonomialMatrixTest {
 	/**
 	 * input3
 	 */
-	private static double[][] output3() {
-		return new double[][] { { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 }, //
-				{ -1.0, -(1.0 / 3), 1.0 / 3, 1.0, -1.0, -(1.0 / 3), 1.0 / 3, 1.0, -1.0, -(1.0 / 3), 1.0 / 3, 1.0, -1.0, -(1.0 / 3), 1.0 / 3, 1.0 }, //
-				{ -1.0, -1.0, -1.0, -1.0, -(1.0 / 3), -(1.0 / 3), -(1.0 / 3), -(1.0 / 3), 1.0 / 3, 1.0 / 3, 1.0 / 3, 1.0 / 3, 1.0, 1.0, 1.0, 1.0 } };
+	private static Apfloat[][] output3() {
+		return new Apfloat[][] {
+				{ ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE }, //
+				{ ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE), ONE, ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE), ONE, ONE.negate(), ONE.divide(THREE).negate(),
+						ONE.divide(THREE), ONE, ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE), ONE }, //
+				{ ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE).negate(), ONE.divide(THREE).negate(), ONE.divide(THREE).negate(),
+						ONE.divide(THREE), ONE.divide(THREE), ONE.divide(THREE), ONE.divide(THREE), ONE, ONE, ONE, ONE } };
 	}
 
 	/**
@@ -110,10 +127,13 @@ public class MonomialMatrixTest {
 	/**
 	 * input4
 	 */
-	private static double[][] output4() {
-		return new double[][] { { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 }, //
-				{ -1.0, -(1.0 / 3), 1.0 / 3, 1.0, -1.0, -(1.0 / 3), 1.0 / 3, 1.0, -1.0, -(1.0 / 3), 1.0 / 3, 1.0, -1.0, -(1.0 / 3), 1.0 / 3, 1.0 }, //
-				{ -1.0, -1.0, -1.0, -1.0, -(1.0 / 3), -(1.0 / 3), -(1.0 / 3), -(1.0 / 3), 1.0 / 3, 1.0 / 3, 1.0 / 3, 1.0 / 3, 1.0, 1.0, 1.0, 1.0 } };
+	private static Apfloat[][] output4() {
+		return new Apfloat[][] {
+				{ ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE, ONE }, //
+				{ ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE), ONE, ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE), ONE, ONE.negate(), ONE.divide(THREE).negate(),
+						ONE.divide(THREE), ONE, ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE), ONE }, //
+				{ ONE.negate(), ONE.negate(), ONE.negate(), ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE).negate(), ONE.divide(THREE).negate(), ONE.divide(THREE).negate(),
+						ONE.divide(THREE), ONE.divide(THREE), ONE.divide(THREE), ONE.divide(THREE), ONE, ONE, ONE, ONE } };
 	}
 
 }

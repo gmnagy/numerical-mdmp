@@ -19,7 +19,7 @@ public class Matrix {
 	 * Array for internal storage of elements.
 	 * 
 	 */
-	private Apfloat[][] A;
+	protected Apfloat[][] A;
 
 	/**
 	 * Row and column dimensions.
@@ -41,6 +41,26 @@ public class Matrix {
 		this.m = m;
 		this.n = n;
 		this.A = new Apfloat[m][n];
+	}
+
+	/**
+	 * Construct a matrix with <tt>value</tt>.
+	 * 
+	 * @param m
+	 *            Number of rows.
+	 * @param n
+	 *            Number of colums.
+	 */
+	public Matrix(final int m, final int n, final Apfloat value) {
+		this.m = m;
+		this.n = n;
+		this.A = new Apfloat[m][n];
+
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				this.A[i][j] = value;
+			}
+		}
 	}
 
 	/**
@@ -334,10 +354,13 @@ public class Matrix {
 		Matrix identity = MatrixMath.identity(m, m);
 
 		if (isSquare()) {
+			System.out.println("a");
 			return getLU().solve(identity);
 		} else if (m > n) {
+			System.out.println("b");
 			return getQR().solve(identity);
 		} else {
+			System.out.println("c");
 			Matrix transposed = transpose();
 			return transposed.getQR().solve(MatrixMath.identity(n, n)).transpose();
 		}

@@ -2,6 +2,7 @@ package hu.nsmdmp.matrix.operation;
 
 import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.matrix.Matrix;
+import hu.nsmdmp.utils.Precision;
 
 import org.apfloat.Apfloat;
 
@@ -43,7 +44,7 @@ final class Normalization {
 				Apfloat b = max.subtract(min);
 
 				// a / b
-				normM[i][j] = a.divide(b);
+				normM[i][j] = a.divide(b).precision(Precision.SCALE);
 
 			}
 		}

@@ -29,7 +29,7 @@ abstract class AExperiments {
 	protected void run(double[][] vectorSet) throws MosekException {
 		long starttime = System.currentTimeMillis();
 		Apfloat[][] vSet = Converters.convert(vectorSet);
-		int variationNum = Variation.getVariationsNumber(vSet);
+		int variationNum = Variation.getPieceVariation(vSet);
 
 		// distribution
 		Vector distr = distribution(variationNum);

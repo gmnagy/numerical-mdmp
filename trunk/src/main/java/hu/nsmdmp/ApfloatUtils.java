@@ -6,11 +6,11 @@ import org.apfloat.Apfloat;
 
 public class ApfloatUtils {
 
-	public static final Apfloat ZERO = new Apfloat(0, Precision.SCALE);
+	public static final Apfloat ZERO = valueOf(0);
 
-	public static final Apfloat ONE = new Apfloat(1, Precision.SCALE);
+	public static final Apfloat ONE = valueOf(1);
 
-	public static final Apfloat TWO = new Apfloat(2, Precision.SCALE);
+	public static final Apfloat TWO = valueOf(2);
 
 	public static Apfloat valueOf(final double value) {
 		return new Apfloat(String.valueOf(value), Precision.SCALE);

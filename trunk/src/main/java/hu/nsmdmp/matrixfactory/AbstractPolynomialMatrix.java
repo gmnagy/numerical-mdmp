@@ -32,19 +32,20 @@ abstract class AbstractPolynomialMatrix {
 	 */
 	Matrix create(final Apfloat[][] vectorSet, final int maxOrder) {
 		int s = vectorSet.length;
+		List<Apfloat[]> variations = Variation.createVariation(vectorSet);
 
 		List<int[]> exponents = TotalOrder.getOrders(maxOrder, s);
 		int m = exponents.size();
-		int n = Variation.getVariationsNumber(vectorSet);
+		int n = variations.size();
 		Matrix M = new Matrix(m, n);
 		Apfloat[][] matrix = M.getArray();
 
 		for (int j = 0; j < n; j++) {
 
-			Apfloat[] variations = Variation.getVariation(j, vectorSet);
+			Apfloat[] ithV = variations.get(j);
 
 			for (int i = 0; i < m; i++) {
-				matrix[i][j] = getMatrixElement(exponents.get(i), variations);
+				matrix[i][j] = getMatrixElement(exponents.get(i), ithV);
 			}
 		}
 

@@ -1,8 +1,9 @@
 package hu.nsmdmp.matrix.operation;
 
+import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.matrix.Matrix;
-import hu.nsmdmp.matrix.operation.Normalization;
 
+import org.apfloat.Apfloat;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -14,13 +15,19 @@ import org.junit.Test;
  */
 public class NormalizationTest {
 
+	private static final Apfloat ZERO = ApfloatUtils.ZERO;
+	private static final Apfloat ONE = ApfloatUtils.ONE;
+	private static final Apfloat TWO = ApfloatUtils.valueOf(2);
+	private static final Apfloat THREE = ApfloatUtils.valueOf(3);
+
 	@Test
 	public void normalizationTest1() {
 		double[][] vSet = { { 1, 2, 3, 4 }, { 0, 1, 2, 3 } };
 		Matrix M = new Matrix(vSet);
 		Matrix normalized = Normalization.normalize(M);
 
-		double[][] expected = { { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1 }, { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1 } };
+		// { { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1 }, { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1 } }
+		Apfloat[][] expected = { { ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE), ONE }, { ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE), ONE } };
 		Matrix em = new Matrix(expected);
 
 		if (!normalized.equals(em)) {
@@ -37,7 +44,8 @@ public class NormalizationTest {
 		Matrix M = new Matrix(vSet);
 		Matrix normalized = Normalization.normalize(M);
 
-		double[][] expected = { { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1 }, { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1 } };
+		// { { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1 }, { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1 } }
+		Apfloat[][] expected = { { ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE), ONE }, { ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE), ONE } };
 		Matrix em = new Matrix(expected);
 
 		if (!normalized.equals(em)) {
@@ -54,7 +62,8 @@ public class NormalizationTest {
 		Matrix M = new Matrix(vSet);
 		Matrix normalized = Normalization.normalize(M);
 
-		double[][] expected = { { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1 }, { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1 } };
+		// { { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1 }, { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1 } }
+		Apfloat[][] expected = { { ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE), ONE }, { ONE.negate(), ONE.divide(THREE).negate(), ONE.divide(THREE), ONE } };
 		Matrix em = new Matrix(expected);
 
 		if (!normalized.equals(em)) {
