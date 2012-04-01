@@ -21,31 +21,33 @@ public abstract class AbstractTransformationMatrix {
 	protected Matrix getTransformationMatrix(final int maxOrder, final int s) {
 		List<int[]> exponentsList = TotalOrder.getOrders(maxOrder, s);
 
-		Matrix M = new Matrix(exponentsList.size(), maxOrder + 1, ApfloatUtils.ZERO);
+		Matrix M = new Matrix(exponentsList.size(), exponentsList.size());
 
 		// rows
 		int i = 0;
 		for (int[] exponents : exponentsList) {
 
+			int j = 0; // polynoms 
 			for (int exp : exponents) {
 				Polynomial polynomial = cachedPolynomials.getPolynomial(exp);
 
-				// columns
-				double[] coefs = polynomial.getCoefficients();
-				for (int j = 0; j < coefs.length; j++) {
-					Apfloat c = ApfloatUtils.valueOf(coefs[j]);
-					if (c.compareTo(ApfloatUtils.ZERO) == 0) {
-						continue;
-					}
+				// iterate columns
+				int k = 0;
+				for (int[] items : exponentsList) {
+					Apfloat c = ApfloatUtils.valueOf(polynomial.coefficient(items[j]));
 
-					Apfloat x = M.get(i, j);
-					if (x.compareTo(ApfloatUtils.ZERO) == 0) {
+					Apfloat x = M.get(i, k);
+					if (null == x) {
 						x = ApfloatUtils.ONE;
 					}
 
-					Apfloat newValue = x.multiply(c);
-					M.set(i, j, newValue);
+					x = x.multiply(c);
+					M.set(i, k, x);
+
+					k++;
 				}
+
+				j++;
 			}
 
 			i++;

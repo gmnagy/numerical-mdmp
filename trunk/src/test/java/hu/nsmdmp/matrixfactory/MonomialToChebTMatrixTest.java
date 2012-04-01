@@ -17,12 +17,9 @@ public class MonomialToChebTMatrixTest {
 		Matrix chebT = MatrixFactory.getChebyshevTMatrix(m.getArray(), moment);
 		Matrix T = MonomialToChebTMatrix.getMatrix(moment, m.getRowDimension());
 
-		System.out.println(monomial);
 		System.out.println(T);
 
 		Matrix newChebT = MatrixMath.multiply(T, monomial);
-
-		System.out.println(newChebT);
 
 		Assert.assertEquals(chebT, newChebT);
 	}
@@ -30,22 +27,15 @@ public class MonomialToChebTMatrixTest {
 	@Test
 	public void multivariate1() {
 		Matrix m = new Matrix(new double[][] { { 0, 1, 2 }, { 0, 1, 2 } });
-		int moment = 2;
+		int moment = 3;
 
 		Matrix monomial = MatrixFactory.getMonomialMatrix(m.getArray(), moment);
 		Matrix chebT = MatrixFactory.getChebyshevTMatrix(m.getArray(), moment);
 		Matrix T = MonomialToChebTMatrix.getMatrix(moment, m.getRowDimension());
 
-		System.out.println(monomial);
-		System.out.println();
 		System.out.println(T);
-		System.out.println();
-		System.out.println(chebT);
 
 		Matrix newChebT = MatrixMath.multiply(T, monomial);
-
-		System.out.println();
-		System.out.println(newChebT);
 
 		Assert.assertEquals(chebT, newChebT);
 	}
