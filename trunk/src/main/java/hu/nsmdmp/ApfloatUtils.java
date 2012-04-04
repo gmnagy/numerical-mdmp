@@ -12,6 +12,8 @@ public class ApfloatUtils {
 
 	public static final Apfloat TWO = valueOf(2);
 
+	public static final Apfloat THREE = valueOf(3);
+
 	public static Apfloat valueOf(final double value) {
 		return new Apfloat(String.valueOf(value), Precision.SCALE);
 	}

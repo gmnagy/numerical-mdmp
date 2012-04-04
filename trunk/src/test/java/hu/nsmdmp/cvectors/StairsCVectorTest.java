@@ -1,5 +1,6 @@
 package hu.nsmdmp.cvectors;
 
+import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.math.Variation;
 import hu.nsmdmp.utils.Converters;
 import hu.nsmdmp.vector.Vector;
@@ -15,7 +16,7 @@ public class StairsCVectorTest {
 		double[][] m = { { 0, 1, 2 }, { 0, 1, 2 }, { 0, 1, 2 } };
 		Apfloat[][] variation = Converters.convert(Variation.createVariation(Converters.convert(m)));
 
-		Vector cVector = CVectorFactory.getStairsCVector(variation);
+		Vector cVector = CVectorFactory.getStairsCVector(variation, ApfloatUtils.ZERO);
 
 		double[] expected = { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 		Vector ev = new Vector(expected);
@@ -33,7 +34,7 @@ public class StairsCVectorTest {
 		double[][] m = { { 0, 1, 2, 3 }, { 1, 2, 3, 4 } };
 		Apfloat[][] variation = Converters.convert(Variation.createVariation(Converters.convert(m)));
 
-		Vector cVector = CVectorFactory.getStairsCVector(variation);
+		Vector cVector = CVectorFactory.getStairsCVector(variation, ApfloatUtils.ZERO);
 
 		double[] expected = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 		Vector ev = new Vector(expected);

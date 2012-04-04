@@ -8,8 +8,13 @@ import org.apfloat.Apfloat;
 
 public class CVectorFactory {
 
-	public static Vector getStairsCVector(final Apfloat[][] vectorSet) {
-		StairsCVector vector = new StairsCVector();
+	public static Vector getStairsCVector(final Apfloat[][] vectorSet, final Apfloat limit) {
+		Apfloat[] limits = new Apfloat[vectorSet[0].length];
+		for (int i = 0; i < limits.length; i++) {
+			limits[i] = limit;
+		}
+
+		StairsCVector vector = new StairsCVector(limits);
 
 		return vector.create(vectorSet);
 	}
@@ -32,4 +37,15 @@ public class CVectorFactory {
 		return vector.create(vectorSet);
 	}
 
+	public static Vector getCumProbPoisson(final Apfloat[][] vectorSet, final Apfloat[] limits) {
+		CumProbPoisson vector = new CumProbPoisson(limits);
+
+		return vector.create(vectorSet);
+	}
+
+	public static Vector getProbPoisson(final Apfloat[][] vectorSet, final Apfloat[] limits) {
+		ProbPoisson vector = new ProbPoisson(limits);
+
+		return vector.create(vectorSet);
+	}
 }

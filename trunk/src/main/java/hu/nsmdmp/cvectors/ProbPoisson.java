@@ -4,11 +4,15 @@ import hu.nsmdmp.ApfloatUtils;
 
 import org.apfloat.Apfloat;
 
-class StairsCVector extends AbstractCVector {
+/**
+ * f(z1,z2) = 1 if z1=x and z2=y, 0 otherwise .
+ * 
+ */
+public class ProbPoisson extends AbstractCVector {
 
 	private final Apfloat[] limit;
 
-	StairsCVector(final Apfloat[] limit) {
+	ProbPoisson(final Apfloat[] limit) {
 		this.limit = limit;
 	}
 
@@ -22,10 +26,10 @@ class StairsCVector extends AbstractCVector {
 
 		for (int i = 0; i < n; i++) {
 			if (variation[i].compareTo(limit[i]) != 0) {
-				return ApfloatUtils.ONE;
+				return ApfloatUtils.ZERO;
 			}
 		}
 
-		return ApfloatUtils.ZERO;
+		return ApfloatUtils.ONE;
 	}
 }
