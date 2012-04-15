@@ -42,22 +42,23 @@ abstract class AExperiments {
 
 		System.out.println("AExperiments disrt, obj, var vectors prepare time: " + (System.currentTimeMillis() - starttime));
 		int maxOrder = getMaxOrder();
-		for (int i = 1; i <= maxOrder; i++) {
+		for (int i = 2; i <= maxOrder; i++) {
 			System.out.println("MaxOrder: " + i);
 
 			//IMatrix normM = MatrixFactory.getMonomialMatrix(normVSet.getMatrix(), i);
 			//printMinMaxPrimalSolution(normM, distr, c, "MonomialMatrix: ");
-			System.out.println("ChebyshevTMatrix: ");
-			starttime = System.currentTimeMillis();
-			Matrix chebTM = MatrixFactory.getChebyshevTMatrix(normVSet.getArray(), i);
-			Vector b = MatrixMath.multiply(chebTM, distr);
-			System.out.println("Matrix and RHS prepare time: " + (System.currentTimeMillis() - starttime));
-			printMinMaxPrimalSolution(chebTM, b, c, "ChebyshevTMatrix: ");
+//			System.out.println("ChebyshevTMatrix: ");
+//			starttime = System.currentTimeMillis();
+//			Matrix chebTM = MatrixFactory.getChebyshevTMatrix(normVSet.getArray(), i);
+//			Vector b = MatrixMath.multiply(chebTM, distr);
+//			System.out.println("Matrix and RHS prepare time: " + (System.currentTimeMillis() - starttime));
+//			printMinMaxPrimalSolution(chebTM, b, c, "ChebyshevTMatrix: ");
 
 			System.out.println("ChebyshevUMatrix: ");
 			starttime = System.currentTimeMillis();
 			Matrix chebUM = MatrixFactory.getChebyshevUMatrix(normVSet.getArray(), i);
-			b = MatrixMath.multiply(chebUM, distr);
+			Vector b = MatrixMath.multiply(chebUM, distr);
+			System.out.println(b);
 			System.out.println("Matrix and RHS prepare time: " + (System.currentTimeMillis() - starttime));
 			printMinMaxPrimalSolution(chebUM, b, c, "ChebyshevUMatrix: ");
 

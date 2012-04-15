@@ -24,14 +24,14 @@ public class ChebyshevTMatrixTest {
 	private static final Apfloat SEVEN = ApfloatUtils.valueOf(7);
 	private static final Apfloat NINE = ApfloatUtils.valueOf(9);
 
-	private final int moment;
+	private final int maxOrder;
 
 	private final double[][] vectorSet;
 
 	private final Apfloat[][] expectedMatrix;
 
-	public ChebyshevTMatrixTest(int moment, double[][] vectorSet, Apfloat[][] expectedMatrix) {
-		this.moment = moment;
+	public ChebyshevTMatrixTest(int maxOrder, double[][] vectorSet, Apfloat[][] expectedMatrix) {
+		this.maxOrder = maxOrder;
 		this.vectorSet = vectorSet;
 		this.expectedMatrix = expectedMatrix;
 	}
@@ -45,7 +45,7 @@ public class ChebyshevTMatrixTest {
 
 	@Test
 	public void simpleMatrixTest() {
-		Matrix chebT = MatrixFactory.getChebyshevTMatrix(Converters.convert(vectorSet), moment);
+		Matrix chebT = MatrixFactory.getChebyshevTMatrix(Converters.convert(vectorSet), maxOrder);
 
 		Matrix em = new Matrix(expectedMatrix);
 

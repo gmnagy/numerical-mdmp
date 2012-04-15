@@ -11,11 +11,11 @@ public class MonomialToChebUMatrixTest {
 	@Test
 	public void univariate1() {
 		Matrix m = new Matrix(new double[][] { { 0, 1, 2, 3 } });
-		int moment = 3;
+		int maxOrder = 3;
 
-		Matrix monomial = MatrixFactory.getMonomialMatrix(m.getArray(), moment);
-		Matrix chebU = MatrixFactory.getChebyshevUMatrix(m.getArray(), moment);
-		Matrix T = MonomialToChebUMatrix.getMatrix(moment, m.getRowDimension());
+		Matrix monomial = MatrixFactory.getMonomialMatrix(m.getArray(), maxOrder);
+		Matrix chebU = MatrixFactory.getChebyshevUMatrix(m.getArray(), maxOrder);
+		Matrix T = MonomialToChebUMatrix.getMatrix(maxOrder, m.getRowDimension());
 
 		System.out.println(T);
 
@@ -27,11 +27,11 @@ public class MonomialToChebUMatrixTest {
 	@Test
 	public void multivariate1() {
 		Matrix m = new Matrix(new double[][] { { 0, 1, 2 }, { 0, 1, 2 } });
-		int moment = 3;
+		int maxOrder = 3;
 
-		Matrix monomial = MatrixFactory.getMonomialMatrix(m.getArray(), moment);
-		Matrix chebU = MatrixFactory.getChebyshevUMatrix(m.getArray(), moment);
-		Matrix T = MonomialToChebUMatrix.getMatrix(moment, m.getRowDimension());
+		Matrix monomial = MatrixFactory.getMonomialMatrix(m.getArray(), maxOrder);
+		Matrix chebU = MatrixFactory.getChebyshevUMatrix(m.getArray(), maxOrder);
+		Matrix T = MonomialToChebUMatrix.getMatrix(maxOrder, m.getRowDimension());
 
 		System.out.println(T);
 

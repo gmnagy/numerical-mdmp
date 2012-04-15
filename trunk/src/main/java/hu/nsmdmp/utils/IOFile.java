@@ -1,5 +1,6 @@
 package hu.nsmdmp.utils;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -14,14 +15,24 @@ public class IOFile {
 	public static final String UTF8 = "UTF-8";
 
 	public static Apfloat[] read(final String fileName) throws IOException {
-		List<Apfloat> binomialMoments = new LinkedList<Apfloat>();
-
 		Scanner scanner = new Scanner(new FileInputStream(fileName), UTF8);
+
+		return read(scanner);
+	}
+
+	public static Apfloat[] read(final File file) throws IOException {
+		Scanner scanner = new Scanner(new FileInputStream(file), UTF8);
+
+		return read(scanner);
+	}
+
+	private static Apfloat[] read(final Scanner scanner) throws IOException {
+		List<Apfloat> rows = new LinkedList<Apfloat>();
 
 		try {
 			while (scanner.hasNextLine()) {
 				try {
-					binomialMoments.add(new Apfloat(scanner.nextBigDecimal(), Precision.SCALE));
+					rows.add(new Apfloat(scanner.nextBigDecimal(), Precision.SCALE));
 				} catch (NoSuchElementException e) {
 					break;
 				}
@@ -30,6 +41,6 @@ public class IOFile {
 			scanner.close();
 		}
 
-		return binomialMoments.toArray(new Apfloat[] {});
+		return rows.toArray(new Apfloat[] {});
 	}
 }

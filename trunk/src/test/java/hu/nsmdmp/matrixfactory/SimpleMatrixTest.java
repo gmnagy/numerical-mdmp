@@ -1,7 +1,6 @@
 package hu.nsmdmp.matrixfactory;
 
 import hu.nsmdmp.matrix.Matrix;
-import hu.nsmdmp.matrixfactory.MatrixFactory;
 import hu.nsmdmp.utils.Converters;
 
 import java.util.Arrays;
@@ -16,14 +15,14 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(value = Parameterized.class)
 public class SimpleMatrixTest {
 
-	private final int moment;
+	private final int maxOrder;
 
 	private final double[][] vectorSet;
 
 	private final double[][] expectedMatrix;
 
-	public SimpleMatrixTest(int moment, double[][] vectorSet, double[][] expectedMatrix) {
-		this.moment = moment;
+	public SimpleMatrixTest(int maxOrder, double[][] vectorSet, double[][] expectedMatrix) {
+		this.maxOrder = maxOrder;
 		this.vectorSet = vectorSet;
 		this.expectedMatrix = expectedMatrix;
 	}
@@ -37,7 +36,7 @@ public class SimpleMatrixTest {
 
 	@Test
 	public void simpleMatrixTest() {
-		Matrix sm = MatrixFactory.getSimpleMatrix(Converters.convert(vectorSet), moment);
+		Matrix sm = MatrixFactory.getSimpleMatrix(Converters.convert(vectorSet), maxOrder);
 
 		Matrix em = new Matrix(expectedMatrix);
 

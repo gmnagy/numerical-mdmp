@@ -354,13 +354,10 @@ public class Matrix {
 		Matrix identity = MatrixMath.identity(m, m);
 
 		if (isSquare()) {
-			System.out.println("a");
 			return getLU().solve(identity);
 		} else if (m > n) {
-			System.out.println("b");
 			return getQR().solve(identity);
 		} else {
-			System.out.println("c");
 			Matrix transposed = transpose();
 			return transposed.getQR().solve(MatrixMath.identity(n, n)).transpose();
 		}

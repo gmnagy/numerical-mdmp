@@ -136,7 +136,7 @@ public final class LinearProgrammingEq {
 		LPSolution lpSolution = new LPSolution();
 		lpSolution.x = xx;
 		lpSolution.primalSolution = task.getprimalobj(Env.soltype.bas);
-		lpSolution.basisIndexes=new int[NUMCON];
+		lpSolution.basisIndexes = new int[NUMCON];
 		task.initbasissolve(lpSolution.basisIndexes);
 		//task.getprimalobj(arg0, arg1)
 		//System.out.println(Arrays.toString(lpSolution.basisIndexes));
@@ -156,17 +156,38 @@ public final class LinearProgrammingEq {
 	private void checkSolutionStatus(final Env.solsta solsta[]) throws MosekException {
 		switch (solsta[0]) {
 		case optimal:
+			System.out.println("The solution is optimal.");
+			break;
 		case near_optimal:
-//			System.out.println("Optimal primal solution.");
+			System.out.println("The solution is nearly optimal.");
 			break;
 		case dual_infeas_cer:
+			System.out.println("The solution is a certificate of dual infeasibility.");
+			break;
+//			throw new MosekException("The solution is a certificate of dual infeasibility.");
 		case near_dual_infeas_cer:
-			throw new MosekException("Dual infeasibility.");
+			System.out.println("The solution is almost a certificate of dual infeasibility.");
+			break;
+//			throw new MosekException("The solution is almost a certificate of dual infeasibility.");
 		case prim_infeas_cer:
+			System.out.println("The solution is a certificate of primal infeasibility.");
+			break;
+//			throw new MosekException("The solution is a certificate of primal infeasibility.");
 		case near_prim_infeas_cer:
-			throw new MosekException("Primal infeasibility.");
+			System.out.println("The solution is almost a certificate of primal infeasibility.");
+			break;
+//			throw new MosekException("The solution is almost a certificate of primal infeasibility.");
+		case dual_feas:
+			System.out.println("The solution is dual feasible.");
+			break;
+		case prim_feas:
+			System.out.println("The solution is primal feasible.");
+			break;
+		case prim_and_dual_feas:
+			System.out.println("The solution is both primal and dual feasible.");
+			break;
 		case unknown:
-			throw new MosekException("Unknown solution status.");
+			throw new MosekException("Status of the solution is unknown.");
 		default:
 			throw new MosekException("Other solution status.");
 		}

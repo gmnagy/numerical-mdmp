@@ -54,4 +54,10 @@ public class CVectorFactory {
 
 		return vector.create(vectorSet);
 	}
+
+	public static Vector getProbPoisson(final List<Apfloat[]> vectorSet, final Apfloat[] limits) {
+		ProbPoisson vector = new ProbPoisson(limits);
+
+		return vector.create(vectorSet);
+	}
 }

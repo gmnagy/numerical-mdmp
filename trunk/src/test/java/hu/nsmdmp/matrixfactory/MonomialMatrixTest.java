@@ -21,14 +21,14 @@ public class MonomialMatrixTest {
 	private static final Apfloat THREE = ApfloatUtils.valueOf(3);
 	private static final Apfloat NINE = ApfloatUtils.valueOf(9);
 
-	private final int moment;
+	private final int maxOrder;
 
 	private final double[][] vectorSet;
 
 	private final Apfloat[][] expectedMatrix;
 
-	public MonomialMatrixTest(int moment, double[][] vectorSet, Apfloat[][] expectedMatrix) {
-		this.moment = moment;
+	public MonomialMatrixTest(int maxOrder, double[][] vectorSet, Apfloat[][] expectedMatrix) {
+		this.maxOrder = maxOrder;
 		this.vectorSet = vectorSet;
 		this.expectedMatrix = expectedMatrix;
 	}
@@ -42,7 +42,7 @@ public class MonomialMatrixTest {
 
 	@Test
 	public void simpleMatrixTest() {
-		Matrix monomial = MatrixFactory.getMonomialMatrix(Converters.convert(vectorSet), moment);
+		Matrix monomial = MatrixFactory.getMonomialMatrix(Converters.convert(vectorSet), maxOrder);
 
 		Matrix em = new Matrix(expectedMatrix);
 

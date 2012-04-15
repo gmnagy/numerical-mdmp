@@ -38,9 +38,9 @@ public class TotalOrderTest {
 	public void test() {
 		List<int[]> exps = TotalOrder.getOrders(maxOrder, size);
 
-		for (int[] e : exps) {
-			System.out.println(Utils.print(e));
-		}
+//		for (int[] e : exps) {
+//			System.out.println(Utils.print(e));
+//		}
 
 		Assert.assertTrue(TotalOrder.equals(exps, expected));
 	}
