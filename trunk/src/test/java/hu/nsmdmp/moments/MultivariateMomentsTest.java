@@ -1,6 +1,6 @@
 package hu.nsmdmp.moments;
 
-import hu.nsmdmp.ApfloatUtils;
+import hu.nsmdmp.utils.ApfloatUtils;
 import hu.nsmdmp.utils.IOFile;
 import hu.nsmdmp.utils.Utils;
 

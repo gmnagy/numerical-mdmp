@@ -2,9 +2,9 @@ package hu.nsmdmp.mosek;
 
 import org.apfloat.Apfloat;
 
-import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.matrix.Matrix;
 import hu.nsmdmp.matrix.operation.MatrixMath;
+import hu.nsmdmp.utils.ApfloatUtils;
 import hu.nsmdmp.vector.Vector;
 import mosek.MosekException;
 

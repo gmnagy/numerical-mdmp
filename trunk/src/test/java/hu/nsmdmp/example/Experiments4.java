@@ -1,10 +1,10 @@
 package hu.nsmdmp.example;
 
-import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.cvectors.CVectorFactory;
 import hu.nsmdmp.distributions.BivPoissDistrVector;
 import hu.nsmdmp.distributions.TruncBivPoissArray;
 import hu.nsmdmp.math.Variation;
+import hu.nsmdmp.utils.ApfloatUtils;
 import hu.nsmdmp.vector.Vector;
 import mosek.MosekException;
 

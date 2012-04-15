@@ -1,6 +1,5 @@
 package hu.nsmdmp.utils;
 
-import hu.nsmdmp.ApfloatUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -2,8 +2,8 @@ package hu.nsmdmp.mosek;
 
 import java.util.Arrays;
 
-import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.matrix.Matrix;
+import hu.nsmdmp.utils.ApfloatUtils;
 import hu.nsmdmp.utils.Utils;
 import hu.nsmdmp.utils.Precision;
 import hu.nsmdmp.vector.Vector;

@@ -1,6 +1,5 @@
-package hu.nsmdmp;
+package hu.nsmdmp.utils;
 
-import hu.nsmdmp.utils.Precision;
 
 import org.apfloat.Apfloat;
 

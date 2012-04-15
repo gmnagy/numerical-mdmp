@@ -43,6 +43,12 @@ public class CVectorFactory {
 		return vector.create(vectorSet);
 	}
 
+	public static Vector getCumProbPoisson(final List<Apfloat[]> vectorSet, final Apfloat[] limits) {
+		CumProbPoisson vector = new CumProbPoisson(limits);
+
+		return vector.create(vectorSet);
+	}
+
 	public static Vector getProbPoisson(final Apfloat[][] vectorSet, final Apfloat[] limits) {
 		ProbPoisson vector = new ProbPoisson(limits);
 

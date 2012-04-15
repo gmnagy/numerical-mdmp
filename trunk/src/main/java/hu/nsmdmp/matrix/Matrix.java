@@ -1,9 +1,9 @@
 package hu.nsmdmp.matrix;
 
-import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.matrix.operation.LUDecomposition;
 import hu.nsmdmp.matrix.operation.MatrixMath;
 import hu.nsmdmp.matrix.operation.QRDecomposition;
+import hu.nsmdmp.utils.ApfloatUtils;
 import hu.nsmdmp.utils.Utils;
 
 import org.apfloat.Apfloat;

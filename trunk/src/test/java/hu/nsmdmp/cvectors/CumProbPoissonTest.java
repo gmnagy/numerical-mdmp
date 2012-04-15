@@ -1,7 +1,7 @@
 package hu.nsmdmp.cvectors;
 
-import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.math.Variation;
+import hu.nsmdmp.utils.ApfloatUtils;
 import hu.nsmdmp.utils.Converters;
 import hu.nsmdmp.vector.Vector;
 

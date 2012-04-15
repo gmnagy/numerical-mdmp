@@ -1,7 +1,7 @@
 package hu.nsmdmp.matrixfactory;
 
-import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.matrix.Matrix;
+import hu.nsmdmp.utils.ApfloatUtils;
 import hu.nsmdmp.utils.Converters;
 
 import java.util.Arrays;

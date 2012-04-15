@@ -1,10 +1,10 @@
 package hu.nsmdmp.moments;
 
-import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.math.CombinationGenerator;
 import hu.nsmdmp.math.Math;
 import hu.nsmdmp.math.TotalOrder;
 import hu.nsmdmp.math.Variation;
+import hu.nsmdmp.utils.ApfloatUtils;
 import hu.nsmdmp.utils.Converters;
 import hu.nsmdmp.utils.Utils;
 

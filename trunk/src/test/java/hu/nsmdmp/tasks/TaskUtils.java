@@ -1,11 +1,14 @@
 package hu.nsmdmp.tasks;
 
-import hu.nsmdmp.ApfloatUtils;
+import hu.nsmdmp.utils.ApfloatUtils;
 
 import org.apfloat.Apfloat;
 
 public class TaskUtils {
 
+	/**
+	 * n=2, m=3 => {{0, 1, 2}, {0, 1, 2}}
+	 */
 	public static Apfloat[][] createVectorSet(final int n, final int m) {
 		Apfloat[][] vectorSet = new Apfloat[n][m];
 

@@ -1,7 +1,7 @@
 package hu.nsmdmp.moments;
 
-import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.math.Math;
+import hu.nsmdmp.utils.ApfloatUtils;
 import hu.nsmdmp.utils.Precision;
 
 import org.apfloat.Apfloat;

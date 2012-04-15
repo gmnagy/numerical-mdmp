@@ -1,9 +1,9 @@
 package hu.nsmdmp.matrixfactory;
 
-import hu.nsmdmp.ApfloatUtils;
 import hu.nsmdmp.math.TotalOrder;
 import hu.nsmdmp.math.Variation;
 import hu.nsmdmp.matrix.Matrix;
+import hu.nsmdmp.utils.ApfloatUtils;
 
 import java.util.List;
 
