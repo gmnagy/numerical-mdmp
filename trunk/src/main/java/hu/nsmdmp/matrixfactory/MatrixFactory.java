@@ -15,9 +15,10 @@ public final class MatrixFactory {
 
 	public static Matrix getMonomialMatrix(final Apfloat[][] vectorSet, final int maxOrder) {
 		MonomialMatrix matrix = new MonomialMatrix();
-		Matrix normalizedMatrix = MatrixMath.normalize(new Matrix(vectorSet));
+		//Matrix normalizedMatrix = MatrixMath.normalize(new Matrix(vectorSet));
 
-		return matrix.create(normalizedMatrix.getArray(), maxOrder);
+		//return matrix.create(normalizedMatrix.getArray(), maxOrder);
+		return matrix.create(vectorSet, maxOrder);
 	}
 
 	public static Matrix getChebyshevTMatrix(final Apfloat[][] vectorSet, final int maxOrder) {
