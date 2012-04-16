@@ -6,8 +6,7 @@ import hu.nsmdmp.matrix.operation.MatrixMath;
 import hu.nsmdmp.matrixfactory.MatrixFactory;
 import hu.nsmdmp.mosek.LPSolution;
 import hu.nsmdmp.mosek.LinearProgrammingEq;
-import hu.nsmdmp.mosek.PreciseLPCalc;
-import hu.nsmdmp.mosek.PreciseLPSolution;
+import hu.nsmdmp.utils.ApfloatUtils;
 import hu.nsmdmp.utils.Converters;
 import hu.nsmdmp.vector.Vector;
 
@@ -36,13 +35,14 @@ abstract class AExperiments {
 
 		// coefficient vector
 		Vector c = getCVector(vSet);
+		System.out.println("c: " + c);
 
 		// normalized vector set
 		Matrix normVSet = MatrixMath.normalize(new Matrix(vectorSet));
 
 		System.out.println("AExperiments disrt, obj, var vectors prepare time: " + (System.currentTimeMillis() - starttime));
 		int maxOrder = getMaxOrder();
-		for (int i = 2; i <= maxOrder; i++) {
+		for (int i = 4; i <= maxOrder; i++) {
 			System.out.println("MaxOrder: " + i);
 
 			//IMatrix normM = MatrixFactory.getMonomialMatrix(normVSet.getMatrix(), i);
@@ -58,7 +58,7 @@ abstract class AExperiments {
 			starttime = System.currentTimeMillis();
 			Matrix chebUM = MatrixFactory.getChebyshevUMatrix(normVSet.getArray(), i);
 			Vector b = MatrixMath.multiply(chebUM, distr);
-			System.out.println(b);
+//			System.out.println(b);
 			System.out.println("Matrix and RHS prepare time: " + (System.currentTimeMillis() - starttime));
 			printMinMaxPrimalSolution(chebUM, b, c, "ChebyshevUMatrix: ");
 
@@ -80,29 +80,45 @@ abstract class AExperiments {
 
 		long starttime = System.currentTimeMillis();
 		LPSolution min = LinearProgrammingEq.optimizeMin(matrix, b, c);
+		System.out.println("c: " + getC(min.getX(), c));
 		System.out.println(String.format("%s \tmin: %s \ttime: %s", "mosek: ", formatter.format(min.getPrimalSolution()), (System.currentTimeMillis() - starttime)));
 
-		starttime = System.currentTimeMillis();
-		PreciseLPSolution precMin = PreciseLPCalc.optimizeMin(matrix, b, c);
-		System.out.println(String.format("%s \tmin: %s \ttime: %s", "precise: ", formatter.format(precMin.getObjectiveValue().doubleValue()), (System.currentTimeMillis() - starttime)));
-		System.out.println(String.format(	"%s nonneg: %s,\tslack: %s",
-											"infeasibility: ",
-											formatter.format(precMin.getPrimalNonnegInfeas().doubleValue()),
-											formatter.format(precMin.getPrimalSlackInfeas().doubleValue())));
-		System.out.println(String.format("%s slack: %s", "dual infeas: ", formatter.format(precMin.getDualSlackInfeas().doubleValue())));
-
-		starttime = System.currentTimeMillis();
+//		starttime = System.currentTimeMillis();
+//		PreciseLPSolution precMin = PreciseLPCalc.optimizeMin(matrix, b, c);
+//		System.out.println(String.format("%s \tmin: %s \ttime: %s", "precise: ", formatter.format(precMin.getObjectiveValue().doubleValue()), (System.currentTimeMillis() - starttime)));
+//		System.out.println(String.format(	"%s nonneg: %s,\tslack: %s",
+//											"infeasibility: ",
+//											formatter.format(precMin.getPrimalNonnegInfeas().doubleValue()),
+//											formatter.format(precMin.getPrimalSlackInfeas().doubleValue())));
+//		System.out.println(String.format("%s slack: %s", "dual infeas: ", formatter.format(precMin.getDualSlackInfeas().doubleValue())));
+//
+//		starttime = System.currentTimeMillis();
 		LPSolution max = LinearProgrammingEq.optimizeMax(matrix, b, c);
 		System.out.println(String.format("%s \tmax: %s \ttime: %s", "mosek: ", formatter.format(max.getPrimalSolution()), (System.currentTimeMillis() - starttime)));
 
-		starttime = System.currentTimeMillis();
-		PreciseLPSolution precMax = PreciseLPCalc.optimizeMax(matrix, b, c);
-		System.out.println(String.format("%s \tmax: %s \ttime: %s", "precise: ", formatter.format(precMax.getObjectiveValue().doubleValue()), (System.currentTimeMillis() - starttime)));
-		System.out.println(String.format(	"%s nonneg: %s,\tslack: %s",
-											"infeasibility: ",
-											formatter.format(precMax.getPrimalNonnegInfeas().doubleValue()),
-											formatter.format(precMax.getPrimalSlackInfeas().doubleValue())));
-		System.out.println(String.format("%s slack: %s", "dual infeas: ", formatter.format(precMax.getDualSlackInfeas().doubleValue())));
+//		starttime = System.currentTimeMillis();
+//		PreciseLPSolution precMax = PreciseLPCalc.optimizeMax(matrix, b, c);
+//		System.out.println(String.format("%s \tmax: %s \ttime: %s", "precise: ", formatter.format(precMax.getObjectiveValue().doubleValue()), (System.currentTimeMillis() - starttime)));
+//		System.out.println(String.format(	"%s nonneg: %s,\tslack: %s",
+//											"infeasibility: ",
+//											formatter.format(precMax.getPrimalNonnegInfeas().doubleValue()),
+//											formatter.format(precMax.getPrimalSlackInfeas().doubleValue())));
+//		System.out.println(String.format("%s slack: %s", "dual infeas: ", formatter.format(precMax.getDualSlackInfeas().doubleValue())));
 
+	}
+
+	private Apfloat getC(double[] X, Vector f) {
+		Apfloat c = ApfloatUtils.ZERO;
+		for (int i = 0; i < X.length; i++) {
+			if (X[i] != 0) {
+				System.out.println(X[i] + "  " + f.get(i));
+			}
+
+			Apfloat x = ApfloatUtils.valueOf(X[i]);
+
+			c = c.add(x.multiply(f.get(i)));
+		}
+
+		return c;
 	}
 }

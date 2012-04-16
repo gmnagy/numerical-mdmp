@@ -42,7 +42,7 @@ public class Experiments4 extends AExperiments {
 
 	@Override
 	protected int getMaxOrder() {
-		return 8;
+		return 4;
 	}
 
 	@Override
