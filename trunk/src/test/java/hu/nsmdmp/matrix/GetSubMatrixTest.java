@@ -1,7 +1,5 @@
 package hu.nsmdmp.matrix;
 
-import hu.nsmdmp.matrix.Matrix;
-
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -1,7 +1,6 @@
 package hu.nsmdmp.matrix.operation;
 
 import hu.nsmdmp.matrix.Matrix;
-import hu.nsmdmp.matrix.operation.Multiplication;
 import hu.nsmdmp.vector.Vector;
 
 import org.junit.Assert;

@@ -1,6 +1,5 @@
 package hu.nsmdmp.math;
 
-import hu.nsmdmp.math.Variation;
 import hu.nsmdmp.utils.Converters;
 import hu.nsmdmp.utils.Utils;
 
