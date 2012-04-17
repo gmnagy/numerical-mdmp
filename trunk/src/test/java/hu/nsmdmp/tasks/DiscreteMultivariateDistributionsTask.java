@@ -31,10 +31,11 @@ public class DiscreteMultivariateDistributionsTask {
 		URL url = getClass().getResource("binomialM2");
 		Vector powerB = new Vector(IOFile.read(new File(url.toURI())));
 
-		Apfloat[][] vectorSet = TaskUtils.createVectorSet(2, 5);
+		Apfloat[][] vectorSet = TaskUtils.createVectorSet(2, 9);
 
 		int maxOrder = 2;
 		Matrix T = MonomialToChebUMatrix.getMatrix(maxOrder, vectorSet.length);
+		System.out.println("b: " + powerB);
 
 		Vector cheby2B = MatrixMath.multiply(T, powerB);
 //		System.out.println("b: " + cheby2B);
@@ -47,7 +48,7 @@ public class DiscreteMultivariateDistributionsTask {
 		Matrix chebU = MatrixFactory.getChebyshevUMatrix(vectorSet, maxOrder);
 //		System.out.println(chebU);
 
-		//LPSolution min = LinearProgrammingEq.optimizeMin(chebU, cheby2B, f);
+//		LPSolution min = LinearProgrammingEq.optimizeMin(chebU, cheby2B, f);
 		LPSolution min = LinearProgrammingEq.optimizeMin(MatrixFactory.getMonomialMatrix(vectorSet, maxOrder), powerB, f);
 
 		System.out.println(Utils.print(min.getX()));
