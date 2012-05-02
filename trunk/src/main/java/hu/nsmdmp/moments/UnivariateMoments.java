@@ -11,7 +11,7 @@ public class UnivariateMoments {
 
 	@Test
 	public void test() {
-		System.out.println(Math.binomial(2, 0));
+		System.out.println(Math.binomial(2, 2));
 	}
 
 	public static Apfloat[] createBinomialMoments(final Apfloat[] probabilities, final int n, final int m) {

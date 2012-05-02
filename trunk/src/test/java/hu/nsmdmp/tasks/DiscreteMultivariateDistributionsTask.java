@@ -10,7 +10,6 @@ import hu.nsmdmp.mosek.LPSolution;
 import hu.nsmdmp.mosek.LinearProgrammingEq;
 import hu.nsmdmp.utils.ApfloatUtils;
 import hu.nsmdmp.utils.IOFile;
-import hu.nsmdmp.utils.Utils;
 import hu.nsmdmp.vector.Vector;
 
 import java.io.File;
@@ -28,14 +27,13 @@ public class DiscreteMultivariateDistributionsTask {
 
 	@Test
 	public void discreteMultivariateDistributions() throws IOException, URISyntaxException, MosekException {
-		URL url = getClass().getResource("binomialM2");
+		URL url = getClass().getResource("binomialTestM2");
 		Vector powerB = new Vector(IOFile.read(new File(url.toURI())));
 
-		Apfloat[][] vectorSet = TaskUtils.createVectorSet(2, 9);
+		Apfloat[][] vectorSet = TaskUtils.createVectorSet(2, 100);
 
 		int maxOrder = 2;
 		Matrix T = MonomialToChebUMatrix.getMatrix(maxOrder, vectorSet.length);
-		System.out.println("b: " + powerB);
 
 		Vector cheby2B = MatrixMath.multiply(T, powerB);
 //		System.out.println("b: " + cheby2B);
@@ -51,7 +49,7 @@ public class DiscreteMultivariateDistributionsTask {
 //		LPSolution min = LinearProgrammingEq.optimizeMin(chebU, cheby2B, f);
 		LPSolution min = LinearProgrammingEq.optimizeMin(MatrixFactory.getMonomialMatrix(vectorSet, maxOrder), powerB, f);
 
-		System.out.println(Utils.print(min.getX()));
+//		System.out.println(Utils.print(min.getX()));
 		System.out.println("c(min): " + getC(min.getX(), f));
 		System.out.println("t(min): " + min.getPrimalSolution());
 

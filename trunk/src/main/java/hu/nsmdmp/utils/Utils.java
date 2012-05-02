@@ -114,6 +114,23 @@ public final class Utils {
 		return sb.toString();
 	}
 
+	public static String print(final long[] v) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("{");
+
+		for (int i = 0; i < v.length; i++) {
+			if (i < v.length - 1) {
+				sb.append(String.format("%s, ", v[i]));
+			} else {
+				sb.append(String.format("%s", v[i]));
+			}
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
 	public static boolean equals(final Apfloat[][] a, final Apfloat[][] b) {
 
 		if (a.length != b.length) {
