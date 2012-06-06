@@ -69,4 +69,29 @@ public class PowerMomentsNormalizationTest {
 		System.out.println(nb2);
 		Assert.assertEquals("", nb1, nb2);
 	}
+
+	@Test
+	public void test4() {
+		// { { 0, 1, 2, 3, 4 }, { 0, 1, 2, 3, 4 } }
+		Apfloat[][] vectorSet = TaskUtils.createVectorSet(2, 4);
+
+		int maxOrder = 3;
+
+		Vector x = new Vector(new double[] { 0.015625, 0.03125, 0.015625, 0, 0, 0.03125, 0.09375, 0.09375, 0.03125, 0, 0.015625, 0.09375, 0.15625, 0.09375, 0.015625, 0, 0.03125, 0.09375, 0.09375,
+				0.03125, 0, 0, 0.015625, 0.03125, 0.015625 });
+
+		// norm(M) * x = nb1
+		Matrix nM = MatrixFactory.getMonomialMatrix(vectorSet, maxOrder);
+		Vector nb1 = MatrixMath.multiply(nM, x);
+
+		// norme(M * x) = nb2
+		Matrix M = MatrixFactory.getSimpleMatrix(vectorSet, maxOrder);
+		Vector b2 = MatrixMath.multiply(M, x);
+		Vector nb2 = PowerMomentsNormalization.normailze(vectorSet, maxOrder, b2);
+
+		System.out.println(nb1);
+		System.out.println(nb2);
+		System.out.println(b2);
+		Assert.assertEquals("", nb1, nb2);
+	}
 }
