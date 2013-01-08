@@ -1,6 +1,6 @@
 package hu.nsmdmp.matrixfactory;
 
-import hu.nsmdmp.math.TotalOrder;
+import static hu.nsmdmp.math.TotalOrder.getTotalOrderOfMomentMembers;
 import hu.nsmdmp.matrix.Matrix;
 import hu.nsmdmp.matrixfactory.cachedpolynomials.AbstractCachedPolynomials;
 import hu.nsmdmp.utils.ApfloatUtils;
@@ -19,7 +19,7 @@ public abstract class AbstractTransformationMatrix {
 	}
 
 	protected Matrix getTransformationMatrix(final int maxOrder, final int s) {
-		List<int[]> exponentsList = TotalOrder.getOrders(maxOrder, s);
+		List<int[]> exponentsList = getTotalOrderOfMomentMembers(maxOrder, s);
 
 		Matrix M = new Matrix(exponentsList.size(), exponentsList.size());
 

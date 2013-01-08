@@ -1,6 +1,6 @@
 package hu.nsmdmp.math;
 
-
+import static hu.nsmdmp.math.Math.factorial;
 
 public class CombinationGenerator {
 
@@ -11,28 +11,28 @@ public class CombinationGenerator {
 	private long total;
 
 	public CombinationGenerator(int n, int r) {
-		if (r > n) {
-			throw new IllegalArgumentException();
-		}
-		if (n < 1) {
-			throw new IllegalArgumentException();
-		}
+		if (r > n)
+			throw new IllegalArgumentException(r + " > " + n);
+
+		if (n < 1)
+			throw new IllegalArgumentException(n + " < " + 1);
+
 		this.n = n;
 		this.r = r;
 		this.a = new int[r];
 
-		long nFact = Math.factorial(n);
-		long rFact = Math.factorial(r);
-		long nminusrFact = Math.factorial(n - r);
+		long nFact = factorial(n);
+		long rFact = factorial(r);
+		long nminusrFact = factorial(n - r);
 		this.total = nFact / (rFact * nminusrFact);
 
 		reset();
 	}
 
 	public void reset() {
-		for (int i = 0; i < a.length; i++) {
+		for (int i = 0; i < a.length; i++)
 			a[i] = i;
-		}
+
 		numLeft = total;
 	}
 
@@ -56,26 +56,16 @@ public class CombinationGenerator {
 		}
 
 		int i = r - 1;
-		while (a[i] == n - r + i) {
+		while (a[i] == n - r + i)
 			i--;
-		}
+
 		a[i] = a[i] + 1;
-		for (int j = i + 1; j < r; j++) {
+		for (int j = i + 1; j < r; j++)
 			a[j] = a[i] + j - i;
-		}
 
 		numLeft--;
 
 		return a;
 	}
 
-	public String nextString() {
-		StringBuilder sb = new StringBuilder();
-
-		for (int i : next()) {
-			sb.append((i + 1));
-		}
-
-		return sb.toString();
-	}
 }

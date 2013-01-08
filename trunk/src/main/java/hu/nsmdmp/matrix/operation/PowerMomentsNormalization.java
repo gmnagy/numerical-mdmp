@@ -1,7 +1,7 @@
 package hu.nsmdmp.matrix.operation;
 
+import static hu.nsmdmp.math.TotalOrder.getTotalOrderOfMomentMembers;
 import hu.nsmdmp.math.Math;
-import hu.nsmdmp.math.TotalOrder;
 import hu.nsmdmp.utils.ApfloatUtils;
 import hu.nsmdmp.utils.Converters;
 import hu.nsmdmp.utils.Precision;
@@ -23,7 +23,7 @@ public class PowerMomentsNormalization {
 		Vector nV = new Vector(V.getColumnDimension());
 
 		// α1,α2,..αs
-		List<int[]> alphasList = TotalOrder.getOrders(maxOrder, s);
+		List<int[]> alphasList = getTotalOrderOfMomentMembers(maxOrder, s);
 
 		Map<String, Apfloat> moments = orderMomentsByAlphas(V, alphasList);
 

@@ -1,8 +1,10 @@
 package hu.nsmdmp.utils;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -71,6 +73,26 @@ public class IOFile {
 
 		} finally {
 			out.close();
+		}
+	}
+
+	public static void append(final String fileName, final String separator, final boolean newLine, final double value) throws IOException {
+		BufferedWriter bw = new BufferedWriter(new FileWriter(fileName, true));
+
+		try {
+			if (null != separator)
+				bw.append(separator);
+
+			bw.write(String.valueOf(value));
+
+			if (newLine)
+				bw.newLine();
+
+			bw.flush();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} finally {
+			bw.close();
 		}
 	}
 }

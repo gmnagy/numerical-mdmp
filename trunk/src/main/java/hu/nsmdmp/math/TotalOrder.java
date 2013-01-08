@@ -1,16 +1,17 @@
 package hu.nsmdmp.math;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 public final class TotalOrder {
 
 	/**
-	 * a1 + a2 + ... <= maxOrder.
+	 * Get the total order of the moment members.
+	 * 
+	 * {a(1), ..., a(s)}, where a(1) + ... + a(s) <= maxOrder
 	 * 
 	 */
-	public static List<int[]> getOrders(final int maxOrder, final int s) {
+	public static List<int[]> getTotalOrderOfMomentMembers(final int maxOrder, final int s) {
 		List<int[]> expList = new LinkedList<int[]>();
 
 		int[] expRow = new int[s];
@@ -57,30 +58,4 @@ public final class TotalOrder {
 		return newArray;
 	}
 
-	public static boolean equals(List<int[]> aList, List<int[]> bList) {
-
-		if (aList.size() != bList.size()) {
-			return false;
-		}
-
-		Iterator<int[]> itA = aList.iterator();
-		Iterator<int[]> itB = bList.iterator();
-
-		while (itB.hasNext()) {
-			int[] a = itA.next();
-			int[] b = itB.next();
-
-			if (a.length != b.length) {
-				return false;
-			}
-
-			for (int i = 0; i < a.length; i++) {
-				if (a[i] != b[i]) {
-					return false;
-				}
-			}
-		}
-
-		return true;
-	}
 }

@@ -22,7 +22,7 @@ public class VariationTest {
 		double[][] vSet = { { 1, 2, 3, 4 }, { 0, 1, 2, 3 } };
 
 		List<Apfloat[]> v = Variation.createVariation(Converters.convert(vSet));
-		
+
 		Apfloat[][] variation = Converters.convert(v);
 		double[][] expected = { { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 }, { 1, 1 }, { 2, 1 }, { 3, 1 }, { 4, 1 }, { 1, 2 }, { 2, 2 }, { 3, 2 }, { 4, 2 }, { 1, 3 }, { 2, 3 }, { 3, 3 }, { 4, 3 } };
 
@@ -67,4 +67,5 @@ public class VariationTest {
 			Assert.assertTrue(false);
 		}
 	}
+
 }

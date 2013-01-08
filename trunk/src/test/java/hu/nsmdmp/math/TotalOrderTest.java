@@ -1,5 +1,8 @@
 package hu.nsmdmp.math;
 
+import static hu.nsmdmp.math.TotalOrder.getTotalOrderOfMomentMembers;
+import hu.nsmdmp.utils.Utils;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -34,13 +37,13 @@ public class TotalOrderTest {
 
 	@Test
 	public void test() {
-		List<int[]> exps = TotalOrder.getOrders(maxOrder, size);
+		List<int[]> exps = getTotalOrderOfMomentMembers(maxOrder, size);
 
 //		for (int[] e : exps) {
 //			System.out.println(Utils.print(e));
 //		}
 
-		Assert.assertTrue(TotalOrder.equals(exps, expected));
+		Assert.assertTrue(Utils.equals(exps, expected));
 	}
 
 	/**
