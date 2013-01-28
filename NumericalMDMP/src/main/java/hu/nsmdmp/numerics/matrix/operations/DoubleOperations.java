@@ -2,6 +2,8 @@ package hu.nsmdmp.numerics.matrix.operations;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.math.BigDecimal;
+
 class DoubleOperations implements IOperations<Double> {
 
 	@Override
@@ -117,6 +119,18 @@ class DoubleOperations implements IOperations<Double> {
 		checkNotNull(value, "The value is NULL.");
 
 		return Math.sqrt(value);
+	}
+
+	@Override
+	public Double valueOf(long d) {
+		return Double.valueOf(d);
+	}
+
+	@Override
+	public Double valueOf(BigDecimal d) {
+		checkNotNull(d, "The d is NULL.");
+
+		return d.doubleValue();
 	}
 
 }

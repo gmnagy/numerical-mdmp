@@ -1,5 +1,7 @@
 package hu.nsmdmp;
 
+import hu.nsmdmp.moments.ArrayCombinationTest;
+import hu.nsmdmp.moments.MultivariateMomentsTest;
 import hu.nsmdmp.mosek.LinearProgrammingEqTest;
 import hu.nsmdmp.mosek.PreciseLPCalcTest;
 import hu.nsmdmp.numerics.matrix.GetSubMatrixTest;
@@ -14,6 +16,7 @@ import hu.nsmdmp.polynomialmatrixfactory.DoubleMonomialToChebTMatrixTest;
 import hu.nsmdmp.polynomialmatrixfactory.DoubleNormalizedMonomialMatrixTest;
 import hu.nsmdmp.tools.SetNormalizationTest;
 import hu.nsmdmp.tools.SetVariationTest;
+import hu.nsmdmp.tools.SubSequencesGeneratorTest;
 import hu.nsmdmp.tools.TotalOrderTest;
 
 import org.junit.runner.RunWith;
@@ -24,7 +27,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
 	
 	// tools
-	SetNormalizationTest.class, SetVariationTest.class, TotalOrderTest.class,
+	SetNormalizationTest.class, SetVariationTest.class, TotalOrderTest.class, SubSequencesGeneratorTest.class,
 	
 	// polynomialmatrixfactory
 	DoubleChebyshevTMatrixTest.class, DoubleMonomialMatrixTest.class, DoubleMonomialToChebTMatrixTest.class, 
@@ -35,7 +38,10 @@ import org.junit.runners.Suite.SuiteClasses;
 	LUDecompositionTest.class, QRDecompositionTest.class,
 	
 	// mosek
-	LinearProgrammingEqTest.class, PreciseLPCalcTest.class
+	LinearProgrammingEqTest.class, PreciseLPCalcTest.class,
+	
+	// moments
+	ArrayCombinationTest.class, MultivariateMomentsTest.class
 	
 	})
 public class TestSuite {

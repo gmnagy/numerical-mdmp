@@ -1,5 +1,7 @@
 package hu.nsmdmp.numerics.matrix.operations;
 
+import java.math.BigDecimal;
+
 public interface IOperations<T> {
 
 	Class<T> getType();
@@ -31,6 +33,10 @@ public interface IOperations<T> {
 	int compareTo(T x, T y);
 
 	T valueOf(double d);
+
+	T valueOf(long d);
+
+	T valueOf(BigDecimal d);
 
 	double toDouble(T value);
 }
