@@ -1,6 +1,6 @@
 package hu.nsmdmp.polynomialmatrixfactory;
 
-import static hu.nsmdmp.numerics.matrix.operations.MatrixMath.multiply;
+import static hu.nsmdmp.numerics.matrix.math.MatrixMath.multiply;
 import static hu.nsmdmp.polynomialmatrixfactory.ChebyshevTMatrix.generateDoubleChebyshevTMatrix;
 import static hu.nsmdmp.polynomialmatrixfactory.MonomialMatrix.generateDoubleMonomialMatrix;
 import static hu.nsmdmp.polynomialmatrixfactory.MonomialToChebTMatrix.generateMonomialChebTTransformationMatrix;
@@ -20,7 +20,7 @@ public class DoubleMonomialToChebTMatrixTest {
 		int maxOrder = 3;
 		double[][] set = { { 0, 1, 2, 3 } };
 
-		Double[][] normalizedM = normalize(primitiveToDouble(set), Double.class);
+		Double[][] normalizedM = normalize(primitiveToDouble(set));
 
 		Matrix<Double> monomial = generateDoubleMonomialMatrix(normalizedM, maxOrder);
 		Matrix<Double> chebyshev = generateDoubleChebyshevTMatrix(normalizedM, maxOrder);
@@ -28,7 +28,7 @@ public class DoubleMonomialToChebTMatrixTest {
 		Matrix<Double> T = generateMonomialChebTTransformationMatrix(maxOrder, set.length, Double.class);
 		System.out.println(T);
 
-		Matrix<Double> newChebyshev = multiply(T, monomial, Double.class);
+		Matrix<Double> newChebyshev = multiply(T, monomial);
 
 		assertEquals(chebyshev, newChebyshev);
 	}
@@ -39,14 +39,14 @@ public class DoubleMonomialToChebTMatrixTest {
 		int maxOrder = 3;
 		double[][] set = { { 0, 1, 2 }, { 0, 1, 2 } };
 
-		Double[][] normalizedM = normalize(primitiveToDouble(set), Double.class);
+		Double[][] normalizedM = normalize(primitiveToDouble(set));
 
 		Matrix<Double> monomial = generateDoubleMonomialMatrix(normalizedM, maxOrder);
 		Matrix<Double> chebyshev = generateDoubleChebyshevTMatrix(normalizedM, maxOrder);
 
 		Matrix<Double> T = generateMonomialChebTTransformationMatrix(maxOrder, set.length, Double.class);
 
-		Matrix<Double> newChebyshev = multiply(T, monomial, Double.class);
+		Matrix<Double> newChebyshev = multiply(T, monomial);
 		System.out.println(chebyshev);
 
 		for (int i = 0; i < newChebyshev.getRowDimension(); i++) {

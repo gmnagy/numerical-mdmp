@@ -1,9 +1,9 @@
-package hu.nsmdmp.numerics.matrix.operations;
+package hu.nsmdmp.numerics.matrix.math;
 
-import static hu.nsmdmp.numerics.OperationFactory.selectOperation;
-import hu.nsmdmp.numerics.IOperations;
+import static hu.nsmdmp.numerics.matrix.operations.OperationFactory.selectOperation;
 import hu.nsmdmp.numerics.matrix.Matrix;
 import hu.nsmdmp.numerics.matrix.Vector;
+import hu.nsmdmp.numerics.matrix.operations.IOperations;
 
 import java.lang.reflect.Array;
 
@@ -13,8 +13,8 @@ final class Multiplication {
 	 * Matrix-Vector multiplication.
 	 * 
 	 */
-	static <T> Vector<T> multiply(final Matrix<T> A, final Vector<T> V, final Class<T> type) {
-		IOperations<T> operations = selectOperation(type);
+	static <T> Vector<T> multiply(final Matrix<T> A, final Vector<T> V) {
+		IOperations<T> operations = selectOperation(A.getElementType());
 
 		int m = A.getRowDimension();
 		int n = A.getColumnDimension();
@@ -45,8 +45,8 @@ final class Multiplication {
 	 * 
 	 */
 	@SuppressWarnings("unchecked")
-	static <T> Matrix<T> multiply(final Matrix<T> A, final Matrix<T> B, final Class<T> type) {
-		IOperations<T> operations = selectOperation(type);
+	static <T> Matrix<T> multiply(final Matrix<T> A, final Matrix<T> B) {
+		IOperations<T> operations = selectOperation(A.getElementType());
 
 		if (B.getRowDimension() != A.getColumnDimension()) {
 			throw new IllegalArgumentException("Matrix inner dimensions must agree.");
@@ -54,7 +54,7 @@ final class Multiplication {
 
 		Matrix<T> X = new Matrix<T>(A.getRowDimension(), B.getColumnDimension());
 		T[][] C = X.getArray();
-		T[] Bcolj = (T[]) Array.newInstance(type, A.getColumnDimension());
+		T[] Bcolj = (T[]) Array.newInstance(A.getElementType(), A.getColumnDimension());
 
 		for (int j = 0; j < B.getColumnDimension(); j++) {
 			for (int k = 0; k < A.getColumnDimension(); k++) {

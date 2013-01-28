@@ -1,6 +1,8 @@
 package hu.nsmdmp.numerics.matrix;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static hu.nsmdmp.numerics.matrix.operations.OperationFactory.selectOperation;
+import hu.nsmdmp.numerics.matrix.operations.IOperations;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
@@ -23,6 +25,21 @@ public class Vector<T> {
 
 	public int getColumnDimension() {
 		return matrix.getColumnDimension();
+	}
+
+	public double[] getDoubleArray() {
+
+		IOperations<T> op = selectOperation(getArray());
+		double[] d = new double[getColumnDimension()];
+
+		int i = 0;
+		for (T item : matrix.getArray()[0]) {
+			d[i] = op.toDouble(item);
+
+			i++;
+		}
+
+		return d;
 	}
 
 	public T[] getArray() {

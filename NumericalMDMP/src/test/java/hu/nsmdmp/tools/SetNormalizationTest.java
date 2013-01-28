@@ -13,7 +13,7 @@ public class SetNormalizationTest {
 
 		double[][] set = { { 1, 2, 3, 4 }, { 0, 1, 2, 3 } };
 
-		Double[][] normalizedM = normalize(primitiveToDouble(set), Double.class);
+		Double[][] normalizedM = normalize(primitiveToDouble(set));
 
 		Double[][] expected = { { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1.0 }, { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1.0 } };
 
@@ -29,7 +29,7 @@ public class SetNormalizationTest {
 
 		double[][] set = { { 0 - 4, 1 - 4, 2 - 4, 3 - 4 }, { 0, 1, 2, 3 } };
 
-		Double[][] normalizedM = normalize(primitiveToDouble(set), Double.class);
+		Double[][] normalizedM = normalize(primitiveToDouble(set));
 
 		Double[][] expected = { { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1.0 }, { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1.0 } };
 
@@ -45,7 +45,7 @@ public class SetNormalizationTest {
 
 		double[][] set = { { 0, 1, 2, 3 }, { 0, 1, 2, 3 } };
 
-		Double[][] normalizedM = normalize(primitiveToDouble(set), Double.class);
+		Double[][] normalizedM = normalize(primitiveToDouble(set));
 
 		Double[][] expected = { { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1.0 }, { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1.0 } };
 
@@ -61,7 +61,7 @@ public class SetNormalizationTest {
 
 		double[][] set = { { 0, 1, 2 }, { 0, 1, 2, 3 } };
 
-		Double[][] normalizedM = normalize(primitiveToDouble(set), Double.class);
+		Double[][] normalizedM = normalize(primitiveToDouble(set));
 
 		Double[][] expected = { { -1.0, 0.0, 1.0 }, { -1.0, -(1.0 / 3.0), (1.0 / 3.0), 1.0 } };
 

@@ -1,9 +1,9 @@
 package hu.nsmdmp.polynomialmatrixfactory;
 
-import static hu.nsmdmp.numerics.OperationFactory.selectOperation;
+import static hu.nsmdmp.numerics.matrix.operations.OperationFactory.selectOperation;
 import static hu.nsmdmp.tools.TotalOrder.generateTotalOrderOfMomentMembers;
-import hu.nsmdmp.numerics.IOperations;
 import hu.nsmdmp.numerics.matrix.Matrix;
+import hu.nsmdmp.numerics.matrix.operations.IOperations;
 import hu.nsmdmp.polynomialmatrixfactory.cachedpolynomials.AbstractCachedPolynomials;
 
 import java.util.List;

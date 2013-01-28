@@ -1,6 +1,8 @@
-package hu.nsmdmp.numerics;
+package hu.nsmdmp.numerics.matrix.operations;
 
 public interface IOperations<T> {
+
+	Class<T> getType();
 
 	T zero();
 
@@ -20,7 +22,15 @@ public interface IOperations<T> {
 
 	T pow(T x, int n);
 
+	T negate(T value);
+
+	T abs(T value);
+
+	T sqrt(T value);
+
 	int compareTo(T x, T y);
 
 	T valueOf(double d);
+
+	double toDouble(T value);
 }

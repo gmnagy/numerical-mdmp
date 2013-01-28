@@ -44,6 +44,15 @@ public class MultiArray<T> {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	public Class<T> getElementType() {
+
+		if (M.length == 0 || M[0].length == 0)
+			throw new RuntimeException("The matrix is empty.");
+
+		return (Class<T>) M[0][0].getClass();
+	}
+
 	public int getRowDimension() {
 		return row;
 	}

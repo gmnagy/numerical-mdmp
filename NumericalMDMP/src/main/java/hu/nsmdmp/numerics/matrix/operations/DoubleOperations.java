@@ -1,4 +1,4 @@
-package hu.nsmdmp.numerics;
+package hu.nsmdmp.numerics.matrix.operations;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -84,6 +84,39 @@ class DoubleOperations implements IOperations<Double> {
 	@Override
 	public Double valueOf(final double d) {
 		return d;
+	}
+
+	@Override
+	public double toDouble(final Double value) {
+		checkNotNull(value, "The value is NULL.");
+
+		return value.doubleValue();
+	}
+
+	@Override
+	public Class<Double> getType() {
+		return Double.class;
+	}
+
+	@Override
+	public Double negate(final Double value) {
+		checkNotNull(value, "The value is NULL.");
+
+		return -value;
+	}
+
+	@Override
+	public Double abs(Double value) {
+		checkNotNull(value, "The value is NULL.");
+
+		return Math.abs(value);
+	}
+
+	@Override
+	public Double sqrt(final Double value) {
+		checkNotNull(value, "The value is NULL.");
+
+		return Math.sqrt(value);
 	}
 
 }

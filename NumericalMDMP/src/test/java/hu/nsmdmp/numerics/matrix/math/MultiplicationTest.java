@@ -1,5 +1,6 @@
-package hu.nsmdmp.numerics.matrix.operations;
+package hu.nsmdmp.numerics.matrix.math;
 
+import static hu.nsmdmp.numerics.matrix.math.Multiplication.multiply;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertTrue;
 import hu.nsmdmp.numerics.matrix.Matrix;
@@ -15,7 +16,7 @@ public class MultiplicationTest {
 		Matrix<Double> M = new Matrix<Double>(new Double[][] { { 1.0, 2.0, 3.0 }, { 4.0, 5.0, 6.0 }, { 7.0, 8.0, 9.0 }, { 10.0, 11.0, 12.0 } });
 		Vector<Double> V = new Vector<Double>(new Double[] { -2.0, 1.0, 0.0 });
 
-		Vector<Double> result = Multiplication.multiply(M, V, Double.class);
+		Vector<Double> result = multiply(M, V);
 
 		Vector<Double> expected = new Vector<Double>(new Double[] { 0.0, -3.0, -6.0, -9.0 });
 
@@ -29,7 +30,7 @@ public class MultiplicationTest {
 		Vector<Double> V = new Vector<Double>(new Double[] { -2.0, 1.0, 0.0, 1.0 });
 
 		try {
-			Multiplication.multiply(M, V, Double.class);
+			multiply(M, V);
 		} catch (IllegalArgumentException e) {
 			return;
 		}
@@ -43,7 +44,7 @@ public class MultiplicationTest {
 		Matrix<Double> M = new Matrix<Double>(new Double[][] { { 1.0, 1.0, 1.0, 1.0 }, { 0.0, 1.0, 0.0, 1.0 }, { 0.0, 0.0, 2.0, 2.0 } });
 		Vector<Double> V = new Vector<Double>(new Double[] { 1.0 / 4.0, 1.0 / 4.0, 1.0 / 4.0, 1.0 / 4.0 });
 
-		Vector<Double> result = Multiplication.multiply(M, V, Double.class);
+		Vector<Double> result = multiply(M, V);
 
 		Vector<Double> expected = new Vector<Double>(new Double[] { 1.0, 2.0 / 4.0, 1.0 });
 
@@ -60,7 +61,7 @@ public class MultiplicationTest {
 		Matrix<Double> M1 = new Matrix<Double>(new Double[][] { { 1.0, 1.0, 1.0 }, { 2.0, 2.0, 2.0 }, { 3.0, 3.0, 3.0 } });
 		Matrix<Double> M2 = new Matrix<Double>(new Double[][] { { 3.0, 3.0, 3.0 }, { 1.0, 1.0, 1.0 }, { 2.0, 2.0, 2.0 } });
 
-		Matrix<Double> result = Multiplication.multiply(M1, M2, Double.class);
+		Matrix<Double> result = multiply(M1, M2);
 
 		Double[][] expected = { { 6.0, 6.0, 6.0 }, { 12.0, 12.0, 12.0 }, { 18.0, 18.0, 18.0 } };
 
@@ -81,7 +82,7 @@ public class MultiplicationTest {
 		Matrix<Double> M1 = new Matrix<Double>(new Double[][] { { 1.0, 1.0, 1.0 }, { 2.0, 2.0, 2.0 }, { 3.0, 3.0, 3.0 } });
 		Matrix<Double> M2 = new Matrix<Double>(new Double[][] { { 3.0, 3.0 }, { 1.0, 1.0 }, { 2.0, 2.0 } });
 
-		Matrix<Double> result = Multiplication.multiply(M1, M2, Double.class);
+		Matrix<Double> result = multiply(M1, M2);
 
 		Double[][] expected = { { 6.0, 6.0 }, { 12.0, 12.0 }, { 18.0, 18.0 } };
 
@@ -102,7 +103,7 @@ public class MultiplicationTest {
 		Matrix<Double> M1 = new Matrix<Double>(new Double[][] { { 1.0, 1.0, 1.0 }, { 2.0, 2.0, 2.0 } });
 		Matrix<Double> M2 = new Matrix<Double>(new Double[][] { { 3.0, 3.0, 3.0, 3.0 }, { 1.0, 1.0, 1.0, 1.0 }, { 2.0, 2.0, 2.0, 2.0 } });
 
-		Matrix<Double> result = Multiplication.multiply(M1, M2, Double.class);
+		Matrix<Double> result = multiply(M1, M2);
 
 		Double[][] expected = { { 6.0, 6.0, 6.0, 6.0 }, { 12.0, 12.0, 12.0, 12.0 } };
 

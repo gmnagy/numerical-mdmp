@@ -1,20 +1,14 @@
 package hu.nsmdmp.polynomialmatrixfactory;
 
-import static hu.nsmdmp.numerics.OperationFactory.selectOperation;
+import static hu.nsmdmp.numerics.matrix.operations.OperationFactory.selectOperation;
 import static hu.nsmdmp.tools.TotalOrder.generateTotalOrderOfMomentMembers;
-import hu.nsmdmp.numerics.IOperations;
 import hu.nsmdmp.numerics.matrix.Matrix;
+import hu.nsmdmp.numerics.matrix.operations.IOperations;
 import hu.nsmdmp.tools.SetVariationIterator;
 
 import java.util.List;
 
 abstract class AbstractPolynomialMatrix<T> {
-
-	protected final IOperations<T> operations;
-
-	protected AbstractPolynomialMatrix(final Class<T> type) {
-		this.operations = selectOperation(type);
-	}
 
 	Matrix<T> create(final T[][] set, final int maxOrder) {
 
@@ -48,6 +42,9 @@ abstract class AbstractPolynomialMatrix<T> {
 	 * 
 	 */
 	private T getMatrixElement(final int[] exponents, final T[] variation) {
+
+		IOperations<T> operations = selectOperation(variation);
+
 		int s = variation.length;
 		T element = operations.one();
 

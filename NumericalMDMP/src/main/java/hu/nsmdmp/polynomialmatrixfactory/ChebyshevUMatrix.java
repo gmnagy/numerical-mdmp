@@ -1,6 +1,8 @@
 package hu.nsmdmp.polynomialmatrixfactory;
 
+import static hu.nsmdmp.numerics.matrix.operations.OperationFactory.selectOperation;
 import hu.nsmdmp.numerics.matrix.Matrix;
+import hu.nsmdmp.numerics.matrix.operations.IOperations;
 import hu.nsmdmp.polynomialmatrixfactory.cachedpolynomials.ChebyshevUCachedPolynomials;
 
 import java.util.HashMap;
@@ -28,14 +30,7 @@ public class ChebyshevUMatrix<T> extends AbstractPolynomialMatrix<T> {
 	private Map<Integer, Map<T, T>> solutions = new HashMap<Integer, Map<T, T>>();
 
 	public static Matrix<Double> generateDoubleChebyshevUMatrix(final Double[][] set, final int maxOrder) {
-
-		ChebyshevUMatrix<Double> matrix = new ChebyshevUMatrix<Double>(Double.class);
-
-		return matrix.create(set, maxOrder);
-	}
-
-	protected ChebyshevUMatrix(final Class<T> type) {
-		super(type);
+		return new ChebyshevUMatrix<Double>().create(set, maxOrder);
 	}
 
 	/**
@@ -75,13 +70,15 @@ public class ChebyshevUMatrix<T> extends AbstractPolynomialMatrix<T> {
 	private T getChebyshevNth(final int n, final T value) {
 		Polynomial polynom = cachedPolynomials.getPolynomial(n);
 
-		T r = operations.zero();
+		IOperations<T> op = selectOperation(value);
+
+		T r = op.zero();
 		int i = 0;
 
 		for (double coef : polynom.getCoefficients()) {
-			T power = pow(value, i);
-			T m = operations.multiply(power, operations.valueOf(coef));
-			r = operations.add(r, m);
+			T power = pow(value, i, op);
+			T m = op.multiply(power, op.valueOf(coef));
+			r = op.add(r, m);
 
 			i++;
 		}
@@ -90,23 +87,17 @@ public class ChebyshevUMatrix<T> extends AbstractPolynomialMatrix<T> {
 	}
 
 	/**
-	 * Integer power.
-	 * 
-	 * @param x
-	 *            base of the power operator
-	 * @param n
-	 *            exponent of the power operator
 	 * @return <tt>x</tt> to the <tt>n</tt>:th power
 	 */
-	private T pow(final T value, final int n) {
+	private T pow(final T value, final int n, final IOperations<T> op) {
 
-		if (n == 0 && operations.signum(value) == 0)
-			return operations.one();
+		if (n == 0 && op.signum(value) == 0)
+			return op.one();
 
-		if (n != 0 && operations.signum(value) == 0) {
-			return operations.zero();
+		if (n != 0 && op.signum(value) == 0) {
+			return op.zero();
 		}
 
-		return operations.pow(value, n);
+		return op.pow(value, n);
 	}
 }

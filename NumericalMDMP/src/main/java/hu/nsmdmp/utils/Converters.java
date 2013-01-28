@@ -17,4 +17,20 @@ public final class Converters {
 
 		return result;
 	}
+
+	public static double[][] doubleToPrimitive(final Double[][] set) {
+
+		double[][] result = new double[set.length][];
+
+		for (int i = 0; i < set.length; i++) {
+
+			result[i] = new double[set[i].length];
+
+			for (int j = 0; j < set[i].length; j++)
+				result[i][j] = set[i][j];
+
+		}
+
+		return result;
+	}
 }

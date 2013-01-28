@@ -1,6 +1,8 @@
 package hu.nsmdmp.polynomialmatrixfactory;
 
+import static hu.nsmdmp.numerics.matrix.operations.OperationFactory.selectOperation;
 import hu.nsmdmp.numerics.matrix.Matrix;
+import hu.nsmdmp.numerics.matrix.operations.IOperations;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,15 +15,8 @@ public class MonomialMatrix<T> extends AbstractPolynomialMatrix<T> {
 	 */
 	private Map<Integer, Map<T, T>> solutions = new HashMap<Integer, Map<T, T>>();
 
-	public MonomialMatrix(final Class<T> type) {
-		super(type);
-	}
-
 	public static Matrix<Double> generateDoubleMonomialMatrix(final Double[][] set, final int maxOrder) {
-
-		MonomialMatrix<Double> matrix = new MonomialMatrix<Double>(Double.class);
-
-		return matrix.create(set, maxOrder);
+		return new MonomialMatrix<Double>().create(set, maxOrder);
 	}
 
 	/**
@@ -54,6 +49,8 @@ public class MonomialMatrix<T> extends AbstractPolynomialMatrix<T> {
 	}
 
 	private T getMonomialNth(final int n, final T value) {
+
+		IOperations<T> operations = selectOperation(value);
 
 		if (n == 0 && operations.signum(value) == 0)
 			return operations.one();

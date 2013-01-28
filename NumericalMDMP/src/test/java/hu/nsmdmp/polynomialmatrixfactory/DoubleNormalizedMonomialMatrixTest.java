@@ -16,7 +16,7 @@ public class DoubleNormalizedMonomialMatrixTest {
 		int maxOrder = 1;
 		double[][] set = { { 0, 1, 2, 3 }, { 0, 1, 2, 3 } };
 
-		Double[][] normalizedM = normalize(primitiveToDouble(set), Double.class);
+		Double[][] normalizedM = normalize(primitiveToDouble(set));
 		Matrix<Double> M = generateDoubleMonomialMatrix(normalizedM, maxOrder);
 
 		Double[][] expected = { //
@@ -37,7 +37,7 @@ public class DoubleNormalizedMonomialMatrixTest {
 		int maxOrder = 2;
 		double[][] set = { { 0, 1, 2, 3 }, { 0, 1, 2, 3 } };
 
-		Double[][] normalizedM = normalize(primitiveToDouble(set), Double.class);
+		Double[][] normalizedM = normalize(primitiveToDouble(set));
 		Matrix<Double> M = generateDoubleMonomialMatrix(normalizedM, maxOrder);
 
 		Double[][] expected = { { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 }, //
