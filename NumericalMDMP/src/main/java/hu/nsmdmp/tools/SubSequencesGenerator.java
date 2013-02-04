@@ -76,4 +76,39 @@ public final class SubSequencesGenerator {
 
 		return result;
 	}
+
+	/**
+	 * n = 6, l = 2, dim = 2
+	 * 
+	 * @return {0, 1}{0, 1, 2, 3}
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T[][] getSubSequences3(final int n, final int l, final int dim, final Class<T> type) {
+		T[][] result = (T[][]) Array.newInstance(type, dim, 0);
+		IOperations<T> op = selectOperation(type);
+
+		int d = 0;
+		int j = 0;
+		T[] subSequence = null;
+
+		for (int i = 0; i < n; i++) {
+
+			if (i % l == 0 && dim != d) {
+				d++;
+				j = 0;
+
+				int size = l;
+				if (dim == d)
+					size = n - i;
+
+				subSequence = (T[]) Array.newInstance(type, size);
+				result[d - 1] = subSequence;
+			}
+
+			subSequence[j] = op.valueOf(i);
+			j++;
+		}
+
+		return result;
+	}
 }

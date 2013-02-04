@@ -1,6 +1,6 @@
 package hu.nsmdmp.tasks;
 
-import static hu.nsmdmp.polynomialmatrixfactory.ChebyshevUMatrix.generateDoubleChebyshevUMatrix;
+import static hu.nsmdmp.polynomialmatrixfactory.ChebyshevUMatrix.generateApfloatChebyshevUMatrix;
 import static hu.nsmdmp.specialvectors.CumProbPoisson.createCumProbPoisson;
 import static hu.nsmdmp.tasks.TaskUtils.createNormChebyshevUVector;
 import static hu.nsmdmp.tasks.TaskUtils.getMaxCumProbMatrixElement;
@@ -33,7 +33,7 @@ public class DiscreteMultivariateDistributionsTask {
 		Vector<Apfloat> nChebyUV = createNormChebyshevUVector(maxOrder, powerV, vectorSet);
 
 		// ChebyshevU matrix.
-		Matrix<Apfloat> chebU = generateDoubleChebyshevUMatrix(normalize(vectorSet), maxOrder);
+		Matrix<Apfloat> chebU = generateApfloatChebyshevUMatrix(normalize(vectorSet), maxOrder);
 
 		Apfloat[][] variation = generateSetVariation(vectorSet);
 		Vector<Apfloat> f = createCumProbPoisson(variation, new Apfloat(8), new Apfloat(8));

@@ -34,7 +34,7 @@ public class ChebyshevUMatrix<T> extends AbstractPolynomialMatrix<T> {
 		return new ChebyshevUMatrix<Double>().create(set, maxOrder);
 	}
 
-	public static Matrix<Apfloat> generateDoubleChebyshevUMatrix(final Apfloat[][] set, final int maxOrder) {
+	public static Matrix<Apfloat> generateApfloatChebyshevUMatrix(final Apfloat[][] set, final int maxOrder) {
 		return new ChebyshevUMatrix<Apfloat>().create(set, maxOrder);
 	}
 

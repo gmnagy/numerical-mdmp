@@ -2,17 +2,17 @@ package hu.nsmdmp.tasks;
 
 import static hu.nsmdmp.moments.MultivariateMoments.convertBinomMomToPowerMom;
 import static hu.nsmdmp.moments.MultivariateMoments.createBinomialMoments;
-import static hu.nsmdmp.polynomialmatrixfactory.ChebyshevUMatrix.generateDoubleChebyshevUMatrix;
+import static hu.nsmdmp.polynomialmatrixfactory.ChebyshevUMatrix.generateApfloatChebyshevUMatrix;
 import static hu.nsmdmp.specialvectors.Discrete.discreteVector;
 import static hu.nsmdmp.tasks.TaskUtils.createNormChebyshevUVector;
 import static hu.nsmdmp.tasks.TaskUtils.getMaxCumProbMatrixElement;
 import static hu.nsmdmp.tasks.TaskUtils.getMinCumProbMatrixElement;
 import static hu.nsmdmp.tools.SetNormalization.normalize;
 import static hu.nsmdmp.tools.SetVariationIterator.getNumberOfVariation;
+import static hu.nsmdmp.tools.SubSequencesGenerator.getSubSequences3;
 import hu.nsmdmp.moments.Moment;
 import hu.nsmdmp.numerics.matrix.Matrix;
 import hu.nsmdmp.numerics.matrix.Vector;
-import hu.nsmdmp.tools.SubSequencesGenerator;
 import hu.nsmdmp.utils.IOFile;
 import hu.nsmdmp.utils.Utils;
 
@@ -31,21 +31,25 @@ public class ContinuousDistributions {
 		int n = 6;
 		int m = 2;
 		int dim = 2;
-		int l = 2;
+		int l = 3;
 
 		List<Moment<Apfloat>> binomMoms = createBinomialMoments(probabilities, n, m, dim, l);
 		Collection<Moment<Apfloat>> powerMoms = convertBinomMomToPowerMom(binomMoms);
 
-		Apfloat[][] subSequences = SubSequencesGenerator.getSubSequences2(n, l, dim, Apfloat.class);
+		Apfloat[][] subSequences = getSubSequences3(n, l, dim, Apfloat.class);
 		System.out.println(Utils.toString(subSequences));
+		System.out.println(Utils.toString(normalize(subSequences)));
 
 		// normailzed ChebyshevU vector.
-		Vector<Apfloat> nChebyUV = createNormChebyshevUVector(m, toVector(powerMoms), subSequences);
+		Vector<Apfloat> nChebyUV = createNormChebyshevUVector(m, toVector(powerMoms), normalize(subSequences));
+		System.out.println(nChebyUV);
 
 		// ChebyshevU matrix.
-		Matrix<Apfloat> chebU = generateDoubleChebyshevUMatrix(normalize(subSequences), m);
+		Matrix<Apfloat> chebU = generateApfloatChebyshevUMatrix(normalize(subSequences), m);
+		System.out.println(chebU);
 
 		Vector<Apfloat> f = discreteVector(getNumberOfVariation(subSequences), 1, new Apfloat(0), new Apfloat(1));
+		System.out.println(f);
 
 		double min = getMinCumProbMatrixElement(chebU, nChebyUV, f);
 		double max = getMaxCumProbMatrixElement(chebU, nChebyUV, f);

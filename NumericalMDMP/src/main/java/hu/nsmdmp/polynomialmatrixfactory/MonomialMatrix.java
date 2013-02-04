@@ -7,6 +7,8 @@ import hu.nsmdmp.numerics.matrix.operations.IOperations;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apfloat.Apfloat;
+
 public class MonomialMatrix<T> extends AbstractPolynomialMatrix<T> {
 
 	/**
@@ -17,6 +19,10 @@ public class MonomialMatrix<T> extends AbstractPolynomialMatrix<T> {
 
 	public static Matrix<Double> generateDoubleMonomialMatrix(final Double[][] set, final int maxOrder) {
 		return new MonomialMatrix<Double>().create(set, maxOrder);
+	}
+
+	public static Matrix<Apfloat> generateApfloatMonomialMatrix(final Apfloat[][] set, final int maxOrder) {
+		return new MonomialMatrix<Apfloat>().create(set, maxOrder);
 	}
 
 	/**
