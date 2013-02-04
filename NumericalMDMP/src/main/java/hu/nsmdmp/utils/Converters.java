@@ -1,7 +1,11 @@
 package hu.nsmdmp.utils;
 
+import static hu.nsmdmp.numerics.matrix.operations.ApfloatOperations.PRECISION;
+
 import java.lang.reflect.Array;
 import java.util.List;
+
+import org.apfloat.Apfloat;
 
 public final class Converters {
 
@@ -32,6 +36,33 @@ public final class Converters {
 			for (int j = 0; j < set[i].length; j++)
 				result[i][j] = set[i][j];
 
+		}
+
+		return result;
+	}
+
+	public static Apfloat[][] toApfloat(final double[][] set) {
+
+		Apfloat[][] result = new Apfloat[set.length][];
+
+		for (int i = 0; i < set.length; i++) {
+
+			result[i] = new Apfloat[set[i].length];
+
+			for (int j = 0; j < set[i].length; j++)
+				result[i][j] = new Apfloat(set[i][j], PRECISION);
+
+		}
+
+		return result;
+	}
+
+	public static Apfloat[] toApfloat(final double[] set) {
+
+		Apfloat[] result = new Apfloat[set.length];
+
+		for (int i = 0; i < set.length; i++) {
+			result[i] = new Apfloat(set[i], PRECISION);
 		}
 
 		return result;

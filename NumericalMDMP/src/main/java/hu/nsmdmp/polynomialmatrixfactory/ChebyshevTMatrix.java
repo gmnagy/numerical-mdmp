@@ -8,6 +8,7 @@ import hu.nsmdmp.polynomialmatrixfactory.cachedpolynomials.ChebyshevTCachedPolyn
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apfloat.Apfloat;
 import org.opensourcephysics.numerics.Polynomial;
 
 /**
@@ -31,6 +32,10 @@ public class ChebyshevTMatrix<T> extends AbstractPolynomialMatrix<T> {
 
 	public static Matrix<Double> generateDoubleChebyshevTMatrix(final Double[][] set, final int maxOrder) {
 		return new ChebyshevTMatrix<Double>().create(set, maxOrder);
+	}
+
+	public static Matrix<Apfloat> generateApfloatChebyshevTMatrix(final Apfloat[][] set, final int maxOrder) {
+		return new ChebyshevTMatrix<Apfloat>().create(set, maxOrder);
 	}
 
 	/**

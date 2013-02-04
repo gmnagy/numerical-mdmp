@@ -32,10 +32,6 @@ public class Moment<T> {
 			return false;
 		}
 
-		if (!moment.equals(bm.moment)) {
-			return false;
-		}
-
-		return true;
+		return moment.equals(bm.moment);
 	}
 }

@@ -1,5 +1,7 @@
 package hu.nsmdmp.numerics.matrix.operations;
 
+import org.apfloat.Apfloat;
+
 public class OperationFactory {
 
 	@SuppressWarnings("unchecked")
@@ -40,6 +42,8 @@ public class OperationFactory {
 
 		if (Double.class.isAssignableFrom(type))
 			return (IOperations<T>) new DoubleOperations();
+		if (Apfloat.class.isAssignableFrom(type))
+			return (IOperations<T>) new ApfloatOperations();
 
 		throw new IllegalArgumentException(type + " not implemented operation!");
 	}

@@ -23,6 +23,10 @@ public class Vector<T> {
 		matrix = new Matrix<T>(1, column);
 	}
 
+	public Class<T> getElementType() {
+		return matrix.getElementType();
+	}
+
 	public int getColumnDimension() {
 		return matrix.getColumnDimension();
 	}

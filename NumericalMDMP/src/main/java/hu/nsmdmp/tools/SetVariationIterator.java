@@ -37,7 +37,7 @@ public final class SetVariationIterator<T> {
 		this.type = (Class<T>) set[0][0].getClass();
 	}
 
-	private int getNumberOfVariation(final T[][] set) {
+	public static <T> int getNumberOfVariation(final T[][] set) {
 		int n = 1;
 		for (T[] t : set) {
 			n *= t.length;
