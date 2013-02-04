@@ -1,6 +1,6 @@
 package hu.nsmdmp.tools;
 
-import static hu.nsmdmp.tools.Math.factorial;
+import static hu.nsmdmp.tools.Math.numberOfCombination;
 
 public final class CombinationGenerator {
 
@@ -21,10 +21,7 @@ public final class CombinationGenerator {
 		this.r = r;
 		this.a = new int[r];
 
-		long nFact = factorial(n);
-		long rFact = factorial(r);
-		long nminusrFact = factorial(n - r);
-		this.total = nFact / (rFact * nminusrFact);
+		this.total = numberOfCombination(n, r);
 
 		reset();
 	}

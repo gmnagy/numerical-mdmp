@@ -41,6 +41,21 @@ public class Math {
 		return n * factorial(n - 1);
 	}
 
+	public static long numberOfCombination(final int n, final int k) {
+		long result = 1;
+
+		int l = k > (n - k) ? k : (n - k);
+		int j = 1;
+
+		for (int i = n; i > l; i--) {
+			result *= (i * 1.0) / j;
+
+			j++;
+		}
+
+		return result;
+	}
+
 	/**
 	 * Stirling number of the first kind.
 	 * 

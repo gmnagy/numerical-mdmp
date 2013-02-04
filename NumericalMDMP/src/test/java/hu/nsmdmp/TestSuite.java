@@ -16,6 +16,7 @@ import hu.nsmdmp.polynomialmatrixfactory.DoubleMonomialToChebTMatrixTest;
 import hu.nsmdmp.polynomialmatrixfactory.DoubleNormalizedMonomialMatrixTest;
 import hu.nsmdmp.specialvectors.CumProbPoissonTest;
 import hu.nsmdmp.specialvectors.DiscreteTest;
+import hu.nsmdmp.tools.FactorialTest;
 import hu.nsmdmp.tools.SetNormalizationTest;
 import hu.nsmdmp.tools.SetVariationTest;
 import hu.nsmdmp.tools.SubSequencesGeneratorTest;
@@ -31,7 +32,7 @@ import org.junit.runners.Suite.SuiteClasses;
 	
 	// tools
 	SetNormalizationTest.class, SetVariationTest.class, TotalOrderTest.class, SubSequencesGeneratorTest.class,
-	VectorNormalizationWithSetTest.class,
+	VectorNormalizationWithSetTest.class, FactorialTest.class,
 	
 	// polynomialmatrixfactory
 	DoubleChebyshevTMatrixTest.class, DoubleMonomialMatrixTest.class, DoubleMonomialToChebTMatrixTest.class, 
