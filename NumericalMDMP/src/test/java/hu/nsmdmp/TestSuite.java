@@ -6,6 +6,7 @@ import hu.nsmdmp.moments.MultivariateMomentsWithPermutationTest;
 import hu.nsmdmp.mosek.LinearProgrammingEqTest;
 import hu.nsmdmp.mosek.PreciseLPCalcTest;
 import hu.nsmdmp.numerics.matrix.GetSubMatrixTest;
+import hu.nsmdmp.numerics.matrix.InverseTest;
 import hu.nsmdmp.numerics.matrix.LUDecompositionTest;
 import hu.nsmdmp.numerics.matrix.MultiArrayTest;
 import hu.nsmdmp.numerics.matrix.QRDecompositionTest;
@@ -42,7 +43,7 @@ import org.junit.runners.Suite.SuiteClasses;
 	
 	// matrix
 	MultiArrayTest.class, MultiplicationTest.class, SparseMatrixTest.class, GetSubMatrixTest.class, 
-	LUDecompositionTest.class, QRDecompositionTest.class,
+	LUDecompositionTest.class, QRDecompositionTest.class, InverseTest.class,
 	
 	// mosek
 	LinearProgrammingEqTest.class, PreciseLPCalcTest.class,
