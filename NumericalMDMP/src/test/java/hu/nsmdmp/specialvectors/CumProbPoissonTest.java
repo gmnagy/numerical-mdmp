@@ -19,6 +19,6 @@ public class CumProbPoissonTest {
 
 		double[] expected = { 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
 
-		assertArrayEquals(expected, cVector.getDoubleArray(), 0.0001);
+		assertArrayEquals(expected, cVector.toDoubleArray(), 0.0001);
 	}
 }

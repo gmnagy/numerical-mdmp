@@ -1,7 +1,7 @@
 package hu.nsmdmp.tools;
 
-import static hu.nsmdmp.numerics.matrix.operations.OperationFactory.selectOperation;
-import hu.nsmdmp.numerics.matrix.operations.IOperations;
+import static hu.nsmdmp.operations.Operations.operation;
+import hu.nsmdmp.operations.IOperation;
 
 import java.lang.reflect.Array;
 
@@ -11,7 +11,7 @@ public class VectorSet {
 	 * n=2, m=3 => {{0, 1, 2, 3}, {0, 1, 2, 3}}
 	 */
 	public static <T> T[][] createVectorSet(final int n, final int m, final Class<T> type) {
-		IOperations<T> op = selectOperation(type);
+		IOperation<T> op = operation(type);
 
 		@SuppressWarnings("unchecked")
 		T[][] vectorSet = (T[][]) Array.newInstance(type, n, m + 1);

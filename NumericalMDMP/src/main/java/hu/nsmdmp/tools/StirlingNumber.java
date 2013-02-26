@@ -1,8 +1,8 @@
 package hu.nsmdmp.tools;
 
-import static hu.nsmdmp.numerics.matrix.operations.OperationFactory.selectOperation;
+import static hu.nsmdmp.operations.Operations.operation;
 import static hu.nsmdmp.utils.Converters.arrayToString;
-import hu.nsmdmp.numerics.matrix.operations.IOperations;
+import hu.nsmdmp.operations.IOperation;
 
 import java.util.Arrays;
 
@@ -12,18 +12,18 @@ public final class StirlingNumber<T> {
 
 	public final int[] exponents;
 
-	private final IOperations<T> operations;
+	private final IOperation<T> operations;
 
 	public StirlingNumber(final T stirlingNumber, final int exponent) {
 		this.number = stirlingNumber;
 		this.exponents = new int[] { exponent };
-		this.operations = selectOperation(stirlingNumber);
+		this.operations = operation(stirlingNumber.getClass());
 	}
 
 	public StirlingNumber(final T stirlingNumber, final int[] exponents) {
 		this.number = stirlingNumber;
 		this.exponents = exponents;
-		this.operations = selectOperation(stirlingNumber);
+		this.operations = operation(stirlingNumber.getClass());
 	}
 
 	@Override

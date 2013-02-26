@@ -1,12 +1,12 @@
 package hu.nsmdmp.moments;
 
-import static hu.nsmdmp.numerics.matrix.operations.OperationFactory.selectOperation;
+import static hu.nsmdmp.operations.Operations.operation;
 import static hu.nsmdmp.tools.Math.factorial;
 import static hu.nsmdmp.tools.Math.stirling;
 import static hu.nsmdmp.tools.SubSequencesGenerator.getSubSequences;
 import static hu.nsmdmp.tools.TotalOrder.generateTotalOrderOfMomentMembers;
 import static hu.nsmdmp.utils.Converters.arrayToString;
-import hu.nsmdmp.numerics.matrix.operations.IOperations;
+import hu.nsmdmp.operations.IOperation;
 import hu.nsmdmp.tools.CombinationGenerator;
 import hu.nsmdmp.tools.SetVariationIterator2;
 import hu.nsmdmp.tools.StirlingNumber;
@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class MultivariateMoments {
 
@@ -34,14 +35,25 @@ public class MultivariateMoments {
 	 * @return {a(1), ..., a(s)}-order cross-binomial moments
 	 */
 	public static <T> List<Moment<T>> createBinomialMoments(final T[] probabilities, final int n, final int m, final int dim, final int subSeqSize) {
+		int[] permutation = new int[n];
+		for (int i = 0; i < n; i++)
+			permutation[i] = i;
+
+		return createBinomialMoments(probabilities, n, permutation, m, dim, subSeqSize);
+	}
+
+	public static <T> List<Moment<T>> createBinomialMoments(final T[] probabilities, final int n, final int[] permutation, final int m, final int dim, final int subSeqSize) {
 		List<Moment<T>> binomialMoments = new ArrayList<Moment<T>>();
 
 		if (probabilities.length == 0)
 			return binomialMoments;
 
-		IOperations<T> op = selectOperation(probabilities);
+		IOperation<T> op = operation(probabilities[0].getClass());
 
-		Map<String, T> orderedProb = orderProbabilities(probabilities, n, m);
+		Map<int[], T> orderedProb = orderProbabilities(probabilities, n, m);
+		Map<String, T> convertedOrderedProb = convertWithPermutation(orderedProb, permutation);
+//		System.out.println(convertedOrderedProb);
+
 		List<int[]> alphasList = generateTotalOrderOfMomentMembers(m, dim);
 		List<int[]> indexSubSequences = getSubSequences(n, subSeqSize, dim);
 
@@ -59,12 +71,15 @@ public class MultivariateMoments {
 			for (int alpha : alphas) {
 
 				if (alpha > 0) {
-					String[] indexCombinationsOfAlpha = combinations(indexSubSequences.get(i), alpha);
+					String[] indexCombinationsOfAlpha = combinations(indexSubSequences.get(i), alpha, permutation);
 					indexCombinationsOfAlphaSet.add(indexCombinationsOfAlpha);
 				}
 
 				i++;
 			}
+//			for (String[] s : indexCombinationsOfAlphaSet)
+//				System.out.println("a: " + Arrays.toString(s));
+//			System.out.println("a: ");
 
 			T ithBinomMom = op.zero();
 
@@ -72,7 +87,7 @@ public class MultivariateMoments {
 			while (it.hasNext()) {
 				String[] indexVariations = it.next();
 
-				ithBinomMom = op.add(ithBinomMom, orderedProb.get(arrayToString(indexVariations)));
+				ithBinomMom = op.add(ithBinomMom, convertedOrderedProb.get(arrayToString(indexVariations)));
 			}
 
 			binomialMoments.add(new Moment<T>(alphas, ithBinomMom));
@@ -85,15 +100,17 @@ public class MultivariateMoments {
 	 * Order probabilities by the number of events and the maximum order of the intersections.
 	 * 
 	 */
-	private static <T> Map<String, T> orderProbabilities(final T[] probabilities, final int n, final int m) {
-		Map<String, T> map = new HashMap<String, T>();
+	private static <T> Map<int[], T> orderProbabilities(final T[] probabilities, final int n, final int m) {
+		Map<int[], T> map = new HashMap<int[], T>();
 
 		int j = 0;
 		for (int i = 1; i <= m; i++) {
 
 			CombinationGenerator g = new CombinationGenerator(n, i);
 			while (g.hasNext()) {
-				map.put(arrayToString(g.next()), probabilities[j]);
+				int[] combination = g.next();
+
+				map.put(Arrays.copyOf(combination, combination.length), probabilities[j]);
 				j++;
 			}
 
@@ -102,7 +119,40 @@ public class MultivariateMoments {
 		return map;
 	}
 
-	static String[] combinations(final int[] array, final int r) {
+	private static <T> Map<String, T> convertWithPermutation(final Map<int[], T> probabilities, final int[] permutation) {
+		Map<String, T> map = new HashMap<String, T>();
+
+		for (Entry<int[], T> item : probabilities.entrySet()) {
+
+			int i = 0;
+			int[] key = new int[item.getKey().length];
+			StringBuilder sb = new StringBuilder();
+			for (int v : item.getKey()) {
+				sb.append(permutation[v]);
+				key[i] = permutation[v];
+				i++;
+			}
+
+			map.put(sb.toString(), getProbability(key, probabilities));
+		}
+
+		return map;
+	}
+
+	private static <T> T getProbability(final int[] key, final Map<int[], T> probabilities) {
+
+		for (Entry<int[], T> item : probabilities.entrySet()) {
+			Arrays.sort(key);
+			Arrays.sort(item.getKey());
+
+			if (Arrays.equals(item.getKey(), key))
+				return item.getValue();
+		}
+
+		return null;
+	}
+
+	static String[] combinations(final int[] array, final int r, final int[] converterArray) {
 		int length = array.length;
 		CombinationGenerator g = new CombinationGenerator(length, r);
 
@@ -115,7 +165,7 @@ public class MultivariateMoments {
 			StringBuilder sb = new StringBuilder();
 
 			for (int i : index) {
-				sb.append(array[i]);
+				sb.append(converterArray[array[i]]);
 			}
 
 			result[t] = sb.toString();
@@ -133,7 +183,7 @@ public class MultivariateMoments {
 		Iterator<Moment<T>> binMomIt = binomialMoments.iterator();
 		Moment<T> binMom = binMomIt.next();
 
-		IOperations<T> op = selectOperation(binMom.moment);
+		IOperation<T> op = operation(binMom.moment.getClass());
 
 		Map<String, Moment<T>> powerMoments = new LinkedHashMap<String, Moment<T>>();
 
@@ -185,7 +235,7 @@ public class MultivariateMoments {
 	 * 
 	 */
 	@SuppressWarnings("unchecked")
-	private static <T> StirlingNumber<T>[] getMonomials(final int alpha, final IOperations<T> op) {
+	private static <T> StirlingNumber<T>[] getMonomials(final int alpha, final IOperation<T> op) {
 		StirlingNumber<T>[] snArray;
 
 		if (alpha == 0) {

@@ -1,14 +1,22 @@
 package hu.nsmdmp.polynomialmatrixfactory;
 
-import static hu.nsmdmp.numerics.matrix.operations.OperationFactory.selectOperation;
+import static hu.nsmdmp.operations.Operations.operation;
 import static hu.nsmdmp.tools.TotalOrder.generateTotalOrderOfMomentMembers;
 import hu.nsmdmp.numerics.matrix.Matrix;
-import hu.nsmdmp.numerics.matrix.operations.IOperations;
+import hu.nsmdmp.operations.IOperation;
 import hu.nsmdmp.tools.SetVariationIterator;
 
 import java.util.List;
 
 abstract class AbstractPolynomialMatrix<T> {
+
+	protected final Class<T> valueType;
+	protected final IOperation<T> op;
+
+	protected AbstractPolynomialMatrix(final Class<T> valueType) {
+		this.valueType = valueType;
+		this.op = operation(valueType);
+	}
 
 	Matrix<T> create(final T[][] set, final int maxOrder) {
 
@@ -18,7 +26,7 @@ abstract class AbstractPolynomialMatrix<T> {
 
 		int row = exponents.size();
 		int column = itV.numberOfVariation;
-		Matrix<T> M = new Matrix<T>(row, column);
+		Matrix<T> M = new Matrix<T>(row, column, valueType);
 
 		int j = 0;
 		while (itV.hasNext()) {
@@ -43,13 +51,11 @@ abstract class AbstractPolynomialMatrix<T> {
 	 */
 	private T getMatrixElement(final int[] exponents, final T[] variation) {
 
-		IOperations<T> operations = selectOperation(variation);
-
 		int s = variation.length;
-		T element = operations.one();
+		T element = op.one();
 
 		for (int k = 0; k < s; k++) {
-			element = operations.multiply(element, getPolynomialValue(exponents[k], variation[k]));
+			element = op.multiply(element, getPolynomialValue(exponents[k], variation[k]));
 		}
 
 		return element;

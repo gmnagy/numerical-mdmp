@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import hu.nsmdmp.numerics.matrix.Matrix;
 import hu.nsmdmp.numerics.matrix.Vector;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class MultiplicationTest {
@@ -20,7 +21,7 @@ public class MultiplicationTest {
 
 		Vector<Double> expected = new Vector<Double>(new Double[] { 0.0, -3.0, -6.0, -9.0 });
 
-		assertArrayEquals(expected.getArray(), result.getArray());
+		Assert.assertEquals(expected, result);
 	}
 
 	@Test
@@ -48,7 +49,7 @@ public class MultiplicationTest {
 
 		Vector<Double> expected = new Vector<Double>(new Double[] { 1.0, 2.0 / 4.0, 1.0 });
 
-		assertArrayEquals(expected.getArray(), result.getArray());
+		Assert.assertEquals(expected, result);
 	}
 
 	/**

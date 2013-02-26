@@ -1,9 +1,9 @@
 package hu.nsmdmp.tools;
 
-import static hu.nsmdmp.numerics.matrix.operations.OperationFactory.selectOperation;
+import static hu.nsmdmp.operations.Operations.operation;
 import static hu.nsmdmp.utils.Converters.arrayToString;
 import hu.nsmdmp.numerics.matrix.Vector;
-import hu.nsmdmp.numerics.matrix.operations.IOperations;
+import hu.nsmdmp.operations.IOperation;
 
 import java.lang.reflect.Array;
 import java.util.HashMap;
@@ -14,10 +14,10 @@ public class VectorNormalizationWithSet {
 
 	public static <T> Vector<T> normailzeByGergo(final T[][] vectorSet, final int maxOrder, final Vector<T> V) {
 		int dim = vectorSet.length;
-		IOperations<T> op = selectOperation(V.getElementType());
+		IOperation<T> op = operation(V.getValueType());
 
 		// normalized vector
-		Vector<T> nV = new Vector<T>(V.getColumnDimension());
+		Vector<T> nV = new Vector<T>(V.getColumnDimension(), op.getType());
 
 		// α1,α2,..αs
 		List<int[]> alphasList = TotalOrder.generateTotalOrderOfMomentMembers(maxOrder, dim);
@@ -43,7 +43,7 @@ public class VectorNormalizationWithSet {
 	/**
 	 * ai = zi0 + zin
 	 */
-	private static <T> T[] getAConstants(final T[][] vectorSet, final IOperations<T> op) {
+	private static <T> T[] getAConstants(final T[][] vectorSet, final IOperation<T> op) {
 		int s = vectorSet.length;
 
 		@SuppressWarnings("unchecked")
@@ -60,7 +60,7 @@ public class VectorNormalizationWithSet {
 	/**
 	 * 1 / ( (z1n - z10)^α1 * (z2n - z20)^α2 * ... * (zsn - zs0)^αs )
 	 */
-	private static <T> T getBConstant(final int[] alphas, final T[][] vectorSet, final IOperations<T> op) {
+	private static <T> T getBConstant(final int[] alphas, final T[][] vectorSet, final IOperation<T> op) {
 		int s = vectorSet.length;
 
 		T b = op.one();
@@ -75,7 +75,7 @@ public class VectorNormalizationWithSet {
 		return op.divide(op.one(), b);
 	}
 
-	private static <T> T stepper(final int[] alphas, final int i, final int[] level, final T[] aConstants, final Map<String, T> moments, final IOperations<T> op) {
+	private static <T> T stepper(final int[] alphas, final int i, final int[] level, final T[] aConstants, final Map<String, T> moments, final IOperation<T> op) {
 		T x = op.zero();
 
 		if (i == alphas.length) {

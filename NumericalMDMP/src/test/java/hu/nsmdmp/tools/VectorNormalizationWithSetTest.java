@@ -76,8 +76,8 @@ public class VectorNormalizationWithSetTest {
 		Vector<Double> nb2 = normailzeByGergo(vectorSet, maxOrder, b2);
 
 		int i = 0;
-		for (Double item : nb1.getDoubleArray()) {
-			assertEquals("row = " + i + ": ", item, nb2.getDoubleArray()[i], 0.00001);
+		for (Double item : nb1.toDoubleMultiArray()[0]) {
+			assertEquals("row = " + i + ": ", item, nb2.toDoubleMultiArray()[0][i], 0.00001);
 			i++;
 		}
 	}

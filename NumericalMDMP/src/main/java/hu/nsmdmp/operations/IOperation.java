@@ -1,8 +1,8 @@
-package hu.nsmdmp.numerics.matrix.operations;
+package hu.nsmdmp.operations;
 
 import java.math.BigDecimal;
 
-public interface IOperations<T> {
+public interface IOperation<T> {
 
 	Class<T> getType();
 

@@ -1,8 +1,8 @@
 package hu.nsmdmp.numerics.matrix.math;
 
-import static hu.nsmdmp.numerics.matrix.operations.OperationFactory.selectOperation;
+import static hu.nsmdmp.operations.Operations.operation;
 import hu.nsmdmp.numerics.matrix.Matrix;
-import hu.nsmdmp.numerics.matrix.operations.IOperations;
+import hu.nsmdmp.operations.IOperation;
 
 public final class SparseMatrix {
 
@@ -20,24 +20,23 @@ public final class SparseMatrix {
 		assign(matrix);
 	}
 
-	private <T> void assign(final Matrix<T> matrix) {
-		int m = matrix.getRowDimension();
-		int n = matrix.getColumnDimension();
+	private <T> void assign(final Matrix<T> M) {
+		int m = M.getRowDimension();
+		int n = M.getColumnDimension();
 		aval = new double[n][0];
 		asub = new int[n][0];
 
-		IOperations<T> op = selectOperation(matrix.getElementType());
+		IOperation<T> op = operation(M.getValueType());
 
-		T[][] M = matrix.getArray();
 		for (int j = 0; j < n; j++) {
 			for (int i = 0; i < m; i++) {
-				if (op.compareTo(op.zero(), M[i][j]) != 0) {
+				if (op.compareTo(op.zero(), M.get(i, j)) != 0) {
 					int s = aval[j].length;
 
 					double[] a = new double[s + 1];
 					System.arraycopy(aval[j], 0, a, 0, s);
 					aval[j] = a;
-					aval[j][s] = op.toDouble(M[i][j]);
+					aval[j][s] = op.toDouble(M.get(i, j));
 
 					int[] b = new int[s + 1];
 					System.arraycopy(asub[j], 0, b, 0, s);

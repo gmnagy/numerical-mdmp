@@ -1,10 +1,10 @@
 package hu.nsmdmp.numerics.matrix.math;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static hu.nsmdmp.numerics.matrix.operations.OperationFactory.selectOperation;
+import static hu.nsmdmp.operations.Operations.operation;
 import hu.nsmdmp.numerics.matrix.Matrix;
 import hu.nsmdmp.numerics.matrix.Vector;
-import hu.nsmdmp.numerics.matrix.operations.IOperations;
+import hu.nsmdmp.operations.IOperation;
 
 public final class MatrixMath {
 
@@ -30,9 +30,9 @@ public final class MatrixMath {
 	public static <T> Matrix<T> identity(int row, int column, final Class<T> type) {
 		checkNotNull(type, "The type of matrix is NULL.");
 
-		IOperations<T> op = selectOperation(type);
+		IOperation<T> op = operation(type);
 
-		Matrix<T> A = new Matrix<T>(row, column);
+		Matrix<T> A = new Matrix<T>(row, column, type);
 
 		for (int i = 0; i < row; i++)
 			for (int j = 0; j < column; j++)

@@ -20,8 +20,8 @@ public class QRDecompositionTest {
 		Matrix<Double> R = new Matrix<Double>(r);
 
 		int i = 0;
-		for (double[] array : R.getDoubleArray()) {
-			assertArrayEquals("row = " + i + ": ", array, qr.getR().getDoubleArray()[i], 0.000001);
+		for (double[] array : R.toDoubleMultiArray()) {
+			assertArrayEquals("row = " + i + ": ", array, qr.getR().toDoubleMultiArray()[i], 0.000001);
 			i++;
 		}
 
@@ -29,8 +29,8 @@ public class QRDecompositionTest {
 		Matrix<Double> Q = new Matrix<Double>(q);
 
 		i = 0;
-		for (double[] array : Q.getDoubleArray()) {
-			assertArrayEquals("row = " + i + ": ", array, qr.getQ().getDoubleArray()[i], 0.000001);
+		for (double[] array : Q.toDoubleMultiArray()) {
+			assertArrayEquals("row = " + i + ": ", array, qr.getQ().toDoubleMultiArray()[i], 0.000001);
 			i++;
 		}
 	}

@@ -13,6 +13,6 @@ public class DiscreteTest {
 
 		Vector<Double> v = discreteVector(5, 2, 0.0, 1.0);
 
-		assertArrayEquals(new Double[] { 0.0, 0.0, 1.0, 1.0, 1.0 }, v.getArray());
+		assertArrayEquals(new Double[] { 0.0, 0.0, 1.0, 1.0, 1.0 }, v.toArray()[0]);
 	}
 }

@@ -1,51 +1,60 @@
 package hu.nsmdmp.numerics.matrix;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 import static hu.nsmdmp.numerics.matrix.math.MatrixMath.identity;
-import static hu.nsmdmp.numerics.matrix.operations.OperationFactory.selectOperation;
-import hu.nsmdmp.numerics.matrix.operations.IOperations;
+import static hu.nsmdmp.operations.Operations.operation;
+import hu.nsmdmp.numerics.matrix.math.MatrixMath;
+import hu.nsmdmp.operations.IOperation;
+
+import java.lang.reflect.Array;
 
 public class Matrix<T> extends MultiArray<T> {
 
 	/**
 	 * Column dimensions.
 	 */
-	protected final int column;
+	protected final int columnLength;
 
 	@SuppressWarnings("unchecked")
-	public Matrix(final int row, final int column) {
-		super(row);
+	public Matrix(final int rowLength, final int columnLength, final Class<T> valueType) {
+		super(rowLength, valueType);
 
-		this.column = column;
+		this.columnLength = columnLength;
 
-		this.M = (T[][]) new Object[row][column];
+		for (int i = 0; i < rowLength; i++)
+			M[i] = (T[]) Array.newInstance(valueType, columnLength);
 	}
 
 	public Matrix(final T[][] A) {
 		super(A);
 
-		this.column = A[0].length;
+		this.columnLength = A[0].length;
 
-		for (int i = 0; i < row; i++)
-			if (A[i].length != column)
-				throw new IllegalArgumentException("All rows must have the same length.");
-
+		for (int i = 0; i < rowLength; i++)
+			checkArgument(A[i].length == columnLength, "All rows must have the same length.");
 	}
 
 	public int getColumnDimension() {
-		return column;
+		return columnLength;
 	}
 
-	public double[][] getDoubleArray() {
+	public double[][] toDoubleMultiArray() {
 
-		IOperations<T> op = selectOperation(getArray());
-		double[][] d = new double[row][column];
+		double[][] array = new double[rowLength][columnLength];
 
 		int i = 0;
-		for (T[] array : M) {
+		for (T[] row : M) {
 
 			int j = 0;
-			for (T item : array) {
-				d[i][j] = op.toDouble(item);
+			for (T item : row) {
+
+				if (null == item)
+					array[i][j] = 0;
+				else {
+					IOperation<T> op = operation(item.getClass());
+					array[i][j] = op.toDouble(item);
+				}
 
 				j++;
 			}
@@ -53,21 +62,21 @@ public class Matrix<T> extends MultiArray<T> {
 			i++;
 		}
 
-		return d;
+		return array;
 	}
 
 	public Matrix<T> transpose() {
-		Matrix<T> X = new Matrix<T>(column, row);
+		Matrix<T> X = new Matrix<T>(columnLength, rowLength, valueType);
 
-		for (int i = 0; i < row; i++)
-			for (int j = 0; j < column; j++)
+		for (int i = 0; i < rowLength; i++)
+			for (int j = 0; j < columnLength; j++)
 				X.set(j, i, M[i][j]);
 
 		return X;
 	}
 
 	public Matrix<T> getSubMatrix(final int[] r, final int i0, final int i1) {
-		Matrix<T> X = new Matrix<T>(r.length, i1 - i0 + 1);
+		Matrix<T> X = new Matrix<T>(r.length, i1 - i0 + 1, valueType);
 
 		for (int i = 0; i < r.length; i++)
 			for (int j = i0; j <= i1; j++)
@@ -77,7 +86,7 @@ public class Matrix<T> extends MultiArray<T> {
 	}
 
 	public Matrix<T> getSubMatrix(final int i0, final int i1, final int j0, final int j1) {
-		Matrix<T> X = new Matrix<T>(i1 - i0 + 1, j1 - j0 + 1);
+		Matrix<T> X = new Matrix<T>(i1 - i0 + 1, j1 - j0 + 1, valueType);
 
 		for (int i = i0; i <= i1; i++)
 			for (int j = j0; j <= j1; j++)
@@ -108,19 +117,40 @@ public class Matrix<T> extends MultiArray<T> {
 	 * @return inverse(A) if A is square, pseudoinverse otherwise.
 	 */
 	public Matrix<T> inverse() {
-		Matrix<T> identity = identity(row, row, getElementType());
+		checkNotNull(get(0, 0));
+
+		Matrix<T> identity = MatrixMath.identity(rowLength, rowLength, valueType);
 
 		if (isSquare()) {
 			return getLU().solve(identity);
-		} else if (row > column) {
+		} else if (rowLength > columnLength) {
 			return getQR().solve(identity);
 		} else {
 			Matrix<T> transposed = transpose();
-			return transposed.getQR().solve(identity(column, column, getElementType())).transpose();
+			return transposed.getQR().solve(identity(columnLength, columnLength, valueType)).transpose();
 		}
 	}
 
 	public boolean isSquare() {
-		return row == column;
+		return rowLength == columnLength;
+	}
+
+	public Vector<T> multiply(final Vector<T> V) {
+		return MatrixMath.multiply(this, V);
+	}
+
+	public Matrix<T> multiply(final Matrix<T> A) {
+		return MatrixMath.multiply(this, A);
+	}
+
+	public T[][] toArray() {
+		@SuppressWarnings("unchecked")
+		T[][] copy = (T[][]) Array.newInstance(valueType, new int[] { rowLength, columnLength });
+
+		for (int i = 0; i < rowLength; i++) {
+			System.arraycopy(M[i], 0, copy[i], 0, M[i].length);
+		}
+
+		return copy;
 	}
 }

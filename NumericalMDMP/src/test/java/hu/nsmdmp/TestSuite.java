@@ -2,6 +2,7 @@ package hu.nsmdmp;
 
 import hu.nsmdmp.moments.ArrayCombinationTest;
 import hu.nsmdmp.moments.MultivariateMomentsTest;
+import hu.nsmdmp.moments.MultivariateMomentsWithPermutationTest;
 import hu.nsmdmp.mosek.LinearProgrammingEqTest;
 import hu.nsmdmp.mosek.PreciseLPCalcTest;
 import hu.nsmdmp.numerics.matrix.GetSubMatrixTest;
@@ -13,6 +14,7 @@ import hu.nsmdmp.numerics.matrix.math.SparseMatrixTest;
 import hu.nsmdmp.polynomialmatrixfactory.DoubleChebyshevTMatrixTest;
 import hu.nsmdmp.polynomialmatrixfactory.DoubleMonomialMatrixTest;
 import hu.nsmdmp.polynomialmatrixfactory.DoubleMonomialToChebTMatrixTest;
+import hu.nsmdmp.polynomialmatrixfactory.DoubleMonomialToChebUMatrixTest;
 import hu.nsmdmp.polynomialmatrixfactory.DoubleNormalizedMonomialMatrixTest;
 import hu.nsmdmp.specialvectors.CumProbPoissonTest;
 import hu.nsmdmp.specialvectors.DiscreteTest;
@@ -36,7 +38,7 @@ import org.junit.runners.Suite.SuiteClasses;
 	
 	// polynomialmatrixfactory
 	DoubleChebyshevTMatrixTest.class, DoubleMonomialMatrixTest.class, DoubleMonomialToChebTMatrixTest.class, 
-	DoubleNormalizedMonomialMatrixTest.class,
+	DoubleNormalizedMonomialMatrixTest.class, DoubleMonomialToChebUMatrixTest.class,
 	
 	// matrix
 	MultiArrayTest.class, MultiplicationTest.class, SparseMatrixTest.class, GetSubMatrixTest.class, 
@@ -46,7 +48,7 @@ import org.junit.runners.Suite.SuiteClasses;
 	LinearProgrammingEqTest.class, PreciseLPCalcTest.class,
 	
 	// moments
-	ArrayCombinationTest.class, MultivariateMomentsTest.class,
+	ArrayCombinationTest.class, MultivariateMomentsTest.class, MultivariateMomentsWithPermutationTest.class,
 	
 	// specialvectors
 	CumProbPoissonTest.class, DiscreteTest.class

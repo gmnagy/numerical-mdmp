@@ -1,8 +1,8 @@
 package hu.nsmdmp.specialvectors;
 
-import static hu.nsmdmp.numerics.matrix.operations.OperationFactory.selectOperation;
+import static hu.nsmdmp.operations.Operations.operation;
 import hu.nsmdmp.numerics.matrix.Vector;
-import hu.nsmdmp.numerics.matrix.operations.IOperations;
+import hu.nsmdmp.operations.IOperation;
 
 /**
  * f(z1,z2) = 1 if z1<=x and z2<=y, 0 otherwise .
@@ -11,10 +11,10 @@ import hu.nsmdmp.numerics.matrix.operations.IOperations;
 public class CumProbPoisson {
 
 	public static <T> Vector<T> createCumProbPoisson(final T[][] sets, final T... limit) {
-		IOperations<T> op = selectOperation(sets);
+		IOperation<T> op = operation(limit[0].getClass());
 
 		int n = sets.length;
-		Vector<T> C = new Vector<T>(n);
+		Vector<T> C = new Vector<T>(n, op.getType());
 
 		for (int i = 0; i < n; i++) {
 			T d = function(sets[i], limit, op);
@@ -24,7 +24,7 @@ public class CumProbPoisson {
 		return C;
 	}
 
-	private static <T> T function(final T[] set, final T[] limit, final IOperations<T> op) {
+	private static <T> T function(final T[] set, final T[] limit, final IOperation<T> op) {
 		int n = set.length;
 
 		if (n != limit.length) {

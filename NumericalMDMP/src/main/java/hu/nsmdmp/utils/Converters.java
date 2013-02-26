@@ -1,6 +1,6 @@
 package hu.nsmdmp.utils;
 
-import static hu.nsmdmp.numerics.matrix.operations.ApfloatOperations.PRECISION;
+import static hu.nsmdmp.operations.ApfloatOperation.PRECISION;
 
 import java.lang.reflect.Array;
 import java.util.List;

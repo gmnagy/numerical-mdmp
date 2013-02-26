@@ -1,4 +1,4 @@
-package hu.nsmdmp.numerics.matrix.operations;
+package hu.nsmdmp.operations;
 
 import java.math.BigDecimal;
 
@@ -6,7 +6,7 @@ import org.apfloat.Apfloat;
 import org.apfloat.Apint;
 import org.apfloat.FixedPrecisionApfloatHelper;
 
-public class ApfloatOperations implements IOperations<Apfloat> {
+public final class ApfloatOperation implements IOperation<Apfloat> {
 
 	public static final long PRECISION = 30;
 
@@ -101,5 +101,4 @@ public class ApfloatOperations implements IOperations<Apfloat> {
 	public double toDouble(final Apfloat value) {
 		return value.doubleValue();
 	}
-
 }

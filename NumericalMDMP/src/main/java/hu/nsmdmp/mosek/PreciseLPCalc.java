@@ -1,10 +1,10 @@
 package hu.nsmdmp.mosek;
 
-import static hu.nsmdmp.numerics.matrix.operations.OperationFactory.selectOperation;
+import static hu.nsmdmp.operations.Operations.operation;
 import hu.nsmdmp.numerics.matrix.Matrix;
 import hu.nsmdmp.numerics.matrix.Vector;
 import hu.nsmdmp.numerics.matrix.math.MatrixMath;
-import hu.nsmdmp.numerics.matrix.operations.IOperations;
+import hu.nsmdmp.operations.IOperation;
 
 import java.lang.reflect.Array;
 
@@ -44,7 +44,7 @@ public class PreciseLPCalc {
 	@SuppressWarnings("unchecked")
 	private static <T> PreciseLPSolution<T> calcResult(final int[] basisIndexes, final Matrix<T> matrix, final Vector<T> b, final Vector<T> c, final int sense) {
 
-		IOperations<T> op = selectOperation(matrix.getElementType());
+		IOperation<T> op = operation(matrix.getValueType());
 
 		PreciseLPSolution<T> result = new PreciseLPSolution<T>();
 		//result.objectiveValue????
@@ -57,8 +57,8 @@ public class PreciseLPCalc {
 		result.dualSlackInfeas = op.zero();
 
 		/* basis matrix and obj. coefficients */
-		Matrix<T> basisMatrix = new Matrix<T>(matrix.getRowDimension(), matrix.getRowDimension());
-		Vector<T> cBasis = new Vector<T>(matrix.getRowDimension());
+		Matrix<T> basisMatrix = new Matrix<T>(matrix.getRowDimension(), matrix.getRowDimension(), op.getType());
+		Vector<T> cBasis = new Vector<T>(matrix.getRowDimension(), op.getType());
 
 		for (int j = 0; j < matrix.getRowDimension(); j++) {
 			if (basisIndexes[j] < matrix.getRowDimension()) {

@@ -1,8 +1,6 @@
 package hu.nsmdmp.polynomialmatrixfactory;
 
-import static hu.nsmdmp.numerics.matrix.operations.OperationFactory.selectOperation;
 import hu.nsmdmp.numerics.matrix.Matrix;
-import hu.nsmdmp.numerics.matrix.operations.IOperations;
 import hu.nsmdmp.polynomialmatrixfactory.cachedpolynomials.ChebyshevTCachedPolynomials;
 
 import java.util.HashMap;
@@ -30,12 +28,16 @@ public class ChebyshevTMatrix<T> extends AbstractPolynomialMatrix<T> {
 	 */
 	private Map<Integer, Map<T, T>> solutions = new HashMap<Integer, Map<T, T>>();
 
+	protected ChebyshevTMatrix(final Class<T> valueType) {
+		super(valueType);
+	}
+
 	public static Matrix<Double> generateDoubleChebyshevTMatrix(final Double[][] set, final int maxOrder) {
-		return new ChebyshevTMatrix<Double>().create(set, maxOrder);
+		return new ChebyshevTMatrix<Double>(Double.class).create(set, maxOrder);
 	}
 
 	public static Matrix<Apfloat> generateApfloatChebyshevTMatrix(final Apfloat[][] set, final int maxOrder) {
-		return new ChebyshevTMatrix<Apfloat>().create(set, maxOrder);
+		return new ChebyshevTMatrix<Apfloat>(Apfloat.class).create(set, maxOrder);
 	}
 
 	/**
@@ -75,12 +77,11 @@ public class ChebyshevTMatrix<T> extends AbstractPolynomialMatrix<T> {
 	private T getChebyshevNth(final int n, final T value) {
 		Polynomial polynom = cachedPolynomials.getPolynomial(n);
 
-		IOperations<T> op = selectOperation(value);
 		T r = op.zero();
 		int i = 0;
 
 		for (double coef : polynom.getCoefficients()) {
-			T power = pow(value, i, op);
+			T power = pow(value, i);
 			T m = op.multiply(power, op.valueOf(coef));
 			r = op.add(r, m);
 
@@ -90,7 +91,7 @@ public class ChebyshevTMatrix<T> extends AbstractPolynomialMatrix<T> {
 		return r;
 	}
 
-	private T pow(final T value, final int n, final IOperations<T> op) {
+	private T pow(final T value, final int n) {
 
 		if (n == 0 && op.signum(value) == 0)
 			return op.one();

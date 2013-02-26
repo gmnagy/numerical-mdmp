@@ -56,7 +56,7 @@ public final class LinearProgrammingEq {
 	public static <T> LPSolution optimizeMin(final Matrix<T> matrix, final Vector<T> b, final Vector<T> c) throws MosekException {
 		SparseMatrix sm = new SparseMatrix(matrix);
 
-		return new LinearProgrammingEq(sm.aval, sm.asub, b.getDoubleArray(), c.getDoubleArray()).optimize(Env.objsense.minimize);
+		return new LinearProgrammingEq(sm.aval, sm.asub, b.toDoubleArray(), c.toDoubleArray()).optimize(Env.objsense.minimize);
 	}
 
 	/**
@@ -66,7 +66,7 @@ public final class LinearProgrammingEq {
 	public static <T> LPSolution optimizeMax(final Matrix<T> matrix, final Vector<T> b, final Vector<T> c) throws MosekException {
 		SparseMatrix sm = new SparseMatrix(matrix);
 
-		return new LinearProgrammingEq(sm.aval, sm.asub, b.getDoubleArray(), c.getDoubleArray()).optimize(Env.objsense.maximize);
+		return new LinearProgrammingEq(sm.aval, sm.asub, b.toDoubleArray(), c.toDoubleArray()).optimize(Env.objsense.maximize);
 	}
 
 	private LPSolution optimize(final Env.objsense objsense) throws MosekException {

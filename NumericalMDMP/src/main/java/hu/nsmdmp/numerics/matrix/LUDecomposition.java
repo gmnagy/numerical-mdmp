@@ -1,7 +1,7 @@
 package hu.nsmdmp.numerics.matrix;
 
-import static hu.nsmdmp.numerics.matrix.operations.OperationFactory.selectOperation;
-import hu.nsmdmp.numerics.matrix.operations.IOperations;
+import static hu.nsmdmp.operations.Operations.operation;
+import hu.nsmdmp.operations.IOperation;
 
 import java.lang.reflect.Array;
 
@@ -43,7 +43,7 @@ final class LUDecomposition<T> {
 	 */
 	private int[] piv;
 
-	private IOperations<T> op;
+	private IOperation<T> op;
 
 	/**
 	 * LU Decomposition
@@ -55,11 +55,11 @@ final class LUDecomposition<T> {
 	@SuppressWarnings("unchecked")
 	LUDecomposition(final Matrix<T> A) {
 
-		op = selectOperation(A.getElementType());
+		op = operation(A.getValueType());
 
 		// Use a "left-looking", dot-product, Crout/Doolittle algorithm.
 
-		LU = A.clone().getArray();
+		LU = A.toArray();
 		m = A.getRowDimension();
 		n = A.getColumnDimension();
 
@@ -142,7 +142,7 @@ final class LUDecomposition<T> {
 	 * @return L
 	 */
 	Matrix<T> getL() {
-		Matrix<T> X = new Matrix<T>(m, n);
+		Matrix<T> X = new Matrix<T>(m, n, op.getType());
 
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < n; j++) {
@@ -165,7 +165,7 @@ final class LUDecomposition<T> {
 	 * @return U
 	 */
 	Matrix<T> getU() {
-		Matrix<T> X = new Matrix<T>(n, n);
+		Matrix<T> X = new Matrix<T>(n, n, op.getType());
 
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
@@ -249,13 +249,12 @@ final class LUDecomposition<T> {
 		// Copy right hand side with pivoting
 		int nx = B.getColumnDimension();
 		Matrix<T> Xmat = B.getSubMatrix(piv, 0, nx - 1);
-		T[][] X = Xmat.getArray();
 
 		// Solve L*Y = B(piv,:)
 		for (int k = 0; k < n; k++) {
 			for (int i = k + 1; i < n; i++) {
 				for (int j = 0; j < nx; j++) {
-					X[i][j] = op.subtract(X[i][j], op.multiply(X[k][j], LU[i][k]));
+					Xmat.set(i, j, op.subtract(Xmat.get(i, j), op.multiply(Xmat.get(k, j), LU[i][k])));
 				}
 			}
 		}
@@ -263,11 +262,11 @@ final class LUDecomposition<T> {
 		// Solve U*X = Y;
 		for (int k = n - 1; k >= 0; k--) {
 			for (int j = 0; j < nx; j++) {
-				X[k][j] = op.divide(X[k][j], LU[k][k]);
+				Xmat.set(k, j, op.divide(Xmat.get(k, j), LU[k][k]));
 			}
 			for (int i = 0; i < k; i++) {
 				for (int j = 0; j < nx; j++) {
-					X[i][j] = op.subtract(X[i][j], op.multiply(X[k][j], LU[i][k]));
+					Xmat.set(i, j, op.subtract(Xmat.get(i, j), op.multiply(Xmat.get(k, j), LU[i][k])));
 				}
 			}
 		}

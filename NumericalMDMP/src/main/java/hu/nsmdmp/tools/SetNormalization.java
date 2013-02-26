@@ -1,8 +1,8 @@
 package hu.nsmdmp.tools;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static hu.nsmdmp.numerics.matrix.operations.OperationFactory.selectOperation;
-import hu.nsmdmp.numerics.matrix.operations.IOperations;
+import static hu.nsmdmp.operations.Operations.operation;
+import hu.nsmdmp.operations.IOperation;
 
 import java.lang.reflect.Array;
 
@@ -11,8 +11,9 @@ public final class SetNormalization {
 	@SuppressWarnings("unchecked")
 	public static <T> T[][] normalize(final T[][] set) {
 		checkNotNull(set, "The set is NULL.");
+		checkNotNull(set[0][0], "The set is NULL.");
 
-		IOperations<T> op = selectOperation(set);
+		IOperation<T> op = operation(set[0][0].getClass());
 
 		int row = set.length;
 

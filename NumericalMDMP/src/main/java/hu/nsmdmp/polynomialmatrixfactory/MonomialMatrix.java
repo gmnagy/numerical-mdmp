@@ -1,8 +1,6 @@
 package hu.nsmdmp.polynomialmatrixfactory;
 
-import static hu.nsmdmp.numerics.matrix.operations.OperationFactory.selectOperation;
 import hu.nsmdmp.numerics.matrix.Matrix;
-import hu.nsmdmp.numerics.matrix.operations.IOperations;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,12 +15,16 @@ public class MonomialMatrix<T> extends AbstractPolynomialMatrix<T> {
 	 */
 	private Map<Integer, Map<T, T>> solutions = new HashMap<Integer, Map<T, T>>();
 
+	private MonomialMatrix(Class<T> valueType) {
+		super(valueType);
+	}
+
 	public static Matrix<Double> generateDoubleMonomialMatrix(final Double[][] set, final int maxOrder) {
-		return new MonomialMatrix<Double>().create(set, maxOrder);
+		return new MonomialMatrix<Double>(Double.class).create(set, maxOrder);
 	}
 
 	public static Matrix<Apfloat> generateApfloatMonomialMatrix(final Apfloat[][] set, final int maxOrder) {
-		return new MonomialMatrix<Apfloat>().create(set, maxOrder);
+		return new MonomialMatrix<Apfloat>(Apfloat.class).create(set, maxOrder);
 	}
 
 	/**
@@ -56,16 +58,14 @@ public class MonomialMatrix<T> extends AbstractPolynomialMatrix<T> {
 
 	private T getMonomialNth(final int n, final T value) {
 
-		IOperations<T> operations = selectOperation(value);
+		if (n == 0 && op.signum(value) == 0)
+			return op.one();
 
-		if (n == 0 && operations.signum(value) == 0)
-			return operations.one();
-
-		if (n != 0 && operations.signum(value) == 0) {
-			return operations.zero();
+		if (n != 0 && op.signum(value) == 0) {
+			return op.zero();
 		}
 
-		return operations.pow(value, n);
+		return op.pow(value, n);
 	}
 
 }

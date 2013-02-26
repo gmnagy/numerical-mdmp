@@ -1,7 +1,7 @@
 package hu.nsmdmp.numerics.matrix;
 
-import static hu.nsmdmp.numerics.matrix.operations.OperationFactory.selectOperation;
-import hu.nsmdmp.numerics.matrix.operations.IOperations;
+import static hu.nsmdmp.operations.Operations.operation;
+import hu.nsmdmp.operations.IOperation;
 
 import java.lang.reflect.Array;
 
@@ -41,7 +41,7 @@ final class QRDecomposition<T> {
 	 */
 	private T[] Rdiag;
 
-	private IOperations<T> op;
+	private IOperation<T> op;
 
 	/**
 	 * QR Decomposition, computed by Householder reflections.
@@ -53,9 +53,9 @@ final class QRDecomposition<T> {
 	@SuppressWarnings("unchecked")
 	public QRDecomposition(final Matrix<T> A) {
 
-		op = selectOperation(A.getElementType());
+		op = operation(A.getValueType());
 
-		QR = A.clone().getArray();
+		QR = A.toArray();
 		m = A.getRowDimension();
 		n = A.getColumnDimension();
 		Rdiag = (T[]) Array.newInstance(op.getType(), n);
@@ -123,7 +123,7 @@ final class QRDecomposition<T> {
 	 * @return R
 	 */
 	Matrix<T> getR() {
-		Matrix<T> X = new Matrix<T>(n, n);
+		Matrix<T> X = new Matrix<T>(n, n, op.getType());
 
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
@@ -146,7 +146,7 @@ final class QRDecomposition<T> {
 	 * @return Q
 	 */
 	Matrix<T> getQ() {
-		Matrix<T> X = new Matrix<T>(m, n);
+		Matrix<T> X = new Matrix<T>(m, n, op.getType());
 
 		for (int k = n - 1; k >= 0; k--) {
 			for (int i = 0; i < m; i++) {
@@ -211,7 +211,7 @@ final class QRDecomposition<T> {
 
 		// Copy right hand side
 		int nx = B.getColumnDimension();
-		T[][] X = B.clone().getArray();
+		T[][] X = B.toArray();
 
 		// Compute Y = transpose(Q)*B
 		for (int k = 0; k < n; k++) {

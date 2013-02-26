@@ -14,20 +14,6 @@ public final class SetVariationIterator2<T> {
 
 	private int index = 0;
 
-//	@SuppressWarnings("unchecked")
-//	public static <T> T[][] generateSetVariation(final T[][] set) {
-//		SetVariationIterator2<T> it = new SetVariationIterator2<T>(set);
-//
-//		T[][] result = (T[][]) Array.newInstance(it.type, it.numberOfVariation, 0);
-//		int i = 0;
-//		while (it.hasNext()) {
-//			result[i] = it.next();
-//			i++;
-//		}
-//
-//		return result;
-//	}
-
 	@SuppressWarnings("unchecked")
 	public SetVariationIterator2(final List<T[]> set) {
 		checkNotNull(set, "The multiarray set is NULL.");

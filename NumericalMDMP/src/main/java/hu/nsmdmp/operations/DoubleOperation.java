@@ -1,10 +1,10 @@
-package hu.nsmdmp.numerics.matrix.operations;
+package hu.nsmdmp.operations;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.math.BigDecimal;
 
-class DoubleOperations implements IOperations<Double> {
+public class DoubleOperation implements IOperation<Double> {
 
 	@Override
 	public Double zero() {
@@ -132,5 +132,4 @@ class DoubleOperations implements IOperations<Double> {
 
 		return d.doubleValue();
 	}
-
 }

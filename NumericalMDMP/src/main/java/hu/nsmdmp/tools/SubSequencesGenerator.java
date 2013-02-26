@@ -1,7 +1,7 @@
 package hu.nsmdmp.tools;
 
-import static hu.nsmdmp.numerics.matrix.operations.OperationFactory.selectOperation;
-import hu.nsmdmp.numerics.matrix.operations.IOperations;
+import static hu.nsmdmp.operations.Operations.operation;
+import hu.nsmdmp.operations.IOperation;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public final class SubSequencesGenerator {
 	@SuppressWarnings("unchecked")
 	public static <T> T[][] getSubSequences2(final int n, final int l, final int dim, final Class<T> type) {
 		T[][] result = (T[][]) Array.newInstance(type, dim, 0);
-		IOperations<T> op = selectOperation(type);
+		IOperation<T> op = operation(type);
 
 		int d = 0;
 		int j = 0;
@@ -85,7 +85,7 @@ public final class SubSequencesGenerator {
 	@SuppressWarnings("unchecked")
 	public static <T> T[][] getSubSequences3(final int n, final int l, final int dim, final Class<T> type) {
 		T[][] result = (T[][]) Array.newInstance(type, dim, 0);
-		IOperations<T> op = selectOperation(type);
+		IOperation<T> op = operation(type);
 
 		int d = 0;
 		int j = 0;

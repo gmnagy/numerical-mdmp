@@ -1,6 +1,6 @@
 package hu.nsmdmp.numerics.matrix;
 
-import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkElementIndex;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Arrays;
@@ -17,77 +17,79 @@ public class MultiArray<T> {
 	/**
 	 * Array for internal storage of elements.
 	 */
-	protected T[][] M;
+	protected final T[][] M;
 
 	/**
 	 * Row dimensions.
 	 */
-	protected final int row;
+	protected final int rowLength;
 
-	MultiArray(final int row) {
-		this.row = row;
+	protected final Class<T> valueType;
+
+	public MultiArray(final int rowLength, final Class<T> valueType) {
+		this.rowLength = rowLength;
+		this.valueType = valueType;
+
+		@SuppressWarnings("unchecked")
+		T[][] tmp = (T[][]) new Object[rowLength][];
+		M = tmp;
 	}
 
 	@SuppressWarnings("unchecked")
 	public MultiArray(final T[][] A) {
 		checkNotNull(A, "The A multiarray is NULL.");
 
-		row = A.length;
-		M = (T[][]) new Object[row][];
+		this.rowLength = A.length;
 
-		for (int i = 0; i < row; i++) {
+		T[][] tmp = (T[][]) new Object[rowLength][];
+		M = tmp;
 
-			M[i] = (T[]) new Object[A[i].length];
+		Class<T> type = null;
 
-			for (int j = 0; j < A[i].length; j++)
-				M[i][j] = A[i][j];
+		for (int i = 0; i < rowLength; i++) {
+
+			int columnIndex = A[i].length;
+			tmp[i] = (T[]) new Object[columnIndex];
+
+			for (int j = 0; j < columnIndex; j++) {
+				if (null != A[i][j] && null == type)
+					type = (Class<T>) A[i][j].getClass();
+
+				tmp[i][j] = A[i][j];
+			}
 		}
-	}
 
-	@SuppressWarnings("unchecked")
-	public Class<T> getElementType() {
-
-		if (M.length == 0 || M[0].length == 0)
-			throw new RuntimeException("The matrix is empty.");
-
-		return (Class<T>) M[0][0].getClass();
+		checkNotNull(type, "The A multiarray elements are NULL.");
+		this.valueType = type;
 	}
 
 	public int getRowDimension() {
-		return row;
+		return rowLength;
 	}
 
-	public T[][] getArray() {
-		return M;
+	public Class<T> getValueType() {
+		return valueType;
 	}
 
-	public void setArray(final T[][] A) {
-		checkNotNull(A, "The A multiarray is NULL.");
-		checkArgument(row != A.length, "The A multiArray row is not equals with defined row.");
-
-		M = A;
+	public T[] getRow(final int rowIndex) {
+		return M[rowIndex];
 	}
 
-	public T[] getRow(final int row) {
-		return M[row];
+	public void setRow(final int rowIndex, final T[] array) {
+		checkElementIndex(rowIndex, this.rowLength);
+
+		M[rowIndex] = array;
 	}
 
-	public void setRow(final int row, final T[] array) {
-		checkNotNull(M, "This MultiArray internal storage is NULL.");
-		checkNotNull(array, "The array is NULL.");
-
-		M[row] = array;
+	public T get(final int rowIndex, final int columnIndex) {
+		return M[rowIndex][columnIndex];
 	}
 
-	public T get(final int row, final int column) {
-		return M[row][column];
-	}
+	public void set(final int rowIndex, final int columnIndex, final T value) {
+		checkElementIndex(rowIndex, this.rowLength);
+		checkElementIndex(columnIndex, M[rowIndex].length);
 
-	public void set(final int row, final int column, final T value) {
-		checkNotNull(M, "This MultiArray internal storage is NULL.");
-		checkNotNull(value, "The value is NULL.");
-
-		M[row][column] = value;
+		M[rowIndex][columnIndex] = value;
 	}
 
 	@Override
@@ -95,8 +97,8 @@ public class MultiArray<T> {
 
 		StringBuilder sb = new StringBuilder();
 
-		for (T[] array : M)
-			sb.append(Arrays.toString(array) + "\n");
+		for (T[] row : M)
+			sb.append(Arrays.toString(row) + "\n");
 
 		return sb.toString();
 	}
@@ -105,8 +107,8 @@ public class MultiArray<T> {
 	public int hashCode() {
 		HashCodeBuilder builder = new HashCodeBuilder();
 
-		for (T[] array : M)
-			builder.append(array);
+		for (T[] row : M)
+			builder.append(row);
 
 		return builder.toHashCode();
 	}
@@ -123,8 +125,8 @@ public class MultiArray<T> {
 		EqualsBuilder builder = new EqualsBuilder();
 
 		int i = 0;
-		for (T[] array : M) {
-			builder.append(array, ma.M[i]);
+		for (T[] row : M) {
+			builder.append(row, ma.M[i]);
 			i++;
 		}
 
@@ -135,5 +137,4 @@ public class MultiArray<T> {
 	public MultiArray<T> clone() {
 		return new MultiArray<T>(this.M);
 	}
-
 }

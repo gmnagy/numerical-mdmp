@@ -1,7 +1,7 @@
 package hu.nsmdmp.utils;
 
-import static hu.nsmdmp.numerics.matrix.operations.OperationFactory.selectOperation;
-import hu.nsmdmp.numerics.matrix.operations.IOperations;
+import static hu.nsmdmp.operations.Operations.operation;
+import hu.nsmdmp.operations.IOperation;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -35,7 +35,7 @@ public class IOFile {
 
 	@SuppressWarnings("unchecked")
 	private static <T> T[] read(final Scanner scanner, final Class<T> type) throws IOException {
-		IOperations<T> op = selectOperation(type);
+		IOperation<T> op = operation(type);
 
 		List<T> rows = new LinkedList<T>();
 
