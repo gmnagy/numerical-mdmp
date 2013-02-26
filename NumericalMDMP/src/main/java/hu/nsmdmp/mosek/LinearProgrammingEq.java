@@ -14,6 +14,20 @@ import mosek.Task;
  * 
  * 
  */
+
+class msgclass extends mosek.Stream {
+	  public msgclass ()
+	  {
+	    super ();
+	  }
+	  
+	  public void stream (String msg)
+	    {
+	      System.out.print (msg);
+	  }
+	}
+	 
+
 public final class LinearProgrammingEq {
 
 	private double infinity = 0;
@@ -69,6 +83,7 @@ public final class LinearProgrammingEq {
 		return new LinearProgrammingEq(sm.aval, sm.asub, b.toDoubleArray(), c.toDoubleArray()).optimize(Env.objsense.maximize);
 	}
 
+
 	private LPSolution optimize(final Env.objsense objsense) throws MosekException {
 		int NUMVAR = aval.length;
 		int NUMCON = b.length;
@@ -79,13 +94,31 @@ public final class LinearProgrammingEq {
 
 		// Make mosek environment. 
 		env = new Env();
+	      // Direct the env log stream to the user specified
+	      // method env_msg_obj.stream
+	      msgclass env_msg_obj = new msgclass ();
+	      env.set_Stream (mosek.Env.streamtype.log, env_msg_obj);
 
+	      
+	            
+	      
 		// Initialize the environment.
 		env.init();
 
 		// Create a task object linked with the environment env.
 		task = new Task(env, 0, 0);
+	      // Directs the log task stream to the user specified
+	      // method task_msg_obj.stream
+	      msgclass task_msg_obj = new msgclass ();
+	      task.set_Stream (mosek.Env.streamtype.log, task_msg_obj);
+	      
+	      task.putdouparam(mosek.Env.dparam.basis_tol_s, 1.0e-9);
+	      task.putdouparam(mosek.Env.dparam.basis_tol_x, 1.0e-9);
 
+
+	      
+	      
+	      
 		task.putmaxnumvar(NUMVAR);
 		task.putmaxnumcon(NUMCON);
 		task.putmaxnumanz(NUMANZ);
@@ -115,9 +148,10 @@ public final class LinearProgrammingEq {
 
 		task.putobjsense(objsense);
 
-		task.writedata("MDMP.lp");
+		//task.writedata("MDMP.lp");
 
 		task.putintparam(mosek.Env.iparam.optimizer, mosek.Env.optimizertype.dual_simplex.getValue());
+		
 		Env.rescode r = task.optimize();
 		if (Env.rescode.ok != r) {
 			System.out.println(r);
