@@ -4,6 +4,9 @@ import static hu.nsmdmp.numerics.matrix.math.MatrixMath.multiply;
 import static hu.nsmdmp.polynomialmatrixfactory.MonomialToChebTMatrix.generateMonomialChebTTransformationMatrix;
 import static hu.nsmdmp.polynomialmatrixfactory.MonomialToChebUMatrix.generateMonomialChebUTransformationMatrix;
 import static hu.nsmdmp.tools.VectorNormalizationWithSet.normailzeByGergo;
+
+import java.util.Arrays;
+
 import hu.nsmdmp.mosek.LPSolution;
 import hu.nsmdmp.mosek.LinearProgrammingEq;
 import hu.nsmdmp.numerics.matrix.Matrix;
@@ -54,6 +57,9 @@ public class TaskUtils {
 	 */
 	public static <T> double getMaxCumProbMatrixElement(final Matrix<T> matrix, final Vector<T> vector, Vector<T> f) throws MosekException {
 		LPSolution max = LinearProgrammingEq.optimizeMax(matrix, vector, f);
+		
+		Arrays.sort(max.getX());
+		System.out.println(Arrays.toString(max.getX()));
 
 		return max.getPrimalSolution();
 	}

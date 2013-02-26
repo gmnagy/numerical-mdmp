@@ -30,7 +30,6 @@ public class PreciseLPCalcTest {
 		// A minimization problem 
 		PreciseLPSolution<Double> result = optimizeMin(M, B, C);
 		Double[] rMin = result.getX();
-		System.out.println(Arrays.toString(rMin));
 
 //		 Apfloat half=(new Apfloat(1, Precision.SCALE)).divide(new Apfloat(2, Precision.SCALE));
 //		Apfloat expectedMin[] = { half, ApfloatUtils.ZERO, ApfloatUtils.ZERO, half };
