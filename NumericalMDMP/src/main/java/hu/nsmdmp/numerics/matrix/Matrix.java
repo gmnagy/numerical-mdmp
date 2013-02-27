@@ -95,6 +95,10 @@ public class Matrix<T> extends MultiArray<T> {
 		return X;
 	}
 
+	public Matrix<T> getSubMatrix(final int from, final int to) {
+		return getSubMatrix(from, to, 0, columnLength - 1);
+	}
+
 	/**
 	 * Get LU Decomposition.
 	 * 

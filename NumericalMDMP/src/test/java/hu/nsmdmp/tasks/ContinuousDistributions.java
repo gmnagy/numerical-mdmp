@@ -4,6 +4,7 @@ import static hu.nsmdmp.moments.MultivariateMoments.convertBinomMomToPowerMom;
 import static hu.nsmdmp.moments.MultivariateMoments.createBinomialMoments;
 import static hu.nsmdmp.specialvectors.Discrete.discreteVector;
 import static hu.nsmdmp.tasks.TaskUtils.getMaxCumProbMatrixElement;
+import static hu.nsmdmp.tasks.TaskUtils.toVector;
 import static hu.nsmdmp.tools.SetNormalization.normalize;
 import static hu.nsmdmp.tools.SetVariationIterator.getNumberOfVariation;
 import hu.nsmdmp.moments.Moment;
@@ -25,16 +26,16 @@ public class ContinuousDistributions {
 
 	@Test
 	public void testMNG6_5() throws Exception {
-		Apfloat[] probabilities = IOFile.read(new File(getClass().getResource("mng11_5").toURI()), Apfloat.class);
-		int n = 11;
+		Apfloat[] probabilities = IOFile.read(new File(getClass().getResource("mng16_5").toURI()), Apfloat.class);
+		int n = 16;
 		int m = 3;
-		int dim = 3;
+		int dim = 5;
 		int l = 3;
 
 		List<Moment<Apfloat>> binomMoms = createBinomialMoments(probabilities, n, m, dim, l);
 		Collection<Moment<Apfloat>> powerMoms = convertBinomMomToPowerMom(binomMoms);
 
-		Apfloat[][] vectorSet = SubSequencesGenerator.getSubSequences2(n + 3, l + 1, dim, Apfloat.class);
+		Apfloat[][] vectorSet = SubSequencesGenerator.getSubSequences2(n + dim, l + 1, dim, Apfloat.class);
 		System.out.println(Utils.toString(vectorSet));
 //		System.out.println(Utils.toString(normalize(subSequences)));
 
@@ -63,17 +64,9 @@ public class ContinuousDistributions {
 //		System.out.println(String.format("maxT: %s\tminT: %s", 1 - maxT, 1 - minT));
 	}
 
-	Vector<Apfloat> toVector(Collection<Moment<Apfloat>> moments) {
+	@Test
+	public void testWithPermutation() {
 
-		Vector<Apfloat> v = new Vector<Apfloat>(moments.size(), Apfloat.class);
-
-		int i = 0;
-		for (Moment<Apfloat> moment : moments) {
-			v.set(i, moment.moment);
-
-			i++;
-		}
-
-		return v;
 	}
+
 }

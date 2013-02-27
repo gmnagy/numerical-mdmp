@@ -4,14 +4,18 @@ import static hu.nsmdmp.numerics.matrix.math.MatrixMath.multiply;
 import static hu.nsmdmp.polynomialmatrixfactory.MonomialToChebTMatrix.generateMonomialChebTTransformationMatrix;
 import static hu.nsmdmp.polynomialmatrixfactory.MonomialToChebUMatrix.generateMonomialChebUTransformationMatrix;
 import static hu.nsmdmp.tools.VectorNormalizationWithSet.normailzeByGergo;
-
-import java.util.Arrays;
-
+import hu.nsmdmp.moments.Moment;
 import hu.nsmdmp.mosek.LPSolution;
 import hu.nsmdmp.mosek.LinearProgrammingEq;
 import hu.nsmdmp.numerics.matrix.Matrix;
 import hu.nsmdmp.numerics.matrix.Vector;
+
+import java.util.Arrays;
+import java.util.Collection;
+
 import mosek.MosekException;
+
+import org.apfloat.Apfloat;
 
 public class TaskUtils {
 
@@ -57,10 +61,21 @@ public class TaskUtils {
 	 */
 	public static <T> double getMaxCumProbMatrixElement(final Matrix<T> matrix, final Vector<T> vector, Vector<T> f) throws MosekException {
 		LPSolution max = LinearProgrammingEq.optimizeMax(matrix, vector, f);
-		
-		Arrays.sort(max.getX());
-		System.out.println(Arrays.toString(max.getX()));
 
 		return max.getPrimalSolution();
+	}
+
+	public static Vector<Apfloat> toVector(Collection<Moment<Apfloat>> moments) {
+
+		Vector<Apfloat> v = new Vector<Apfloat>(moments.size(), Apfloat.class);
+
+		int i = 0;
+		for (Moment<Apfloat> moment : moments) {
+			v.set(i, moment.moment);
+
+			i++;
+		}
+
+		return v;
 	}
 }

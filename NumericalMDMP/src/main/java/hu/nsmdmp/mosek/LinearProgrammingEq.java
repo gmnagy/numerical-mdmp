@@ -103,10 +103,9 @@ public final class LinearProgrammingEq {
 		task = new Task(env, 0, 0);
 		// Directs the log task stream to the user specified
 		// method task_msg_obj.stream
-		msgclass task_msg_obj = new msgclass();
-		task.set_Stream(mosek.Env.streamtype.msg, task_msg_obj);
-		
-		task.solutionsummary(mosek.Env.streamtype.msg);
+//		msgclass task_msg_obj = new msgclass();
+//		task.set_Stream(mosek.Env.streamtype.msg, task_msg_obj);
+//		task.solutionsummary(mosek.Env.streamtype.msg);
 
 		task.putdouparam(mosek.Env.dparam.basis_tol_s, 1.0e-9);
 		task.putdouparam(mosek.Env.dparam.basis_tol_x, 1.0e-9);

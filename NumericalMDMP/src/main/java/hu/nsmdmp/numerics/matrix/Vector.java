@@ -23,4 +23,14 @@ public class Vector<T> extends Matrix<T> {
 		return super.toDoubleMultiArray()[0];
 	}
 
+	public Vector<T> getSubVector(final int from, final int to) {
+
+		Vector<T> sub = new Vector<T>(to - from + 1, valueType);
+
+		for (int i = from; i <= to; i++) {
+			sub.set(i - from, get(i));
+		}
+
+		return sub;
+	}
 }
