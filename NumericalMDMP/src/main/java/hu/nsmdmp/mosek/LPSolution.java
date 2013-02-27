@@ -1,14 +1,22 @@
 package hu.nsmdmp.mosek;
 
+import mosek.Env;
+
 public class LPSolution {
 
-	double[] x;
+	final double[] x;
 
-	double primalSolution;
+	final double primalSolution;
 
-	int[] basisIndexes;
+	final int[] basisIndexes;
 
-	LPSolution() {
+	final Env.solsta solutionStatus;
+
+	LPSolution(double[] x, double primalSolution, int[] basisIndexes, Env.solsta solutionStatus) {
+		this.x = x;
+		this.primalSolution = primalSolution;
+		this.basisIndexes = basisIndexes;
+		this.solutionStatus = solutionStatus;
 	}
 
 	public double[] getX() {
@@ -23,4 +31,7 @@ public class LPSolution {
 		return basisIndexes;
 	}
 
+	public Env.solsta getSolutionStatus() {
+		return solutionStatus;
+	}
 }

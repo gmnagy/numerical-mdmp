@@ -20,6 +20,7 @@ import hu.nsmdmp.polynomialmatrixfactory.DoubleMonomialToChebUMatrixTest;
 import hu.nsmdmp.polynomialmatrixfactory.DoubleNormalizedMonomialMatrixTest;
 import hu.nsmdmp.specialvectors.CumProbPoissonTest;
 import hu.nsmdmp.specialvectors.DiscreteTest;
+import hu.nsmdmp.tasks.DiscreteMultivariateDistributionsTest;
 import hu.nsmdmp.tools.FactorialTest;
 import hu.nsmdmp.tools.SetNormalizationTest;
 import hu.nsmdmp.tools.SetVariationTest;
@@ -53,7 +54,10 @@ import org.junit.runners.Suite.SuiteClasses;
 	ArrayCombinationTest.class, MultivariateMomentsTest.class, MultivariateMomentsWithPermutationTest.class,
 	
 	// specialvectors
-	CumProbPoissonTest.class, DiscreteTest.class
+	CumProbPoissonTest.class, DiscreteTest.class,
+	
+	// tasks
+	DiscreteMultivariateDistributionsTest.class
 	
 	})
 public class TestSuite {

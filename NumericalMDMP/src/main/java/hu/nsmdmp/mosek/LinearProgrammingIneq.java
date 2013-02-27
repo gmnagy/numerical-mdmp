@@ -7,25 +7,7 @@ import mosek.Env;
 import mosek.MosekException;
 import mosek.Task;
 
-/**
- * Subject: Ax = b, x >= 0
- * 
- * min/max cx.
- * 
- * 
- */
-
-class msgclass extends mosek.Stream {
-	public msgclass() {
-		super();
-	}
-
-	public void stream(String msg) {
-		System.out.print(msg);
-	}
-}
-
-public final class LinearProgrammingEq {
+public class LinearProgrammingIneq {
 
 	private double infinity = 0;
 
@@ -49,35 +31,38 @@ public final class LinearProgrammingEq {
 	 */
 	private final double b[];
 
+	private final double e;
+
 	/**
 	 * Hiden.
 	 * 
 	 */
-	private LinearProgrammingEq(final double aval[][], final int asub[][], final double b[], final double c[]) {
+	private LinearProgrammingIneq(final double aval[][], final int asub[][], final double b[], final double c[], final double e) {
 		this.aval = aval;
 		this.asub = asub;
 		this.b = b;
 		this.c = c;
+		this.e = e;
 	}
 
 	/**
 	 * Minimalizalas.
 	 * 
 	 */
-	public static <T> LPSolution optimizeMin(final Matrix<T> matrix, final Vector<T> b, final Vector<T> c) throws MosekException {
+	public static <T> LPSolution optimizeMin(final Matrix<T> matrix, final Vector<T> b, final Vector<T> c, final double e) throws MosekException {
 		SparseMatrix sm = new SparseMatrix(matrix);
 
-		return new LinearProgrammingEq(sm.aval, sm.asub, b.toDoubleArray(), c.toDoubleArray()).optimize(Env.objsense.minimize);
+		return new LinearProgrammingIneq(sm.aval, sm.asub, b.toDoubleArray(), c.toDoubleArray(), e).optimize(Env.objsense.minimize);
 	}
 
 	/**
 	 * Maximalizalasa.
 	 * 
 	 */
-	public static <T> LPSolution optimizeMax(final Matrix<T> matrix, final Vector<T> b, final Vector<T> c) throws MosekException {
+	public static <T> LPSolution optimizeMax(final Matrix<T> matrix, final Vector<T> b, final Vector<T> c, final double e) throws MosekException {
 		SparseMatrix sm = new SparseMatrix(matrix);
 
-		return new LinearProgrammingEq(sm.aval, sm.asub, b.toDoubleArray(), c.toDoubleArray()).optimize(Env.objsense.maximize);
+		return new LinearProgrammingIneq(sm.aval, sm.asub, b.toDoubleArray(), c.toDoubleArray(), e).optimize(Env.objsense.maximize);
 	}
 
 	private LPSolution optimize(final Env.objsense objsense) throws MosekException {
@@ -91,28 +76,11 @@ public final class LinearProgrammingEq {
 		// Make mosek environment. 
 		env = new Env();
 
-		// Direct the env log stream to the user specified
-		// method env_msg_obj.stream
-		msgclass env_msg_obj = new msgclass();
-		env.set_Stream(mosek.Env.streamtype.log, env_msg_obj);
-		env.set_Stream(mosek.Env.streamtype.msg, env_msg_obj);
-
 		// Initialize the environment.
 		env.init();
 
 		// Create a task object linked with the environment env.
 		task = new Task(env, 0, 0);
-
-		// Directs the log task stream to the user specified
-		// method task_msg_obj.stream
-//		msgclass task_msg_obj = new msgclass();
-//		task.set_Stream(mosek.Env.streamtype.msg, task_msg_obj);
-//		task.solutionsummary(mosek.Env.streamtype.msg);
-
-//		task.putdouparam(mosek.Env.dparam.basis_tol_s, 1.0e-9);
-//		task.putdouparam(mosek.Env.dparam.basis_tol_x, 1.0e-9);
-//		task.putdouparam(mosek.Env.dparam.basis_rel_tol_s, 1.0e-6);
-//		task.putintparam(mosek.Env.iparam.infeas_report_auto, 1);
 
 		task.putmaxnumvar(NUMVAR);
 		task.putmaxnumcon(NUMCON);
@@ -138,7 +106,7 @@ public final class LinearProgrammingEq {
 		for (int i = 0; i < NUMCON; ++i) {
 			/* Set the bounds on constraints.
 			   blc[i] <= constraint i <= buc[i] */
-			task.putbound(Env.accmode.con, i, Env.boundkey.fx, b[i], b[i]);
+			task.putbound(Env.accmode.con, i, Env.boundkey.ra, b[i] - Math.abs(b[i]) * e, b[i] + Math.abs(b[i]) * e);
 		}
 
 		task.putobjsense(objsense);

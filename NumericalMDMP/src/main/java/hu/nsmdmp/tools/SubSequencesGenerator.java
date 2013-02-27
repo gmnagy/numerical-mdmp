@@ -43,9 +43,8 @@ public final class SubSequencesGenerator {
 	}
 
 	/**
-	 * n = 6, l = 2, dim = 2
-	 * 
-	 * @return {0, 1}{0, 1, 2, 3}
+	 * n = 6, l = 2, dim = 2 <br />
+	 * result: {0, 1}{0, 1, 2, 3}
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T[][] getSubSequences2(final int n, final int l, final int dim, final Class<T> type) {
