@@ -47,10 +47,10 @@ public class ContinuousDistributionFeasibility {
 			Vector<Apfloat> f = new Vector<Apfloat>(chebU.getRow(i + 1));
 //			System.out.println(f);
 
-			double min = 1 - getMinCumProbMatrixElement(sub, v, f);
-			double max = 1 - getMaxCumProbMatrixElement(sub, v, f);
+			double min = getMinCumProbMatrixElement(sub, v, f);
+			double max = getMaxCumProbMatrixElement(sub, v, f);
 
-			System.out.println(String.format("i:%s    min:%s  -  expected:%s  -  max:%s", i, min, normChebyUV.get(i), max));
+			System.out.println(String.format("i:%s    min:%s  -  expected:%s  -  max:%s", i, min, normChebyUV.get(i+1), max));
 		}
 
 	}
