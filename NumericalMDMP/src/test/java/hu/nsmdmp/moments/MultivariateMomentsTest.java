@@ -113,6 +113,41 @@ public class MultivariateMomentsTest {
 		}
 	}
 
+	
+	/**
+	 * n=6. m=2. Dimensional = 3.
+	 * 
+	 */
+	@Test
+	public void testCreateBinomialMoments5() throws IOException {
+		Double[] probabilities = IOFile.read("prob.txt", Double.class);
+
+		List<Moment<Double>> binomMoms = createBinomialMoments(probabilities, 6, 2, 3, 2);
+
+		List<Moment<Double>> expected = new ArrayList<Moment<Double>>();
+		expected.add(new Moment<Double>(new int[] { 0, 0, 0 }, 1.0));
+		expected.add(new Moment<Double>(new int[] { 1, 0, 0 }, 0.597));
+		expected.add(new Moment<Double>(new int[] { 2, 0, 0 }, 0.161));
+		expected.add(new Moment<Double>(new int[] { 0, 1, 0 }, 0.462));
+		expected.add(new Moment<Double>(new int[] { 1, 1, 0 }, 0.886));
+		expected.add(new Moment<Double>(new int[] { 0, 2, 0 }, 0.223));
+		expected.add(new Moment<Double>(new int[] { 0, 0, 1 }, 0.469));
+		expected.add(new Moment<Double>(new int[] { 1, 0, 1 }, 0.809));
+		expected.add(new Moment<Double>(new int[] { 0, 1, 1 }, 0.920));
+		expected.add(new Moment<Double>(new int[] { 0, 0, 2 }, 0.0));
+
+		int i = 0;
+		for (Moment<Double> moment : expected) {
+			assertEquals("row = " + i + ": ", moment.moment, binomMoms.get(i).moment, 0.00001);
+			i++;
+		}
+	}
+
+	
+	
+	
+	
+	
 	/**
 	 * n=6. m=3. Dimensional = 2.
 	 * 
