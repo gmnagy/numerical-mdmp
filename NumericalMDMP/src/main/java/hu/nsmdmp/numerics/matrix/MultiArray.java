@@ -26,6 +26,9 @@ public class MultiArray<T> {
 
 	protected final Class<T> valueType;
 
+	/**
+	 * Create empty multiarray. 
+	 */
 	public MultiArray(final int rowLength, final Class<T> valueType) {
 		this.rowLength = rowLength;
 		this.valueType = valueType;
