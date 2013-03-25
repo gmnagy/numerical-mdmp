@@ -22,6 +22,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apfloat.Apfloat;
+import org.apfloat.ApfloatMath;
+
 public class MultivariateMoments {
 
 	/**
@@ -55,7 +58,16 @@ public class MultivariateMoments {
 //		System.out.println(convertedOrderedProb);
 
 		List<int[]> alphasList = generateTotalOrderOfMomentMembers(m, dim);
+		/* for(int[] tomb : alphasList){
+			System.out.println((Arrays.toString(tomb)));
+		}
+		*/
 		List<int[]> indexSubSequences = getSubSequences(n, subSeqSize, dim);
+		/*for(int[] tomb : indexSubSequences){
+			System.out.println((Arrays.toString(tomb)));
+		}
+		*/
+
 
 		Iterator<int[]> itAlphas = alphasList.iterator();
 
@@ -64,6 +76,7 @@ public class MultivariateMoments {
 
 		while (itAlphas.hasNext()) {
 			int[] alphas = itAlphas.next();
+			//System.out.println((Arrays.toString(alphas)));
 
 			List<String[]> indexCombinationsOfAlphaSet = new ArrayList<String[]>();
 
@@ -91,6 +104,83 @@ public class MultivariateMoments {
 			}
 
 			binomialMoments.add(new Moment<T>(alphas, ithBinomMom));
+		}
+
+		return binomialMoments;
+	}
+
+	/*
+	 * probabilities<-> exponents
+	 */
+	public static  List<Moment<Apfloat>> createBinomialMomentsExponent(Apfloat p, final Double[] probabilities, final int n, final int m, final int dim, final int subSeqSize) {
+		int[] permutation = new int[n];
+		for (int i = 0; i < n; i++)
+			permutation[i] = i;
+
+		return createBinomialMomentsExponent(p, probabilities, n, permutation, m, dim, subSeqSize);
+	}
+	
+	
+	
+	public static List<Moment<Apfloat>> createBinomialMomentsExponent(Apfloat p, final Double[] probabilities, final int n, final int[] permutation, final int m, final int dim, final int subSeqSize) {
+		List<Moment<Apfloat>> binomialMoments = new ArrayList<Moment<Apfloat>>();
+
+		if (probabilities.length == 0)
+			return binomialMoments;
+
+		IOperation<Apfloat> op = operation(probabilities[0].getClass());
+
+		Map<int[], Double> orderedProb = orderProbabilities(probabilities, n, m);
+		Map<String, Double> convertedOrderedProb = convertWithPermutation(orderedProb, permutation);
+//		System.out.println(convertedOrderedProb);
+
+		List<int[]> alphasList = generateTotalOrderOfMomentMembers(m, dim);
+		/* for(int[] tomb : alphasList){
+			System.out.println((Arrays.toString(tomb)));
+		}
+		*/
+		List<int[]> indexSubSequences = getSubSequences(n, subSeqSize, dim);
+		/*for(int[] tomb : indexSubSequences){
+			System.out.println((Arrays.toString(tomb)));
+		}
+		*/
+
+
+		Iterator<int[]> itAlphas = alphasList.iterator();
+
+		// skip first: (0,0, ... 0)
+		binomialMoments.add(new Moment<Apfloat>(itAlphas.next(), op.one()));
+
+		while (itAlphas.hasNext()) {
+			int[] alphas = itAlphas.next();
+			//System.out.println((Arrays.toString(alphas)));
+
+			List<String[]> indexCombinationsOfAlphaSet = new ArrayList<String[]>();
+
+			int i = 0;
+			for (int alpha : alphas) {
+
+				if (alpha > 0) {
+					String[] indexCombinationsOfAlpha = combinations(indexSubSequences.get(i), alpha, permutation);
+					indexCombinationsOfAlphaSet.add(indexCombinationsOfAlpha);
+				}
+
+				i++;
+			}
+//			for (String[] s : indexCombinationsOfAlphaSet)
+//				System.out.println("a: " + Arrays.toString(s));
+//			System.out.println("a: ");
+
+			Apfloat ithBinomMom = op.zero();
+
+			SetVariationIterator2<String> it = new SetVariationIterator2<String>(indexCombinationsOfAlphaSet);
+			while (it.hasNext()) {
+				String[] indexVariations = it.next();
+
+				ithBinomMom = op.add(ithBinomMom,  ApfloatMath.pow( p, convertedOrderedProb.get(arrayToString(indexVariations)).longValue()));
+			}
+
+			binomialMoments.add(new Moment<Apfloat>(alphas, ithBinomMom));
 		}
 
 		return binomialMoments;

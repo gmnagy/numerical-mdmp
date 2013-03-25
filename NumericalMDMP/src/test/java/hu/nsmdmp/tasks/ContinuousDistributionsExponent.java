@@ -58,14 +58,14 @@ public class ContinuousDistributionsExponent {
 
 	private static Vector<Apfloat> createPowerMoments(Apfloat p, Double[] expArray, int n, int m, int dim, int l) throws Exception {
 
-		Apfloat[] probabilities = new Apfloat[expArray.length];
+/*		Apfloat[] probabilities = new Apfloat[expArray.length];
 		int i = 0;
 		for (double exp : expArray) {
 			probabilities[i] = ApfloatMath.pow(p, (long) exp);
 			i++;
 		}
-
-		List<Moment<Apfloat>> binomMoms = createBinomialMoments(probabilities, n, m, dim, l);
+*/
+		List<Moment<Apfloat>> binomMoms = createBinomialMomentsExponent(p, expArray, n, m, dim, l);
 		Collection<Moment<Apfloat>> powerMoms = convertBinomMomToPowerMom(binomMoms);
 
 		return TaskUtils.toVector(powerMoms);
