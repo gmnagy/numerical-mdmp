@@ -34,9 +34,9 @@ public class ContinuousDistributionsExponent {
 		Double[] expArray = IOFile.read(new File(ContinuousDistributionsExponent.class.getResource(exponentFile).toURI()), Double.class);
 		Apfloat[] pArray = IOFile.read(new File(ContinuousDistributionsExponent.class.getResource(pFile).toURI()), Apfloat.class);
 
-		int n = 18; //?
+		int n = 23; //?
 		int m = 3;
-		int dim = 2;
+		int dim = 7;
 		int l = 3;
 
 		Apfloat[][] vectorSet = getSubSequences2(n + dim, l + 1, dim, Apfloat.class);
