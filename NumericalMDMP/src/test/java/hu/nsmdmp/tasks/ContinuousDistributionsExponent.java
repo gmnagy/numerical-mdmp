@@ -35,37 +35,47 @@ public class ContinuousDistributionsExponent {
 		Apfloat[] pArray = IOFile.read(new File(ContinuousDistributionsExponent.class.getResource(pFile).toURI()), Apfloat.class);
 
 		int n = 23; //?
-		int m = 3;
-		int dim = 7;
-		int l = 3;
+		int m = 5;
+		int dim = 2;
+		int l = 11;
 
+		System.out.println("start-vectorset");
 		Apfloat[][] vectorSet = getSubSequences2(n + dim, l + 1, dim, Apfloat.class);
+		System.out.println("start-chebU");
 		Matrix<Apfloat> chebU = generateApfloatChebyshevUMatrix(normalize(vectorSet), m);
+		System.out.println("start-discrete vector");
 		Vector<Apfloat> f = discreteVector(getNumberOfVariation(vectorSet), 1, new Apfloat(0), new Apfloat(1));
 
 		for (Apfloat p : pArray) {
 
+			System.out.println("start-power");
 			Vector<Apfloat> powerMomentV = createPowerMoments(p, expArray, n, m, dim, l);
+			System.out.println("normChebyUV");
 			Vector<Apfloat> normChebyUV = TaskUtils.normChebyUV(m, powerMomentV, vectorSet);
 
-//			LPSolution minLPSolution = getMinCumProbMatrixElement(chebU, normChebyUV, f);
-//			LPSolution maxLPSolution = getMaxCumProbMatrixElement(chebU, normChebyUV, f);
-//
-//			System.out.println(String.format("min:%s  -  max:%s", minLPSolution.getPrimalSolution(), maxLPSolution.getPrimalSolution()));
+			System.out.println("start-min");
+			long startTime = System.currentTimeMillis();
+			LPSolution minLPSolution = getMinCumProbMatrixElement(chebU, normChebyUV, f);
+			System.out.println("Running time-min:"+  (System.currentTimeMillis()-startTime));
+			System.out.println("start-max");
+			startTime = System.currentTimeMillis();
+			LPSolution maxLPSolution = getMaxCumProbMatrixElement(chebU, normChebyUV, f);
+			System.out.println("Running time-max:"+  (System.currentTimeMillis()-startTime));
+			System.out.println(String.format("min:%s  -  max:%s", minLPSolution.getPrimalSolution(), maxLPSolution.getPrimalSolution()));
 		}
 
 	}
 
 	private static Vector<Apfloat> createPowerMoments(Apfloat p, Double[] expArray, int n, int m, int dim, int l) throws Exception {
 
-/*		Apfloat[] probabilities = new Apfloat[expArray.length];
+		Apfloat[] probabilities = new Apfloat[expArray.length];
 		int i = 0;
 		for (double exp : expArray) {
 			probabilities[i] = ApfloatMath.pow(p, (long) exp);
 			i++;
 		}
-*/
-		List<Moment<Apfloat>> binomMoms = createBinomialMomentsExponent(p, expArray, n, m, dim, l);
+
+		List<Moment<Apfloat>> binomMoms = createBinomialMoments(probabilities, n, m, dim, l);
 		Collection<Moment<Apfloat>> powerMoms = convertBinomMomToPowerMom(binomMoms);
 
 		return TaskUtils.toVector(powerMoms);
