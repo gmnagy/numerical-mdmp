@@ -40,13 +40,19 @@ public class ContinuousDistributionsExponent {
 		int l = 11;
 
 		System.out.println("start-vectorset");
-		Apfloat[][] vectorSet = getSubSequences2(n + dim, l + 1, dim, Apfloat.class);
+		int i = 1;
+		Apfloat[][] vectorSet = getSubSequences2(n + dim, l + i, dim, Apfloat.class);
 		System.out.println("start-chebU");
 		Matrix<Apfloat> chebU = generateApfloatChebyshevUMatrix(normalize(vectorSet), m);
 		System.out.println("start-discrete vector");
-		Vector<Apfloat> f = discreteVector(getNumberOfVariation(vectorSet), 1, new Apfloat(0), new Apfloat(1));
+		Vector<Apfloat> f = discreteVector(getNumberOfVariation(vectorSet), i, new Apfloat(0), new Apfloat(i));
 
+		String[][] result = new String[pArray.length][6];
+		System.out.println(pArray.length);
+
+		int ind = 0;
 		for (Apfloat p : pArray) {
+			System.out.println(ind);
 
 			System.out.println("start-power");
 			Vector<Apfloat> powerMomentV = createPowerMoments(p, expArray, n, m, dim, l);
@@ -56,14 +62,26 @@ public class ContinuousDistributionsExponent {
 			System.out.println("start-min");
 			long startTime = System.currentTimeMillis();
 			LPSolution minLPSolution = getMinCumProbMatrixElement(chebU, normChebyUV, f);
-			System.out.println("Running time-min:"+  (System.currentTimeMillis()-startTime));
+			System.out.println("Running time-min:" + (System.currentTimeMillis() - startTime));
+
+			result[ind][0] = String.valueOf(minLPSolution.getPrimalSolution());
+			result[ind][1] = String.valueOf(minLPSolution.getSolutionStatus());
+			result[ind][2] = String.valueOf((System.currentTimeMillis() - startTime));
+
 			System.out.println("start-max");
 			startTime = System.currentTimeMillis();
 			LPSolution maxLPSolution = getMaxCumProbMatrixElement(chebU, normChebyUV, f);
-			System.out.println("Running time-max:"+  (System.currentTimeMillis()-startTime));
+			System.out.println("Running time-max:" + (System.currentTimeMillis() - startTime));
 			System.out.println(String.format("min:%s  -  max:%s", minLPSolution.getPrimalSolution(), maxLPSolution.getPrimalSolution()));
+
+			result[ind][3] = String.valueOf(maxLPSolution.getPrimalSolution());
+			result[ind][4] = String.valueOf(maxLPSolution.getSolutionStatus());
+			result[ind][5] = String.valueOf((System.currentTimeMillis() - startTime));
+
+			ind++;
 		}
 
+		IOFile.write("resultCDE", "/t", result);
 	}
 
 	private static Vector<Apfloat> createPowerMoments(Apfloat p, Double[] expArray, int n, int m, int dim, int l) throws Exception {

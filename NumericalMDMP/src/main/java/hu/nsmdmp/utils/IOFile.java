@@ -54,7 +54,7 @@ public class IOFile {
 		return rows.toArray((T[]) Array.newInstance(type, rows.size()));
 	}
 
-	public static void write(final String fileName, final String separator, final double[][] matrix) throws IOException {
+	public static void write(final String fileName, final String separator, final String[][] matrix) throws IOException {
 
 		Writer out = new OutputStreamWriter(new FileOutputStream(fileName), UTF8);
 
