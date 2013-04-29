@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.lang.reflect.Array;
+import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -42,7 +43,8 @@ public class IOFile {
 		try {
 			while (scanner.hasNextLine()) {
 				try {
-					rows.add(op.valueOf(scanner.nextBigDecimal()));
+					//System.out.println(scanner.next());
+					rows.add(op.valueOf(new BigDecimal(scanner.next())));
 				} catch (NoSuchElementException e) {
 					break;
 				}
@@ -71,6 +73,27 @@ public class IOFile {
 				}
 
 				toFile.append(matrix[i][j]);
+
+				out.write(toFile.toString());
+				out.write(System.getProperty("line.separator"));
+			}
+
+		} finally {
+			out.close();
+		}
+	}
+	
+	public static void write(final String fileName, final Object[] matrix) throws IOException {
+
+		Writer out = new OutputStreamWriter(new FileOutputStream(fileName), UTF8);
+
+		try {
+
+			for (int i = 0; i < matrix.length; i++) {
+
+				StringBuilder toFile = new StringBuilder();
+	
+				toFile.append(matrix[i]);
 
 				out.write(toFile.toString());
 				out.write(System.getProperty("line.separator"));
