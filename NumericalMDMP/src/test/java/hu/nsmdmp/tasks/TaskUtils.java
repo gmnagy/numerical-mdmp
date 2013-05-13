@@ -10,6 +10,8 @@ import hu.nsmdmp.moments.Moment;
 import hu.nsmdmp.mosek.LPSolution;
 import hu.nsmdmp.mosek.LinearProgrammingEq;
 import hu.nsmdmp.mosek.LinearProgrammingIneq;
+import hu.nsmdmp.mosek.PreciseLPCalc;
+import hu.nsmdmp.mosek.PreciseLPSolution;
 import hu.nsmdmp.numerics.matrix.Matrix;
 import hu.nsmdmp.numerics.matrix.Vector;
 import hu.nsmdmp.utils.IOFile;
@@ -74,6 +76,15 @@ public class TaskUtils {
 		return LinearProgrammingEq.optimizeMax(matrix, vector, f);
 	}
 
+	public static <T> PreciseLPSolution<T> getPrecMinCumProbMatrixElement(final Matrix<T> matrix, final Vector<T> vector, final Vector<T> f) throws MosekException {
+		return PreciseLPCalc.optimizeMin(matrix, vector, f);
+	}
+
+	public static <T> PreciseLPSolution<T> getPrecMaxCumProbMatrixElement(final Matrix<T> matrix, final Vector<T> vector, Vector<T> f) throws MosekException {
+		return PreciseLPCalc.optimizeMax(matrix, vector, f);
+	}
+
+	
 	public static <T> LPSolution getMinCumProbMatrixElement(final Matrix<T> matrix, final Vector<T> vector, final Vector<T> f, final double e) throws MosekException {
 		return LinearProgrammingIneq.optimizeMin(matrix, vector, f, e);
 	}
