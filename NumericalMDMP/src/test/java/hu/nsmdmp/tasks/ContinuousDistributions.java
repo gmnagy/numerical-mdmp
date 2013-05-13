@@ -26,8 +26,8 @@ public class ContinuousDistributions {
 	String fileName = "mng31_5";
 	int n = 31;
 	int m = 3;
-	int dim = 1;
-	int l = 31;
+	int dim = 5;
+	int l = 6;
 	double e = 0;
 
 	

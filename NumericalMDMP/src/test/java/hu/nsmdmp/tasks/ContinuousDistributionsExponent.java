@@ -28,6 +28,8 @@ import org.apfloat.Apfloat;
 import org.apfloat.ApfloatMath;
 import org.junit.Test;
 
+import static hu.nsmdmp.operations.ApfloatOperation.PRECISION;
+
 public class ContinuousDistributionsExponent {
 
 	@Test
@@ -40,9 +42,9 @@ public class ContinuousDistributionsExponent {
 		Apfloat[] pArray = IOFile.read(new File(ContinuousDistributionsExponent.class.getResource(pFile).toURI()), Apfloat.class);
 
 		int n = 23; //?
-		int m = 3;
-		int dim = 2;
-		int l = 11;
+		int m = 5;
+		int dim = 4;
+		int l = 5;
 
 		System.out.println("start-vectorset");
 		int i = 1;
@@ -53,12 +55,13 @@ public class ContinuousDistributionsExponent {
 		Vector<Apfloat> f = discreteVector(getNumberOfVariation(vectorSet), i, new Apfloat(0), new Apfloat(i));
 
 		String[][] result = new String[pArray.length][6];
-		System.out.println(pArray.length);
+		//System.out.println(pArray.length);
 
 		int ind = 0;
-		for (Apfloat p : pArray) {
-			System.out.println(ind);
-
+		for (Apfloat p : pArray){ 
+		//{Apfloat p=new Apfloat(0.56, PRECISION);
+			//System.out.println(ind);
+			System.out.println(p);
 			System.out.println("start-power");
 			Vector<Apfloat> powerMomentV = createPowerMoments(p, expArray, n, m, dim, l);
 			System.out.println("normChebyUV");
@@ -95,13 +98,13 @@ public class ContinuousDistributionsExponent {
 
 			
 			System.out.println(String.format("min:%s  -  max:%s", minLPSolution.getPrimalSolution(), maxLPSolution.getPrimalSolution()));
-			System.out.println(String.format("Prec_min:%s  -  Prec_max:%s", minPrecLPSolution.getObjectiveValue(), maxPrecLPSolution.getObjectiveValue()));
-			System.out.println(String.format("nonneg_min:%s  -  nonneg_max:%s",
-					minPrecLPSolution.getPrimalNonnegInfeas().doubleValue(), maxPrecLPSolution.getPrimalNonnegInfeas().doubleValue()));
-			System.out.println(String.format("prslack_min:%s  -  prslack_max:%s", 
-					minPrecLPSolution.getPrimalSlackInfeas().doubleValue(), maxPrecLPSolution.getPrimalSlackInfeas().doubleValue()));
-			System.out.println(String.format("dualslack_min:%s  -  dslack_max:%s", 
-					minPrecLPSolution.getDualSlackInfeas().doubleValue(), maxPrecLPSolution.getDualSlackInfeas().doubleValue()));
+			//System.out.println(String.format("Prec_min:%s  -  Prec_max:%s", minPrecLPSolution.getObjectiveValue(), maxPrecLPSolution.getObjectiveValue()));
+			//System.out.println(String.format("nonneg_min:%s  -  nonneg_max:%s",
+			//		minPrecLPSolution.getPrimalNonnegInfeas().doubleValue(), maxPrecLPSolution.getPrimalNonnegInfeas().doubleValue()));
+			//System.out.println(String.format("prslack_min:%s  -  prslack_max:%s", 
+			//		minPrecLPSolution.getPrimalSlackInfeas().doubleValue(), maxPrecLPSolution.getPrimalSlackInfeas().doubleValue()));
+			//System.out.println(String.format("dualslack_min:%s  -  dslack_max:%s", 
+			//		minPrecLPSolution.getDualSlackInfeas().doubleValue(), maxPrecLPSolution.getDualSlackInfeas().doubleValue()));
 			//System.out.println(  Arrays.toString(minLPSolution.getBasisIndexes()) + Arrays.toString(maxLPSolution.getBasisIndexes()));
 
 
@@ -120,8 +123,11 @@ public class ContinuousDistributionsExponent {
 			probabilities[i] = ApfloatMath.pow(p, (long) exp);
 			i++;
 		}
+		
+		//IOFile.write("test_" + System.currentTimeMillis(), probabilities);
 
 		List<Moment<Apfloat>> binomMoms = createBinomialMoments(probabilities, n, m, dim, l);
+		// itt a hiba: IOFile.write("binomtest_" + System.currentTimeMillis(), binomMoms.toArray());
 		Collection<Moment<Apfloat>> powerMoms = convertBinomMomToPowerMom(binomMoms);
 
 		return TaskUtils.toVector(powerMoms);

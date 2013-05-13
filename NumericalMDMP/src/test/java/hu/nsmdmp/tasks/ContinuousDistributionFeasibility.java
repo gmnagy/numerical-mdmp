@@ -19,11 +19,11 @@ public class ContinuousDistributionFeasibility {
 	@Test
 	public void test() throws Exception {
 
-		String fileName = "mng16_5";
-		int n = 16;
+		String fileName = "ctest20b.m55";
+		int n = 20;
 		int m = 3;
-		int dim = 5;
-		int l = 3;
+		int dim = 2;
+		int l = 10;
 
 		Apfloat[][] vectorSet = getSubSequences2(n + dim, l + 1, dim, Apfloat.class);
 

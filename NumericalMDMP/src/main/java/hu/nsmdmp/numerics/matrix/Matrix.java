@@ -85,6 +85,16 @@ public class Matrix<T> extends MultiArray<T> {
 		return X;
 	}
 
+	public Matrix<T> getSubColMatrix(final int[] c) {
+		Matrix<T> X = new Matrix<T>(this.rowLength, c.length, valueType);
+
+		for (int i = 0; i < this.rowLength; i++)
+			for (int j = 0; j < c.length; j++)
+				X.set(i, j, M[i][c[j]]);
+
+		return X;
+	}
+
 	public Matrix<T> getSubMatrix(final int i0, final int i1, final int j0, final int j1) {
 		Matrix<T> X = new Matrix<T>(i1 - i0 + 1, j1 - j0 + 1, valueType);
 
@@ -99,6 +109,24 @@ public class Matrix<T> extends MultiArray<T> {
 		return getSubMatrix(from, to, 0, columnLength - 1);
 	}
 
+	public Matrix<T> getColPrepend(Matrix<T> Mx){
+		checkArgument(this.rowLength == Mx.rowLength, "The nr. of rows must be the same");
+		Matrix<T> X = new Matrix<T>(this.rowLength, Mx.columnLength+this.columnLength, valueType);
+		
+
+		for (int i = 0; i < this.rowLength; i++)
+			for (int j = 0; j < Mx.columnLength; j++)
+				X.set(i , j, Mx.M[i][j]);
+		
+		for (int i = 0; i < this.rowLength; i++)
+			for (int j = 0; j < this.columnLength; j++)
+				X.set(i , j+Mx.columnLength, this.M[i][j]);
+
+		return X;
+		
+	}
+	
+	
 	/**
 	 * Get LU Decomposition.
 	 * 

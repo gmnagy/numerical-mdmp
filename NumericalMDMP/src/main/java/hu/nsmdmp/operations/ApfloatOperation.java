@@ -8,7 +8,7 @@ import org.apfloat.FixedPrecisionApfloatHelper;
 
 public final class ApfloatOperation implements IOperation<Apfloat> {
 
-	public static final long PRECISION = 30;
+	public static final long PRECISION = 100;
 
 	private static final FixedPrecisionApfloatHelper FIXED_PRECISION = new FixedPrecisionApfloatHelper(PRECISION);
 

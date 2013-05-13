@@ -138,12 +138,12 @@ public final class LinearProgrammingEq {
 		for (int i = 0; i < NUMCON; ++i) {
 			/* Set the bounds on constraints.
 			   blc[i] <= constraint i <= buc[i] */
-			task.putbound(Env.accmode.con, i, Env.boundkey.fx, b[i], b[i]);
+			task.putbound(Env.accmode.con, i, Env.boundkey.fx  , b[i], b[i]);
 		}
 
 		task.putobjsense(objsense);
 
-		//task.writedata("MDMP.lp");
+		task.writedata("MDMP.mps");
 
 		task.putintparam(mosek.Env.iparam.optimizer, mosek.Env.optimizertype.dual_simplex.getValue());
 

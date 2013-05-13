@@ -54,7 +54,7 @@ public class MultivariateMoments {
 		IOperation<T> op = operation(probabilities[0].getClass());
 
 		Map<SubSet, T> orderedProb = orderProbabilities(probabilities, n, m);
-		System.out.println(orderedProb);
+		//System.out.println(orderedProb);
 
 		List<int[]> alphasList = generateTotalOrderOfMomentMembers(m, dim);
 		List<int[]> indexSubSequences = getSubSequences(n, subSeqSize, dim);
@@ -89,7 +89,7 @@ public class MultivariateMoments {
 			SetVariationIterator2<SubSet> it = new SetVariationIterator2<SubSet>(alphaSubSetList);
 			while (it.hasNext()) {
 				SubSet[] alphaSubSets = it.next();
-				System.out.println(Arrays.toString(alphaSubSets));
+				//System.out.println(Arrays.toString(alphaSubSets));
 
 				ithBinomMom = op.add(ithBinomMom, orderedProb.get(new SubSet(alphaSubSets)));
 			}
