@@ -13,10 +13,12 @@ import hu.nsmdmp2.utils.IOFile;
 import java.io.File;
 
 import org.apfloat.Apfloat;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class DiscreteMultivariateDistributions {
 
+	@Ignore
 	@Test
 	public void distributions() throws Exception {
 

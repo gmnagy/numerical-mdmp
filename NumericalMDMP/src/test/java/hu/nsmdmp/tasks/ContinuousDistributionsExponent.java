@@ -26,12 +26,14 @@ import java.util.List;
 
 import org.apfloat.Apfloat;
 import org.apfloat.ApfloatMath;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static hu.nsmdmp.operations.ApfloatOperation.PRECISION;
 
 public class ContinuousDistributionsExponent {
 
+	@Ignore 
 	@Test
 	public void runChebyshevU() throws Exception {
 
