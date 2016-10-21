@@ -1,5 +1,6 @@
 package hu.nsmdmp.moments;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -16,11 +17,13 @@ final class SubSet {
 	SubSet(int... items) {
 		for (int item : items)
 			set.add(item);
+		Collections.sort(set);
 	}
 
 	SubSet(SubSet... items) {
 		for (SubSet item : items)
 			set.addAll(item.set);
+		Collections.sort(set);
 	}
 
 	void add(int item) {

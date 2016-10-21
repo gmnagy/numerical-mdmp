@@ -76,6 +76,7 @@ public class MultivariateMoments {
 				if (alpha > 0) {
 					SubSet[] alphaSubSets = combinations(indexSubSequences.get(i), alpha, permutation);
 					alphaSubSetList.add(alphaSubSets);
+					// System.out.println(Arrays.toString(alphaSubSets));
 				}
 
 				i++;
@@ -89,7 +90,8 @@ public class MultivariateMoments {
 			SetVariationIterator2<SubSet> it = new SetVariationIterator2<SubSet>(alphaSubSetList);
 			while (it.hasNext()) {
 				SubSet[] alphaSubSets = it.next();
-				//System.out.println(Arrays.toString(alphaSubSets));
+				System.out.println(Arrays.toString(alphaSubSets));
+				
 
 				ithBinomMom = op.add(ithBinomMom, orderedProb.get(new SubSet(alphaSubSets)));
 			}

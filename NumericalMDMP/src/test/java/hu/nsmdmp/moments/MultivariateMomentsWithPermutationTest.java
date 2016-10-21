@@ -24,6 +24,7 @@ public class MultivariateMomentsWithPermutationTest {
 		Double[] probabilities = IOFile.read("prob.txt", Double.class);
 
 		List<Moment<Double>> binomMoms = createBinomialMoments(probabilities, 4, new int[] { 2, 1, 0, 3 }, 2, 1, 2);
+//		List<Moment<Double>> binomMoms = createBinomialMoments(probabilities, 4, new int[] { 1, 0, 2, 3 }, 2, 1, 2);
 
 		List<Moment<Double>> expected = new ArrayList<Moment<Double>>();
 		expected.add(new Moment<Double>(new int[] { 0 }, 1.0));

@@ -46,8 +46,8 @@ public class DiscreteMultivariateDistributionsTest {
 
 		System.out.println(String.format("max: %s\tmin: %s", maxLPSolution.getPrimalSolution(), minLPSolution.getPrimalSolution()));
 
-		assertEquals(0.00338248781146195, minLPSolution.getPrimalSolution(), 0.00000000000001);
-		assertEquals(0.512441887045137, maxLPSolution.getPrimalSolution(), 0.00000000000001);
+		assertEquals(0.00338248781146195, minLPSolution.getPrimalSolution(), 0.000001);
+		assertEquals(0.512441887045137, maxLPSolution.getPrimalSolution(), 0.00001);
 	}
 
 	/**
